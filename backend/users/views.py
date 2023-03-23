@@ -27,4 +27,5 @@ def user_login(request):
             login(request, user)
             serializer = UserWithTokenSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'message': 'Username or password is incorrect'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({'error': 'Username or password is incorrect'})
