@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -14,7 +14,9 @@ export const AuthProvider = (props) => {
         baseURL: "http://127.0.0.1:8000/api/",
     });
 
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState(
+        () => JSON.parse(localStorage.getItem("user")) || null
+    );
 
     const [error, setError] = useState(null);
 
@@ -28,7 +30,8 @@ export const AuthProvider = (props) => {
             if (data.error) {
                 setError(data.error);
             } else {
-                setUser(true);
+                localStorage.setItem("user", JSON.stringify(data));
+                setUser(data);
             }
         } catch (error) {
             return;

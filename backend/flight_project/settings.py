@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Packages
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     # Project apps
     'users.apps.UsersConfig',
     'flights.apps.FlightsConfig',
