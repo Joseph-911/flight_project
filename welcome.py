@@ -29,11 +29,13 @@ def welcome():
     env_file = os.path.join(root_dir, '.env')
     database_name, database_user = generate_env_file(env_file)
     
+    # Get path to output SQL file
+    output_file = os.path.join(root_dir, 'backend', f'{database_name}.sql').replace('\\', '/')
 
-    # # Get current directory and generate a path to file.sql and create schema
+    # Get current directory and generate a path to file.sql and create schema
     current_dir = os.getcwd()
-    input_file = os.path.join(current_dir, f'{database_name}.sql').replace('\\', '/')
-    generate_sql_file(f'{database_name}.sql', database_name, database_user, input_file)
+    input_file = os.path.join(f'{current_dir}\\backend', f'{database_name}.sql').replace('\\', '/')
+    generate_sql_file(database_name, database_user, input_file, output_file)
 
 
 # Execute the welcome function
