@@ -1,7 +1,7 @@
 import subprocess
 
-def generate_sql_file(sql_file, database_name, database_user, input_file):
-    with open(sql_file, 'w') as f:
+def generate_sql_file(database_name, database_user, input_file, output_file):
+    with open(output_file, 'w') as f:
         # Write the SQL command to create the database
         f.write(f'CREATE DATABASE IF NOT EXISTS {database_name};\n')
 
