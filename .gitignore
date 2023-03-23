@@ -1,1 +1,7 @@
 .venv
+.env
+.vscode
+migrations
+__pycache__
+*.sql
+*.sqlite3
