@@ -1,0 +1,43 @@
+/* --------------------------------------------- */
+/* ------------------- Navbar ------------------ */
+/* --------------------------------------------- */
+.navbar {
+    display: flex;
+}
+
+/* --------------------------------------------- */
+/* --------------- Navbar Links List------------ */
+/* --------------------------------------------- */
+.navbar {
+    .navbar-links-list {
+        display: flex;
+        align-items: center;
+
+        .navbar-item {
+            &:not(:first-of-type) {
+                margin-left: 20px;
+            }
+
+            .navbar-link {
+                transition: all 0.2s;
+                text-decoration: none;
+                &:link,
+                &:visited {
+                    color: var(--white);
+                    font-weight: 500;
+                    border: 2px solid transparent;
+                    padding-bottom: 3px;
+                }
+                &:hover,
+                &:active {
+                    border-bottom: 2px solid var(--white);
+                }
+
+                &.active {
+                    color: var(--gray-1);
+                    border-bottom: 2px solid var(--gray-1);
+                }
+            }
+        }
+    }
+}

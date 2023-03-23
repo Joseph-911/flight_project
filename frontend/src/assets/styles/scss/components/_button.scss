@@ -1,0 +1,64 @@
+/* --------------------------------------------- */
+/* ------------------- Button ------------------ */
+/* --------------------------------------------- */
+.btn {
+    @include flexCenter();
+    border-radius: 5px;
+    transition: all 0.2s;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --------------------------------------------- */
+/* --------------- Button Style ---------------- */
+/* --------------------------------------------- */
+.btn {
+    &.btn-primary {
+        background-color: var(--blue-1);
+        border: 1px solid var(--white);
+        color: var(--white);
+        &:hover,
+        &:active {
+            background-color: var(--blue-3);
+        }
+    }
+    
+    &.btn-primary-outline {
+        background-color: var(--white);
+        border: 2px solid var(--blue-1);
+        color: var(--blue-1);
+        &:hover,
+        &:active {
+            color: var(--white);
+            background-color: var(--blue-3);
+        }
+    }
+    
+    &.btn-danger {
+        background-color: var(--red-2);
+        color: var(--white);
+        &:hover,
+        &:active {
+            background-color: var(--red-1);
+        }
+    }
+}
+
+/* --------------------------------------------- */
+/* ---------------- Button Size ---------------- */
+/* --------------------------------------------- */
+.btn {
+    &.btn-xl {
+        width: 100%;
+        height: 40px;
+    }
+    &.btn-md {
+        width: fit-content;
+        padding: 10px 15px;
+    }
+    &.btn-sm {
+        width: fit-content;
+        padding: 5px 10px;
+    }
+}
