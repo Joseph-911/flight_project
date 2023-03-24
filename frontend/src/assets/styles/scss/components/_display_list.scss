@@ -1,0 +1,93 @@
+/* --------------------------------------------- */
+/* ---------------- Display List --------------- */
+/* --------------------------------------------- */
+.display-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0 auto; 
+    .display-item {
+        @include card();   
+
+        .display-link {
+            &:link,
+            &:visited {
+                display: block;
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+                text-decoration: none;
+
+                .display-image {
+                    width: 112px;
+                    height: auto;
+                    overflow: hidden;
+                    border-radius: 50%;
+                    margin-bottom: 7px;
+                    img {
+                        width: 100%;
+                        height: auto;
+                        object-fit: cover;
+                    }
+                }
+                p {
+                    text-align: center;
+                    &.title {
+                        font-weight: 500;
+                    }
+                    &:not(.title) {
+                        color: var(--color-text);
+                    }
+                    &:not(:last-of-type) {
+                        margin-bottom: 7px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* --------------------------------------------- */
+/* --------------- Displayed Item -------------- */
+/* --------------------------------------------- */
+.displayed-item {
+    @include card();
+    padding: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+
+    .displayed-item-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .displayed-item-image {
+            width: 130px;
+            height: auto;
+            overflow: hidden;
+            border-radius: 50%;
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+        p {
+            &.displayed-item-title {
+                font-weight: 500;
+                font-size: 1.5rem;
+            }
+            &:not(:last-of-type) {
+                margin-bottom: 5px;
+            }
+        }
+    }
+    
+    .displayed-item-links {
+        margin-top: 20px;
+        display: flex;
+        @include flexCenter(column);
+        gap: 10px;
+    }
+}

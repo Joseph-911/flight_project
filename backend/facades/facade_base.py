@@ -5,6 +5,8 @@ from rest_framework.response import Response
 
 from dal.dal import GenericDAL
 from users.serializers import *
+from flights.models import *
+from flights.serializers import *
 
 
 class FacadeBase:
@@ -36,6 +38,15 @@ class FacadeBase:
         if request.method == 'POST':
             logout(request)
             return Response({'message': 'User logged out'})
+        
+    
+    # --------------------------------------------- # 
+    # --------------- All Countries --------------- # 
+    # --------------------------------------------- # 
+    def get_all_countries(self, request):
+        countries = self.dal.read_all_objects(Country)
+        serializer = CountrySerializer(countries, many=True)
+        return Response(serializer.data)
 
 
 
