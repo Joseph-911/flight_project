@@ -3,9 +3,12 @@ import { Outlet, Navigate } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
 
-const RestrictedRoute = () => {
+export const RestrictedRoute = () => {
     const { user } = useContext(AuthContext);
     return user ? <Navigate to="/" /> : <Outlet />;
 };
 
-export default RestrictedRoute;
+export const PrivateRoute = () => {
+    const { user } = useContext(AuthContext);
+    return user ? <Outlet /> : <Navigate to="/" />;
+};

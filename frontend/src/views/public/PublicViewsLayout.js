@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { Home, Login } from "routes/publicRoutes";
-import RestrictedRoute from "utils/RestrictedRoute";
+import { RestrictedRoute } from "utils/CustomRoutes";
 
 const PublicViewsLayout = () => {
     return (
