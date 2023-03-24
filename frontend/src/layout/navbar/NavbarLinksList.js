@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
 
 const NavbarLinksList = () => {
-    const { user } = useContext(AuthContext);
+    const { user, userLogout } = useContext(AuthContext);
 
     const navbarLinks = [
         { title: "Home", path: "/" },
@@ -12,6 +12,11 @@ const NavbarLinksList = () => {
         { title: "Countries", path: "/countries" },
         { title: "Airlines", path: "/airlines" },
     ];
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        userLogout();
+    };
 
     return (
         <ul className="navbar-links-list">
@@ -26,7 +31,12 @@ const NavbarLinksList = () => {
             })}
             <li className="navbar-item">
                 {user ? (
-                    <button className="btn btn-md btn-primary">Logout</button>
+                    <button
+                        onClick={userLogout}
+                        className="btn btn-md btn-primary"
+                    >
+                        Logout
+                    </button>
                 ) : (
                     <Link className="btn btn-md btn-primary" to="/login">
                         Login

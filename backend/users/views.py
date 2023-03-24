@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -29,3 +30,14 @@ def user_login(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Username or password is incorrect'})
+
+
+# --------------------------------------------- # 
+# ------------------- Logout ------------------ # 
+# --------------------------------------------- # 
+@csrf_exempt
+@api_view(['POST'])
+def user_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return Response({'message': 'User logged out'})

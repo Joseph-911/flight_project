@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { AuthProvider } from "context/AuthContext";
 import Header from "layout/header/Header";
+import Main from "layout/main/Main";
 
 const App = () => {
     return (
@@ -10,6 +11,7 @@ const App = () => {
             <div className="App">
                 <AuthProvider>
                     <Header />
+                    <Main />
                 </AuthProvider>
             </div>
         </Router>

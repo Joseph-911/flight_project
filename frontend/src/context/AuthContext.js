@@ -38,10 +38,17 @@ export const AuthProvider = (props) => {
         }
     };
 
+    const userLogout = () => {
+        api.post("logout/");
+        localStorage.removeItem("user");
+        setUser(null);
+    };
+
     const authContextData = {
         api,
         user,
         userLogin,
+        userLogout,
         error,
     };
 
