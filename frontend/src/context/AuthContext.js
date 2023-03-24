@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -38,11 +38,26 @@ export const AuthProvider = (props) => {
         }
     };
 
-    const userLogout = () => {
+    const userLogout = useCallback(() => {
         api.post("logout/");
         localStorage.removeItem("user");
         setUser(null);
-    };
+    }, [api]);
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            if (!localStorage.getItem("user")) {
+                userLogout();
+                console.log("Executed");
+            }
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, [userLogout]);
 
     const authContextData = {
         api,

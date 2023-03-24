@@ -28,7 +28,7 @@ const NavbarLinksList = () => {
                 {user ? (
                     <button
                         onClick={userLogout}
-                        className="btn btn-md btn-primary"
+                        className="btn btn-md btn-danger"
                     >
                         Logout
                     </button>
