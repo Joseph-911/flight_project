@@ -24,20 +24,29 @@ const NavbarLinksList = () => {
                     </li>
                 );
             })}
-            <li className="navbar-item">
-                {user ? (
-                    <button
-                        onClick={userLogout}
-                        className="btn btn-md btn-danger"
-                    >
-                        Logout
-                    </button>
-                ) : (
+            {user ? (
+                <>
+                    <li className="navbar-item">
+                        <NavLink className="navbar-link" to="/profile">
+                            Profile
+                        </NavLink>
+                    </li>
+                    <li className="navbar-item">
+                        <button
+                            onClick={userLogout}
+                            className="btn btn-md btn-danger"
+                        >
+                            Logout
+                        </button>
+                    </li>
+                </>
+            ) : (
+                <li className="navbar-item">
                     <Link className="btn btn-md btn-primary" to="/login">
                         Login
                     </Link>
-                )}
-            </li>
+                </li>
+            )}
         </ul>
     );
 };
