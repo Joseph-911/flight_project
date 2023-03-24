@@ -48,7 +48,6 @@ export const AuthProvider = (props) => {
         const handleStorageChange = () => {
             if (!localStorage.getItem("user")) {
                 userLogout();
-                console.log("Executed");
             }
         };
 
