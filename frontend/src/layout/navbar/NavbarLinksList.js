@@ -13,11 +13,6 @@ const NavbarLinksList = () => {
         { title: "Airlines", path: "/airlines" },
     ];
 
-    const handleLogout = (e) => {
-        e.preventDefault();
-        userLogout();
-    };
-
     return (
         <ul className="navbar-links-list">
             {navbarLinks.map((link, idx) => {
