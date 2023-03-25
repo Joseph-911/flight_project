@@ -49,5 +49,18 @@ class FacadeBase:
         return Response(serializer.data)
 
 
+    # --------------------------------------------- # 
+    # ---------------- Get Country ---------------- # 
+    # --------------------------------------------- # 
+    def get_country_by_id(self, request, pk):
+        country = self.dal.read_object(Country, pk)
+
+        if request.method == 'GET':
+            if country:
+                serializer = CountrySerializer(country)
+                return Response(serializer.data)
+            else:
+                return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 facade_base = FacadeBase()

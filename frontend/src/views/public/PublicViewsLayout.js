@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { Home, Login, Countries } from "routes/publicRoutes";
+import { Home, Login, Countries, Country } from "routes/publicRoutes";
 import { RestrictedRoute } from "utils/CustomRoutes";
 
 const PublicViewsLayout = () => {
@@ -9,6 +9,7 @@ const PublicViewsLayout = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/countries" element={<Countries />} />
+            <Route path="/countries/:id" element={<Country />} />
             <Route element={<RestrictedRoute />}>
                 <Route path="/login" element={<Login />} />
             </Route>

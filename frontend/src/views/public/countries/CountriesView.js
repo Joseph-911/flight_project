@@ -26,7 +26,10 @@ const CountriesView = () => {
                                 key={`country-item-${idx}`}
                                 className="display-item animate-up"
                             >
-                                <Link to="/" className="display-link">
+                                <Link
+                                    to={`/countries/${item.id}`}
+                                    className="display-link"
+                                >
                                     <div className="display-image">
                                         <img
                                             src={item.flag}

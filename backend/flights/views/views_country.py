@@ -12,3 +12,12 @@ from facades.facade_base import facade_base
 @permission_classes([AllowAny])
 def get_all_countries(request):
     return facade_base.get_all_countries(request)
+
+
+# --------------------------------------------- #
+# -------------- Country Details -------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_country(request, pk):
+    return facade_base.get_country_by_id(request, pk)
