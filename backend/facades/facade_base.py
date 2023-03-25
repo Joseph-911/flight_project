@@ -39,11 +39,34 @@ class FacadeBase:
             logout(request)
             return Response({'message': 'User logged out'})
         
+
+    # --------------------------------------------- # 
+    # ---------------- All Airlines --------------- # 
+    # --------------------------------------------- #
+    def get_all_airlines(self):
+        airlines = self.dal.read_all_objects(AirlineCompany)
+        serializer = AirlineCompanySerializer(airlines, many=True)
+        return Response(serializer.data)
+
+
+    # --------------------------------------------- # 
+    # ---------------- Get Airline ---------------- # 
+    # --------------------------------------------- # 
+    def get_airline_by_id(self, request, pk):
+        airline = self.dal.read_object(AirlineCompany, pk)
+
+        if request.method == 'GET':
+            if airline:
+                serializer = AirlineCompanySerializer(airline)
+                return Response(serializer.data)
+            else:
+                return Response({'message': 'Airline company not found'}, status=status.HTTP_404_NOT_FOUND)
+    
     
     # --------------------------------------------- # 
     # --------------- All Countries --------------- # 
     # --------------------------------------------- # 
-    def get_all_countries(self, request):
+    def get_all_countries(self):
         countries = self.dal.read_all_objects(Country)
         serializer = CountrySerializer(countries, many=True)
         return Response(serializer.data)

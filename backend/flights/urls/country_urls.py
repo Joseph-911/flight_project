@@ -1,6 +1,6 @@
 from django.urls import path
 
-from flights.views import *
+from flights.views import views_country
 
 
 urlpatterns = [

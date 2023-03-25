@@ -3,37 +3,37 @@ import { Link } from "react-router-dom";
 
 import PageTitle from "components/PageTitle";
 import { fetchData } from "utils/fetchData";
-import { getAllCountries } from "api/countriesActions";
+import { getAllAirlines } from "api/airlinesActions";
 
-const CountriesView = () => {
-    const [countries, setCountries] = useState([]);
+const AirlinesView = () => {
+    const [airlines, setAirlines] = useState([]);
 
     useEffect(() => {
-        fetchData(getAllCountries, setCountries);
+        fetchData(getAllAirlines, setAirlines);
     }, []);
 
     return (
         <>
-            <PageTitle title="All Countries" />
+            <PageTitle title="All Airlines" />
 
-            {countries.length === 0 ? (
-                <p>No countries found</p>
+            {airlines.length === 0 ? (
+                <p>No airlines found</p>
             ) : (
                 <ul className="display-list">
-                    {countries.map((item, idx) => {
+                    {airlines.map((item, idx) => {
                         return (
                             <li
-                                key={`country-item-${idx}`}
+                                key={`airline-item-${idx}`}
                                 className="display-item animate-up"
                             >
                                 <Link
-                                    to={`/countries/${item.id}`}
+                                    to={`/airlines/${item.id}`}
                                     className="display-link"
                                 >
                                     <div className="display-image">
                                         <img
-                                            src={item.flag}
-                                            alt="Country Flag"
+                                            src={item.user_thumbnail}
+                                            alt="Airline Profile"
                                         />
                                     </div>
                                     <p className="title">{item.name}</p>
@@ -47,4 +47,4 @@ const CountriesView = () => {
     );
 };
 
-export default CountriesView;
+export default AirlinesView;

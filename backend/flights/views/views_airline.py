@@ -6,18 +6,18 @@ from facades.facade_base import facade_base
 
 
 # --------------------------------------------- #
-# ------------ View All Countries ------------- #
+# ------------- View All Airlines ------------- #
 # --------------------------------------------- #
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_all_countries(request):
-    return facade_base.get_all_countries()
+def get_all_airlines(request):
+    return facade_base.get_all_airlines()
 
 
 # --------------------------------------------- #
-# -------------- Country Details -------------- #
+# -------------- Airline Details -------------- #
 # --------------------------------------------- #
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_country(request, pk):
-    return facade_base.get_country_by_id(request, pk)
+def get_airline(request, pk):
+    return facade_base.get_airline_by_id(request, pk)

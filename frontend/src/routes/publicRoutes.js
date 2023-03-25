@@ -4,7 +4,9 @@ import { Helmet } from "react-helmet";
 import HomeView from "views/public/home/HomeView";
 import LoginView from "views/public/login/LoginView";
 import CountriesView from "views/public/countries/CountriesView";
-import CountryView from "views/public/country/CountryView";
+import CountryView from "views/public/countries/CountryView";
+import AirlinesView from "views/public/airlines/AirlinesView";
+import AirlineView from "views/public/airlines/AirlineView";
 
 export const Home = () => {
     return (
@@ -46,6 +48,28 @@ export const Country = () => {
                 <title>Country</title>
             </Helmet>
             <CountryView />
+        </>
+    );
+};
+
+export const Airlines = () => {
+    return (
+        <>
+            <Helmet>
+                <title>All Airlines</title>
+            </Helmet>
+            <AirlinesView />
+        </>
+    );
+};
+
+export const Airline = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Airline</title>
+            </Helmet>
+            <AirlineView />
         </>
     );
 };
