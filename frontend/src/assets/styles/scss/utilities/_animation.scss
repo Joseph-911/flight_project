@@ -1,0 +1,26 @@
+.animate-up {
+    transition: all 0.3s;
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 10px 2px var(--gray-1);
+    }
+}
+
+
+@keyframes counter {
+    from {
+        width: 100%;
+    } to {
+        width: 0;
+    }
+}
+
+@keyframes deactivateMessage {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    } to {
+        opacity: 0;
+        transform: translateY(-7px);
+    }
+}
