@@ -69,14 +69,6 @@
             object-fit: contain;
             border-radius: 50%;
         }
-
-        button {
-            display: none;
-
-            &.active {
-                display: block;
-            }
-        }
     }
     input {
         &:not([type="file"]) {

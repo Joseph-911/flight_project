@@ -8,7 +8,9 @@ import {
     Country,
     Airlines,
     Airline,
+    Register,
 } from "routes/publicRoutes";
+
 import { RestrictedRoute } from "utils/CustomRoutes";
 
 const PublicViewsLayout = () => {
@@ -21,6 +23,7 @@ const PublicViewsLayout = () => {
             <Route path="/airlines/:id" element={<Airline />} />
             <Route element={<RestrictedRoute />}>
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Route>
         </Routes>
     );

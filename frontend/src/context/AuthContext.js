@@ -18,26 +18,6 @@ export const AuthProvider = (props) => {
         () => JSON.parse(localStorage.getItem("user")) || null
     );
 
-    const [error, setError] = useState(null);
-
-    const userLogin = async (email, password) => {
-        try {
-            const { data } = await api.post("login/", {
-                username: email,
-                password: password,
-            });
-
-            if (data.error) {
-                setError(data.error);
-            } else {
-                localStorage.setItem("user", JSON.stringify(data));
-                setUser(data);
-            }
-        } catch (error) {
-            return;
-        }
-    };
-
     const userLogout = useCallback(() => {
         api.post("logout/");
         localStorage.removeItem("user");
@@ -61,9 +41,8 @@ export const AuthProvider = (props) => {
     const authContextData = {
         api,
         user,
-        userLogin,
+        setUser,
         userLogout,
-        error,
     };
 
     return (

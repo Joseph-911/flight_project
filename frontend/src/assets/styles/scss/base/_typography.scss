@@ -22,6 +22,16 @@ button, input {
     font-family: inherit;
 }
 
+a {
+    color: var(--blue-1);
+
+    &:not(.btn) {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 .bold {
     font-weight: 500;
 }

@@ -11,8 +11,8 @@ from facades.facade_base import facade_base
 # ------------------- Login ------------------- # 
 # --------------------------------------------- # 
 @api_view(['POST'])
-@permission_classes([AllowAny])
-@authentication_classes([SessionAuthentication])
+# @permission_classes([AllowAny])
+# @authentication_classes([SessionAuthentication])
 def user_login(request):
     return facade_base.user_login(request)
 
@@ -24,3 +24,11 @@ def user_login(request):
 @api_view(['POST'])
 def user_logout(request):
     return facade_base.user_logout(request)
+
+
+# --------------------------------------------- # 
+# ------------------ Register ----------------- # 
+# --------------------------------------------- # 
+@api_view(['POST'])
+def user_register(request):
+    return facade_base.create_new_user(request)

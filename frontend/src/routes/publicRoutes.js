@@ -7,6 +7,7 @@ import CountriesView from "views/public/countries/CountriesView";
 import CountryView from "views/public/countries/CountryView";
 import AirlinesView from "views/public/airlines/AirlinesView";
 import AirlineView from "views/public/airlines/AirlineView";
+import RegisterView from "views/public/register/RegisterView";
 
 export const Home = () => {
     return (
@@ -26,6 +27,17 @@ export const Login = () => {
                 <title>Login</title>
             </Helmet>
             <LoginView />
+        </>
+    );
+};
+
+export const Register = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
+            <RegisterView />
         </>
     );
 };

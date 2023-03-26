@@ -23,7 +23,7 @@
             background-color: var(--blue-3);
         }
     }
-    
+
     &.btn-primary-outline {
         background-color: var(--white);
         border: 2px solid var(--blue-1);
@@ -34,12 +34,23 @@
             background-color: var(--blue-3);
         }
     }
-    
+
     &.btn-danger {
         background-color: var(--red-2);
         color: var(--white);
         &:hover,
         &:active {
+            background-color: var(--red-1);
+        }
+    }
+
+    &.btn-danger-outline {
+        border: 2px solid var(--red-1);
+        background-color: var(--white);
+        color: var(--red-1);
+        &:hover,
+        &:active {
+            color: var(--white);
             background-color: var(--red-1);
         }
     }

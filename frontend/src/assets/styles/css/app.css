@@ -155,6 +155,13 @@ button, input {
   font-family: inherit;
 }
 
+a {
+  color: var(--blue-1);
+}
+a:not(.btn):hover {
+  text-decoration: underline;
+}
+
 .bold {
   font-weight: 500;
 }
@@ -331,12 +338,6 @@ button {
      object-fit: contain;
   border-radius: 50%;
 }
-.form-block label button {
-  display: none;
-}
-.form-block label button.active {
-  display: block;
-}
 .form-block input:not([type=file]) {
   width: 100%;
   height: 35px;
@@ -427,6 +428,15 @@ button {
   color: var(--white);
 }
 .btn.btn-danger:hover, .btn.btn-danger:active {
+  background-color: var(--red-1);
+}
+.btn.btn-danger-outline {
+  border: 2px solid var(--red-1);
+  background-color: var(--white);
+  color: var(--red-1);
+}
+.btn.btn-danger-outline:hover, .btn.btn-danger-outline:active {
+  color: var(--white);
   background-color: var(--red-1);
 }
 
@@ -538,4 +548,98 @@ button {
   align-items: center;
   flex-direction: column;
   gap: 10px;
+}
+
+.messages-wrapper {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 5;
+  opacity: 0.9;
+}
+.messages-wrapper .banner-alert {
+  position: relative;
+  padding: 15px 35px 15px 20px;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: all 0.2s;
+  animation-name: deactivateMessage;
+  animation-duration: 0.2s;
+  animation-delay: 4.7s;
+  animation-fill-mode: forwards;
+}
+.messages-wrapper .banner-alert:not(:last-child) {
+  margin-bottom: 30px;
+}
+.messages-wrapper .banner-alert .counter {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  animation: counter 5s forwards;
+}
+.messages-wrapper .banner-alert .close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 7px;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+.messages-wrapper .banner-alert.message-info {
+  background-color: #c8d2ed;
+}
+.messages-wrapper .banner-alert.message-info .counter {
+  background-color: #40489b;
+}
+.messages-wrapper .banner-alert.message-success {
+  background-color: #c8edd6;
+}
+.messages-wrapper .banner-alert.message-success .counter {
+  background-color: #469b40;
+}
+.messages-wrapper .banner-alert.message-error {
+  background-color: #edc8c8;
+}
+.messages-wrapper .banner-alert.message-error .counter {
+  background-color: #9b4040;
+}
+
+.animate-up {
+  transition: all 0.3s;
+}
+.animate-up:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px 2px var(--gray-1);
+}
+
+@keyframes counter {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+@keyframes deactivateMessage {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
 }/*# sourceMappingURL=app.css.map */

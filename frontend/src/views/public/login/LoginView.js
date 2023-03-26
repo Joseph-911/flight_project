@@ -1,20 +1,39 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
+import Message from "components/Message";
 
 const LoginView = () => {
-    const { userLogin } = useContext(AuthContext);
+    const { api, setUser } = useContext(AuthContext);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
     const handleLogin = async (e) => {
+        setError(null);
         e.preventDefault();
-        await userLogin(username, password);
+        try {
+            const { data } = await api.post("login/", {
+                username: username,
+                password: password,
+            });
+
+            if (data) {
+                localStorage.setItem("user", JSON.stringify(data));
+                setUser(data);
+            }
+        } catch (error) {
+            setError(error.response.data.message);
+        }
     };
 
     return (
         <div className="form-wrapper">
+            {error && (
+                <Message level="error" message={error} setState={setError} />
+            )}
             <form method="POST" onSubmit={handleLogin} className="form">
                 <h2 className="form-title">Welcome Back</h2>
                 <div className="form-block">
@@ -43,7 +62,12 @@ const LoginView = () => {
                         required
                     />
                 </div>
-
+                <div className="form-footer">
+                    <p>
+                        Don't have an account?{" "}
+                        <Link to="/register">Register</Link>
+                    </p>
+                </div>
                 <input
                     className="btn btn-xl btn-primary"
                     type="submit"
