@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -14,34 +15,55 @@ export const AuthProvider = (props) => {
         baseURL: "http://127.0.0.1:8000/api/",
     });
 
-    const [user, setUser] = useState(
-        () => JSON.parse(localStorage.getItem("user")) || null
-    );
+    const [user, setUser] = useState(null);
+
+    const userLogin = async (username, password, setError) => {
+        try {
+            const { data } = await api.post("login/", {
+                username: username,
+                password: password,
+            });
+
+            if (data) {
+                Cookies.set("user", data);
+                setUser(data);
+            }
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    };
 
     const userLogout = useCallback(() => {
         api.post("logout/");
-        localStorage.removeItem("user");
+        Cookies.remove("user");
         setUser(null);
     }, [api]);
 
     useEffect(() => {
-        const handleStorageChange = () => {
-            if (!localStorage.getItem("user")) {
+        const timer = setInterval(() => {
+            const cookie = Cookies.get("user");
+            if (!cookie && user) {
                 userLogout();
+            } else if (cookie && !user) {
+                setUser(cookie);
             }
-        };
-
-        window.addEventListener("storage", handleStorageChange);
+        }, 1000);
 
         return () => {
-            window.removeEventListener("storage", handleStorageChange);
+            clearInterval(timer);
         };
-    }, [userLogout]);
+    }, [userLogout, user]);
+
+    useEffect(() => {
+        const token = Cookies.get("user");
+        token && setUser(token);
+    }, [user, setUser]);
 
     const authContextData = {
         api,
         user,
         setUser,
+        userLogin,
         userLogout,
     };
 

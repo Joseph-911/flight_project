@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import MethodNotAllowed
 
 from dal.dal import GenericDAL
 from users.serializers import *
@@ -27,7 +28,9 @@ class FacadeBase:
             if user is not None:
                 login(request, user)
                 serializer = UserWithTokenSerializer(user)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                response = Response(serializer.data['token'], status=status.HTTP_200_OK)
+                response.set_cookie(key='user', value=serializer.data['token'])
+                return response
             else:
                 return Response({'message': 'Username or password is incorrect'}, status=status.HTTP_401_UNAUTHORIZED)
     
@@ -38,7 +41,9 @@ class FacadeBase:
     def user_logout(self, request):
         if request.method == 'POST':
             logout(request)
-            return Response({'message': 'User logged out'})
+            response = Response({'message': 'User logged out'}) 
+            response.set_cookie(key='user', value='', max_age=0, expires=0)
+            return response
         
 
     # --------------------------------------------- # 
@@ -46,19 +51,18 @@ class FacadeBase:
     # --------------------------------------------- # 
     def create_new_user(self, request):
         if request.method == 'POST':
+            # Create a form instance with the request data
             form = CustomUserCreationForm(request.data)
             if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.save()
+                # If the form is valid, create the new user and return success status
                 return Response({'message': 'User created successfully.'}, status=status.HTTP_201_CREATED)
             else:
+                # If the form is invalid, return error message with form errors
                 return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)    
 
-        # serializer = CustomUserCreationSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     # serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # else:
-        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
     # --------------------------------------------- # 
     # ---------------- All Airlines --------------- # 

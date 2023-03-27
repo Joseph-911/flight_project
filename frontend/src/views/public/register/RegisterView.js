@@ -6,7 +6,7 @@ import user_default from "../../../assets/images/users/user_default.png";
 import { FormBlock } from "components/Forms";
 
 const RegisterView = () => {
-    const { api } = useContext(AuthContext);
+    const { api, userLogin } = useContext(AuthContext);
 
     const imgInputRef = useRef();
 
@@ -15,7 +15,7 @@ const RegisterView = () => {
     const [removeBtnActive, setRemoveBtnActive] = useState(false);
 
     // Form states
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
     // Form fields
@@ -67,7 +67,10 @@ const RegisterView = () => {
                 }
             );
 
-            setData(data);
+            if (data) {
+                await userLogin(username, password1);
+            }
+
             setError(null);
         } catch (error) {
             setError(error.response.data.errors);

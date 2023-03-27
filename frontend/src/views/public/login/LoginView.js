@@ -5,7 +5,7 @@ import AuthContext from "context/AuthContext";
 import Message from "components/Message";
 
 const LoginView = () => {
-    const { api, setUser } = useContext(AuthContext);
+    const { userLogin } = useContext(AuthContext);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -14,19 +14,7 @@ const LoginView = () => {
     const handleLogin = async (e) => {
         setError(null);
         e.preventDefault();
-        try {
-            const { data } = await api.post("login/", {
-                username: username,
-                password: password,
-            });
-
-            if (data) {
-                localStorage.setItem("user", JSON.stringify(data));
-                setUser(data);
-            }
-        } catch (error) {
-            setError(error.response.data.message);
-        }
+        await userLogin(username, password, setError);
     };
 
     return (

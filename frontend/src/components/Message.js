@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
 
 const Message = (props) => {
     const setState = props.setState;
@@ -13,12 +14,17 @@ const Message = (props) => {
     }, [setState, message]);
 
     return (
-        <div className="messages-wrapper">
-            <div className={`banner-alert message-${props.level}`}>
-                <p className="message">{props.message}</p>
-                <span className="counter"></span>
-            </div>
-        </div>
+        <>
+            {ReactDOM.createPortal(
+                <div className="messages-wrapper">
+                    <div className={`banner-alert message-${props.level}`}>
+                        <p className="message">{props.message}</p>
+                        <span className="counter"></span>
+                    </div>
+                </div>,
+                document.getElementById("messages")
+            )}
+        </>
     );
 };
 
