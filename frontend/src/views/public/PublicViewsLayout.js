@@ -9,6 +9,7 @@ import {
     Airlines,
     Airline,
     Register,
+    PageNotFound,
 } from "routes/publicRoutes";
 
 import { RestrictedRoute } from "utils/CustomRoutes";
@@ -16,7 +17,7 @@ import { RestrictedRoute } from "utils/CustomRoutes";
 const PublicViewsLayout = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="" element={<Home />} />
             <Route path="/countries" element={<Countries />} />
             <Route path="/countries/:id" element={<Country />} />
             <Route path="/airlines" element={<Airlines />} />
@@ -25,6 +26,7 @@ const PublicViewsLayout = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Route>
+            <Route path="*" element={<PageNotFound />} />
         </Routes>
     );
 };

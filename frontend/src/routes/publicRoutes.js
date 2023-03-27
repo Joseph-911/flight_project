@@ -8,6 +8,18 @@ import CountryView from "views/public/countries/CountryView";
 import AirlinesView from "views/public/airlines/AirlinesView";
 import AirlineView from "views/public/airlines/AirlineView";
 import RegisterView from "views/public/register/RegisterView";
+import PageNotFoundView from "views/public/404/PageNotFoundView";
+
+export const PageNotFound = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Opps!</title>
+            </Helmet>
+            <PageNotFoundView />
+        </>
+    );
+};
 
 export const Home = () => {
     return (

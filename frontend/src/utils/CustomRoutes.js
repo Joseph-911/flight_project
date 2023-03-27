@@ -10,5 +10,5 @@ export const RestrictedRoute = () => {
 
 export const PrivateRoute = () => {
     const { user } = useContext(AuthContext);
-    return user ? <Outlet /> : <Navigate to="/" />;
+    return user ? <Outlet /> : <Navigate to="/login" />;
 };

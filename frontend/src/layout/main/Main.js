@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import PrivateViewsLayout from "views/private/PrivateViewsLayout";
 import PublicViewsLayout from "views/public/PublicViewsLayout";
 
 const Main = () => {
@@ -12,6 +13,10 @@ const Main = () => {
                         <Route
                             path="/*"
                             element={<PublicViewsLayout />}
+                        ></Route>
+                        <Route
+                            path="/profile/*"
+                            element={<PrivateViewsLayout />}
                         ></Route>
                     </Routes>
                 </div>
