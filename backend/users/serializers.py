@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -31,3 +32,28 @@ class UserWithTokenSerializer(serializers.ModelSerializer):
         return str(token.key)
 
 
+class UserDetailsSerializer(serializers.ModelSerializer):
+    role = serializers.SerializerMethodField(read_only=True)
+    last_login = serializers.SerializerMethodField(read_only=True)
+    created = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'thumbnail', 'role', 'last_login', 'created']
+
+
+    def get_role(self, obj):
+        role = obj.user_role.role_name
+        return role
+        
+    
+    def get_last_login(self, obj):
+        last_login = datetime.datetime.strptime(str(obj.last_login), '%Y-%m-%d %H:%M:%S.%f%z')
+        last_login_formatted = last_login.strftime('%Y-%m-%d %H:%M')
+        return last_login_formatted
+    
+    
+    def get_created(self, obj):
+        created = datetime.datetime.strptime(str(obj.created), '%Y-%m-%d %H:%M:%S.%f%z')
+        created_formatted = created.strftime('%Y-%m-%d')
+        return created_formatted

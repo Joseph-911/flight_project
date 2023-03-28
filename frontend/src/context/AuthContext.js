@@ -16,6 +16,18 @@ export const AuthProvider = (props) => {
     });
 
     const [user, setUser] = useState(null);
+    const [userDetails, setUserDetails] = useState([]);
+
+    const userInfo = async (token) => {
+        if (token) {
+            const { data } = await api.get("user-details/", {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            });
+            setUserDetails(data);
+        }
+    };
 
     const userLogin = async (username, password, setError) => {
         try {
@@ -27,6 +39,7 @@ export const AuthProvider = (props) => {
             if (data) {
                 Cookies.set("user", data);
                 setUser(data);
+                await userInfo(data);
             }
         } catch (error) {
             setError(error.response.data.message);
@@ -62,7 +75,7 @@ export const AuthProvider = (props) => {
     const authContextData = {
         api,
         user,
-        setUser,
+        userDetails,
         userLogin,
         userLogout,
     };

@@ -1,4 +1,4 @@
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
@@ -13,6 +13,7 @@ from utils.decorators import *
 # ------------------- Login ------------------- # 
 # --------------------------------------------- #
 @api_view(['POST', 'GET'])
+@permission_classes([AllowAny])
 @unauthenticated_user_only 
 def user_login(request):
     return facade_base.user_login(request)
@@ -31,15 +32,19 @@ def user_logout(request):
 # ------------------ Register ----------------- # 
 # --------------------------------------------- # 
 @api_view(['POST', 'GET'])
+@permission_classes([AllowAny])
 @unauthenticated_user_only
 def user_register(request):
     return facade_base.create_new_user(request)
 
 
+# --------------------------------------------- # 
+# ---------------- User Details --------------- # 
+# --------------------------------------------- # 
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 @api_view(['GET'])
-def check_auth(request):
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            return Response({'auth': True})
-        else:
-            return Response({'auth': False})
+def user_details(request):
+    print(request.user)
+    serializer = UserDetailsSerializer(request.user)
+    return Response(serializer.data)

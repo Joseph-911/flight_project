@@ -617,6 +617,42 @@ button {
   background-color: #9b4040;
 }
 
+/* --------------------------------------------- */
+/* ------------------- Avatar ------------------ */
+/* --------------------------------------------- */
+.avatar-wrapper {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  max-width: 350px;
+  padding: 25px;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0 auto;
+}
+.avatar-wrapper .avatar-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  overflow: hidden;
+}
+.avatar-wrapper .avatar-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.avatar-wrapper .avatar-info {
+  text-align: center;
+}
+.avatar-wrapper .avatar-info p {
+  white-space: nowrap;
+}
+.avatar-wrapper .avatar-info p:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
 .animate-up {
   transition: all 0.3s;
 }
@@ -642,4 +678,23 @@ button {
     opacity: 0;
     transform: translateY(-7px);
   }
+}
+/* --------------------------------------------- */
+/* ------------- Profile Wrapper  -------------- */
+/* --------------------------------------------- */
+.profile-wrapper {
+  display: flex;
+}
+
+/* --------------------------------------------- */
+/* ----------------- Dashboard ----------------- */
+/* --------------------------------------------- */
+.dashboard-wrapper {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  width: 100%;
+  margin-left: 40px;
+  height: -moz-fit-content;
+  height: fit-content;
 }/*# sourceMappingURL=app.css.map */
