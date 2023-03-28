@@ -19,22 +19,5 @@ const Avatar = () => {
         </div>
     );
 };
-// const Avatar = (props) => {
-//     const userInfo = props.userInfo;
-//     return (
-//         <>
-//             {userInfo && (
-//                 <>
-//                     <div className="avatar-wrapper">
-//                         <div className="avatar-image">
-//                             <img src={userInfo.thumbnail} alt="User Profile" />
-//                         </div>
-//                     </div>
-//                     <div className=""></div>
-//                 </>
-//             )}
-//         </>
-//     );
-// };
 
 export default Avatar;

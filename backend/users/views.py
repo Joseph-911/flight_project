@@ -45,6 +45,5 @@ def user_register(request):
 @authentication_classes([TokenAuthentication])
 @api_view(['GET'])
 def user_details(request):
-    print(request.user)
     serializer = UserDetailsSerializer(request.user)
     return Response(serializer.data)
