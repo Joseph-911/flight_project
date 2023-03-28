@@ -47,3 +47,14 @@ def user_register(request):
 def user_details(request):
     serializer = UserDetailsSerializer(request.user)
     return Response(serializer.data)
+
+
+# --------------------------------------------- # 
+# ------------------ Profile ------------------ # 
+# --------------------------------------------- # 
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@api_view(['GET'])
+def user_role(request):
+    serializer = UserRoleSerializer(request.user)
+    return Response(serializer.data)

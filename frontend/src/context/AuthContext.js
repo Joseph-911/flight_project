@@ -18,6 +18,9 @@ export const AuthProvider = (props) => {
     const [user, setUser] = useState(null);
     const [userDetails, setUserDetails] = useState([]);
 
+    /* --------------------------------------------- */
+    /* ----------------- User Login ---------------- */
+    /* --------------------------------------------- */
     const userLogin = async (username, password, setError) => {
         try {
             const { data } = await api.post("login/", {
@@ -34,6 +37,21 @@ export const AuthProvider = (props) => {
         }
     };
 
+    /* --------------------------------------------- */
+    /* ----------------- User Role ----------------- */
+    /* --------------------------------------------- */
+    const userRole = async () => {
+        try {
+            const { data } = await api.get("user-role/");
+            return data;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    /* --------------------------------------------- */
+    /* ---------------- User Logout ---------------- */
+    /* --------------------------------------------- */
     const userLogout = useCallback(() => {
         api.post("logout/");
         Cookies.remove("user");
@@ -73,6 +91,7 @@ export const AuthProvider = (props) => {
         userDetails,
         userLogin,
         userLogout,
+        userRole,
     };
 
     return (

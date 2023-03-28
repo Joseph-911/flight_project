@@ -33,18 +33,12 @@ class UserWithTokenSerializer(serializers.ModelSerializer):
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
-    role = serializers.SerializerMethodField(read_only=True)
     last_login = serializers.SerializerMethodField(read_only=True)
     created = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['username', 'thumbnail', 'role', 'last_login', 'created']
-
-
-    def get_role(self, obj):
-        role = obj.user_role.role_name
-        return role
+        fields = ['username', 'thumbnail', 'last_login', 'created']
         
     
     def get_last_login(self, obj):
@@ -57,3 +51,16 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         created = datetime.datetime.strptime(str(obj.created), '%Y-%m-%d %H:%M:%S.%f%z')
         created_formatted = created.strftime('%Y-%m-%d')
         return created_formatted
+    
+
+class UserRoleSerializer(serializers.ModelSerializer):
+    role = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = User
+        fields = ['role']
+
+    def get_role(self, obj):
+        if obj.user_role:
+            return obj.user_role.role_name
+        return None

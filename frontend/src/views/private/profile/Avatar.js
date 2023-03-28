@@ -5,7 +5,6 @@ import AuthContext from "context/AuthContext";
 const Avatar = () => {
     const { userDetails } = useContext(AuthContext);
 
-    console.log(userDetails);
     return (
         <div className="avatar-wrapper">
             <div className="avatar-image">
