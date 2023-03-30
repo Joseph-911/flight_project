@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import AuthContext from "context/AuthContext";
 import user_default from "../../../assets/images/users/user_default.png";
-import { FormBlock } from "components/Forms";
+import { FieldError, FormBlock } from "components/Forms";
 
 const RegisterView = () => {
     const { api, userLogin } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const RegisterView = () => {
     const imgInputRef = useRef();
 
     // Thumbnail preview
-    const [thumbnailSrc, setThumbnailSrc] = useState(user_default);
+    const [imgPreview, setImagePreview] = useState(user_default);
     const [removeBtnActive, setRemoveBtnActive] = useState(false);
 
     // Form states
@@ -27,45 +28,41 @@ const RegisterView = () => {
 
     // Handle thumbnail change preview
     const handleThumbnailChange = (e) => {
-        let [file] = e.target.files;
+        const [file] = e.target.files;
+        setThumbnail(file);
         if (file) {
-            setThumbnailSrc(URL.createObjectURL(file));
+            setImagePreview(URL.createObjectURL(file));
             setRemoveBtnActive(true);
         } else {
-            setThumbnailSrc(user_default);
+            setImagePreview(user_default);
             setRemoveBtnActive(false);
         }
     };
 
     // Handle thumbnail remove
     const handleRemoveThumbnail = () => {
-        setThumbnailSrc(user_default);
+        setImagePreview(user_default);
         setRemoveBtnActive(false);
-        setTimeout(() => {
-            imgInputRef.current.value = "";
-            setThumbnail("");
-        }, 100);
+        setThumbnail("");
+        imgInputRef.current.value = null; // Reset the input value
     };
 
     // Handle form submit
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("thumbnail", thumbnail);
+        formData.append("username", username);
+        formData.append("email", email);
+        formData.append("password1", password1);
+        formData.append("password2", password2);
+
         try {
-            const { data } = await api.post(
-                "register/",
-                {
-                    thumbnail: thumbnail,
-                    username: username,
-                    email: email,
-                    password1: password1,
-                    password2: password2,
+            const { data } = await api.post("register/", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
                 },
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
+            });
 
             if (data) {
                 await userLogin(username, password1);
@@ -73,7 +70,7 @@ const RegisterView = () => {
 
             setError(null);
         } catch (error) {
-            setError(error.response.data.errors);
+            setError(error.response.data);
         }
     };
 
@@ -91,19 +88,20 @@ const RegisterView = () => {
                     <label htmlFor="thumbnail">
                         <span>Profile Image</span>
                         <img
-                            src={thumbnailSrc}
+                            src={imgPreview}
                             alt="Default profile thumbnail"
                             className="form-thumbnail"
                         />
                     </label>
                     {removeBtnActive && (
-                        <button
+                        <span
                             id="remove-thumbnail"
                             onClick={handleRemoveThumbnail}
                             className="btn btn-md btn-danger-outline"
+                            role="button"
                         >
                             Remove image
-                        </button>
+                        </span>
                     )}
                     <input
                         type="file"
@@ -111,13 +109,12 @@ const RegisterView = () => {
                         accept="image/*"
                         className="form-control"
                         id="thumbnail"
-                        value={thumbnail}
                         onChange={(e) => {
                             handleThumbnailChange(e);
-                            setThumbnail(e.target.value);
                         }}
                         ref={imgInputRef}
                     />
+                    <FieldError error={error} field="thumbnail" />
                 </div>
                 <FormBlock
                     label="Username"

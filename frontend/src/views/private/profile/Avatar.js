@@ -12,7 +12,6 @@ const Avatar = () => {
             </div>
             <div className="avatar-info">
                 <p className="bold">{userDetails.username}</p>
-                <p>Last login: {userDetails.last_login}</p>
                 <p>Member since: {userDetails.created}</p>
             </div>
         </div>

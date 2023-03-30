@@ -1,15 +1,20 @@
+import base64
+
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import MethodNotAllowed
 
+from PIL import Image
+from io import BytesIO
+
 from dal.dal import GenericDAL
 from users.serializers import *
+from utils.validators import *
 from flights.models import *
 from flights.serializers import *
 
-from users.forms import *
 
 class FacadeBase:
     
@@ -44,6 +49,7 @@ class FacadeBase:
             response = Response({'message': 'User logged out'}) 
             response.set_cookie(key='user', value='', max_age=0, expires=0)
             return response
+  
         
 
     # --------------------------------------------- # 
@@ -51,17 +57,12 @@ class FacadeBase:
     # --------------------------------------------- # 
     def create_new_user(self, request):
         if request.method == 'POST':
-            # Create a form instance with the request data
-            form = CustomUserCreationForm(request.data)
-            if form.is_valid():
-                user = form.save(commit=False)
-                user.username = user.username.lower()
-                user.save()
-                # If the form is valid, create the new user and return success status
-                return Response({'message': 'User created successfully.'}, status=status.HTTP_201_CREATED)
-            else:
-                # If the form is invalid, return error message with form errors
-                return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)    
+            serializer = UserRegisterSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+
+            return Response({'error': 'An error during registeration'}, status=status.HTTP_400_BAD_REQUEST)  
 
 
     # --------------------------------------------- # 

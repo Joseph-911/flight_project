@@ -15,7 +15,7 @@ export const AuthProvider = (props) => {
         baseURL: "http://127.0.0.1:8000/api/",
     });
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => Cookies.get("user") || null);
     const [userDetails, setUserDetails] = useState([]);
 
     /* --------------------------------------------- */
@@ -76,7 +76,9 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const token = Cookies.get("user");
         const userInfo = async () => {
-            const { data } = await axios.get("api/user-details/");
+            const { data } = await axios.get(
+                "http://127.0.0.1:8000/api/user-details/"
+            );
             setUserDetails(data);
         };
         if (token) {

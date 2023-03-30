@@ -11,10 +11,23 @@ const LoginView = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
 
+    const [inputType, setInputType] = useState("password");
+    const [icon, setIcon] = useState("eye");
+
     const handleLogin = async (e) => {
         setError(null);
         e.preventDefault();
         await userLogin(username, password, setError);
+    };
+
+    const handlePasswordToggle = () => {
+        if (inputType === "password") {
+            setInputType("text");
+            setIcon("eye-off");
+        } else {
+            setInputType("password");
+            setIcon("eye");
+        }
     };
 
     return (
@@ -39,16 +52,25 @@ const LoginView = () => {
                 </div>
                 <div className="form-block">
                     <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                        required
-                    />
+                    <div className="password-input-wrapper">
+                        <input
+                            type={inputType}
+                            name="password"
+                            id="password"
+                            placeholder="Enter password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
+                            required
+                        />
+                        <span
+                            role="button"
+                            className="password-toggle"
+                            onClick={handlePasswordToggle}
+                        >
+                            <ion-icon name={icon}></ion-icon>
+                        </span>
+                    </div>
                 </div>
                 <div className="form-footer">
                     <p>

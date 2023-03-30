@@ -16,6 +16,7 @@ const Main = () => {
                         ></Route>
                         <Route
                             path="/profile/*"
+                            exact
                             element={<PrivateViewsLayout />}
                         ></Route>
                     </Routes>

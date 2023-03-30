@@ -1,9 +1,12 @@
 import datetime
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.password_validation import validate_password
+from django.core.files import File
 
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+
+from utils.validators import *
 
 # from users.models import User
 
@@ -30,27 +33,31 @@ class UserWithTokenSerializer(serializers.ModelSerializer):
             pass
         token = Token.objects.create(user=obj)
         return str(token.key)
+    
+
+
+class UserExistedToken(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = User
+        fields = ['token']
+
+    def get_token(self, obj):
+        token = obj.auth_token
+        return str(token.key)
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
-    last_login = serializers.SerializerMethodField(read_only=True)
     created = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['username', 'thumbnail', 'last_login', 'created']
-        
-    
-    def get_last_login(self, obj):
-        last_login = datetime.datetime.strptime(str(obj.last_login), '%Y-%m-%d %H:%M:%S.%f%z')
-        last_login_formatted = last_login.strftime('%Y-%m-%d %H:%M')
-        return last_login_formatted
+        fields = ['username', 'thumbnail', 'created']
     
     
     def get_created(self, obj):
-        created = datetime.datetime.strptime(str(obj.created), '%Y-%m-%d %H:%M:%S.%f%z')
-        created_formatted = created.strftime('%Y-%m-%d')
-        return created_formatted
+        return obj.created.date()
     
 
 class UserRoleSerializer(serializers.ModelSerializer):
@@ -64,3 +71,38 @@ class UserRoleSerializer(serializers.ModelSerializer):
         if obj.user_role:
             return obj.user_role.role_name
         return None
+
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.ImageField(required=False)
+    username = serializers.CharField(required=True, max_length=15, validators=[validate_user_username])
+    password1 = serializers.CharField(required=True, validators=[validate_user_password1])
+    password2 = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'thumbnail', 'password1', 'password2']
+
+    def validate(self, data):
+        data = super().validate(data)
+        data = validate_user_passwords(data)
+
+        if 'thumbnail' in data:
+            thumbnail = data['thumbnail']
+            try:
+                validate_user_thumbnail(thumbnail)
+            except:
+                raise serializers.ValidationError("Invalid image file.")
+        return data
+    
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password1']
+        )
+        if 'thumbnail' in validated_data:
+            thumbnail = validated_data['thumbnail']
+            user.thumbnail.save(thumbnail.name, thumbnail)
+        return user
