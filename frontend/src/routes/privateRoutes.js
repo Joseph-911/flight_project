@@ -10,7 +10,9 @@ export const Profile = () => {
             <Helmet>
                 <title>Profile</title>
             </Helmet>
-            <ProfileView />
+            <div className="animate-fade-up">
+                <ProfileView />
+            </div>
         </>
     );
 };
@@ -21,7 +23,9 @@ export const ProfileAdministratorUsers = () => {
             <Helmet>
                 <title>All Users</title>
             </Helmet>
-            <AllUsersView />
+            <div className="animate-fade-up">
+                <AllUsersView />
+            </div>
         </>
     );
 };

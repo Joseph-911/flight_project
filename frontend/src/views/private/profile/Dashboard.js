@@ -6,18 +6,26 @@ import DashboardAdmin from "./admin/DashboardAdmin";
 const Dashboard = () => {
     const { userRole } = useContext(AuthContext);
     const [component, setComponent] = useState(null);
+    const [dashboard, setDashboard] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             const roleData = await userRole();
-            if (roleData.role === "admin") {
-                setComponent(<DashboardAdmin />);
+            if (roleData.role) {
+                const role = roleData.role;
+                if (role === "admin") {
+                    setComponent(<DashboardAdmin />);
+                }
+            } else {
+                setDashboard(false);
             }
         };
         fetchData();
     }, [userRole]);
 
-    return <div className="dashboard-wrapper">{component}</div>;
+    return (
+        <>{dashboard && <div className="dashboard-wrapper">{component}</div>}</>
+    );
 };
 
 export default Dashboard;

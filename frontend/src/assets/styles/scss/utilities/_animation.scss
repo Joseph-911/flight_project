@@ -6,11 +6,27 @@
     }
 }
 
+.animate-fade-up {
+    opacity: 0;
+    animation: transform_fade 0.5s forwards;
+}
+
+@keyframes transform_fade {
+    from {
+        opacity: 0;
+        transform: translate(0, 10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
 
 @keyframes counter {
     from {
         width: 100%;
-    } to {
+    }
+    to {
         width: 0;
     }
 }
@@ -19,7 +35,8 @@
     from {
         opacity: 1;
         transform: translateY(0);
-    } to {
+    }
+    to {
         opacity: 0;
         transform: translateY(-7px);
     }

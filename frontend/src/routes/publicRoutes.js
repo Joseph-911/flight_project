@@ -27,7 +27,9 @@ export const Home = () => {
             <Helmet>
                 <title>Flight Project</title>
             </Helmet>
-            <HomeView />
+            <div className="animate-fade-up">
+                <HomeView />
+            </div>
         </>
     );
 };
@@ -38,7 +40,9 @@ export const Login = () => {
             <Helmet>
                 <title>Login</title>
             </Helmet>
-            <LoginView />
+            <div className="animate-fade-up">
+                <LoginView />
+            </div>
         </>
     );
 };
@@ -49,7 +53,9 @@ export const Register = () => {
             <Helmet>
                 <title>Register</title>
             </Helmet>
-            <RegisterView />
+            <div className="animate-fade-up">
+                <RegisterView />
+            </div>
         </>
     );
 };
@@ -60,7 +66,9 @@ export const Countries = () => {
             <Helmet>
                 <title>All Countries</title>
             </Helmet>
-            <CountriesView />
+            <div className="animate-fade-up">
+                <CountriesView />
+            </div>
         </>
     );
 };
@@ -71,7 +79,9 @@ export const Country = () => {
             <Helmet>
                 <title>Country</title>
             </Helmet>
-            <CountryView />
+            <div className="animate-fade-up">
+                <CountryView />
+            </div>
         </>
     );
 };
@@ -82,7 +92,9 @@ export const Airlines = () => {
             <Helmet>
                 <title>All Airlines</title>
             </Helmet>
-            <AirlinesView />
+            <div className="animate-fade-up">
+                <AirlinesView />
+            </div>
         </>
     );
 };
@@ -93,7 +105,9 @@ export const Airline = () => {
             <Helmet>
                 <title>Airline</title>
             </Helmet>
-            <AirlineView />
+            <div className="animate-fade-up">
+                <AirlineView />
+            </div>
         </>
     );
 };
