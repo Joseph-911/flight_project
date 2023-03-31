@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    thumbnail = models.ImageField(null=True, blank=True, default='users/user-default.png', upload_to='users/')
+    thumbnail = models.ImageField(null=True, blank=True, default='defaults/user-default.png', upload_to='users/')
     created = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'username'
