@@ -2,7 +2,11 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "utils/CustomRoutes";
 
-import { Profile, ProfileAdministratorUsers } from "routes/privateRoutes";
+import {
+    Profile,
+    ProfileAdministratorUsers,
+    ProfileAdministratorUsersAdd,
+} from "routes/privateRoutes";
 
 const PrivateViewsLayout = () => {
     return (
@@ -12,6 +16,10 @@ const PrivateViewsLayout = () => {
                 <Route
                     path="/administrator/users"
                     element={<ProfileAdministratorUsers />}
+                />
+                <Route
+                    path="/administrator/users/add"
+                    element={<ProfileAdministratorUsersAdd />}
                 />
             </Route>
         </Routes>
