@@ -15,7 +15,6 @@ const RegisterView = () => {
     const [removeBtnActive, setRemoveBtnActive] = useState(false);
 
     // Form states
-    // const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
     // Form fields

@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import AllUsersView from "views/private/profile/admin/AllUsersView";
+import AllUsersView from "views/private/profile/admin/usersActions/AllUsersView";
 
 import ProfileView from "views/private/profile/ProfileView";
 

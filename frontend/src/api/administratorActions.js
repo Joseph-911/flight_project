@@ -1,9 +1,29 @@
-import axios from "axios";
+const baseURL = "profile/administrator/";
 
-const baseURL = "http://127.0.0.1:8000/api/profile/administrator/";
+export const getAllUsers = async (
+    api,
+    setUsers,
+    setError,
+    setLoading,
+    search_query = null
+) => {
+    setLoading(false);
 
-export const getAllUsers = async (path) => {
-    return await axios
-        .get(`${baseURL}${path}`)
-        .then((response) => response.data);
+    let data;
+
+    if (search_query) {
+        const search_data = { search_query: search_query };
+        ({ data } = await api.post(`${baseURL}users/`, search_data));
+    } else {
+        ({ data } = await api.get(`${baseURL}users/`));
+    }
+    try {
+        if (data) {
+            setUsers(data);
+        }
+    } catch (error) {
+        if (error.response.status === 403) {
+            setError(true);
+        }
+    }
 };

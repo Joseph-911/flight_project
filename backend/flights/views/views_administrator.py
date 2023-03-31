@@ -7,7 +7,7 @@ from utils.decorators import *
 # --------------------------------------------- #
 # --------------- View All Users -------------- #
 # --------------------------------------------- #
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @user_has_permission('view_user')
 def view_all_users(request):
-    return administrator_facade.get_all_users()
+    return administrator_facade.get_all_users(request)

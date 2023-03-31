@@ -24,3 +24,9 @@ class GenericDAL:
     def read_all_objects(self, model_class):
         objects = model_class.objects.all()
         return objects
+    
+
+    def read_objects_filter_username(self, username):
+        users =  User.objects.filter(username__icontains=username)
+        return users
+
