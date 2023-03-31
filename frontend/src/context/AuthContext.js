@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -17,6 +18,8 @@ export const AuthProvider = (props) => {
 
     const [user, setUser] = useState(() => Cookies.get("user") || null);
     const [userDetails, setUserDetails] = useState([]);
+
+    const navigate = useNavigate();
 
     /* --------------------------------------------- */
     /* ----------------- User Login ---------------- */
@@ -56,7 +59,8 @@ export const AuthProvider = (props) => {
         api.post("logout/");
         Cookies.remove("user");
         setUser(null);
-    }, [api]);
+        navigate("/");
+    }, [api, navigate]);
 
     useEffect(() => {
         const timer = setInterval(() => {

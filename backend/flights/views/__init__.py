@@ -1,1 +1,1 @@
-from .views_country import *
+from flights.views import *

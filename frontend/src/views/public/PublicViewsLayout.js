@@ -9,7 +9,7 @@ import {
     Airlines,
     Airline,
     Register,
-    PageNotFound,
+    Page404,
 } from "routes/publicRoutes";
 
 import { RestrictedRoute } from "utils/CustomRoutes";
@@ -26,7 +26,7 @@ const PublicViewsLayout = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Route>
-            <Route path="*" element={<PageNotFound />} />
+            <Route path="*" element={<Page404 />} />
         </Routes>
     );
 };

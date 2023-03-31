@@ -3,6 +3,9 @@ export const fetchData = async (apiFunction, setState, setError) => {
         const data = await apiFunction();
         setState(data);
     } catch (error) {
-        setError(error);
+        if (setError) {
+            setError(error);
+        }
+        return;
     }
 };

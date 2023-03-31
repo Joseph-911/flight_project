@@ -6,9 +6,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.renderers import MultiPartRenderer, JSONRenderer
 
-from rest_framework.authtoken.models import Token
-
-
 from users.serializers import *
 from facades.facade_base import facade_base
 
@@ -67,16 +64,3 @@ def user_role(request):
     serializer = UserRoleSerializer(request.user)
     return Response(serializer.data)
 
-
-
-# --------------------------------------------- # 
-# --------------------------------------------- # 
-# --------------------------------------------- # 
-@api_view(['POST', 'GET'])
-def user_is_auth(request):
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            serializer = UserExistedToken(request.user)
-            return Response(serializer.data)
-        else:
-            return Response({'message': 'not authenticated'})

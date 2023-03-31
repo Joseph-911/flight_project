@@ -13,10 +13,19 @@ from utils.validators import *
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
+    user_role = serializers.SerializerMethodField(read_only=True) 
+
     class Meta:
         model = User
         fields = '__all__'
 
+    
+    def get_user_role(self, obj):
+        if obj.user_role:
+            return obj.user_role.role_name
+        else:
+            return None
+        
 
 class UserWithTokenSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)

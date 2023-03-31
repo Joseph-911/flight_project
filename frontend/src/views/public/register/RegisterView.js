@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import AuthContext from "context/AuthContext";
 import user_default from "../../../assets/images/users/user_default.png";
