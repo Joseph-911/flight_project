@@ -11,7 +11,7 @@ def unauthenticated_user_only(view_func):
     """
     @wraps(view_func)
     def wrapper_func(request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and (request.user.user_role.role_name != 'admin'):
             if request.method == 'GET':
                 return Response({'message': 'Authenticated user cannot visit this page'}, status=status.HTTP_401_UNAUTHORIZED)
             elif request.method == 'POST':
