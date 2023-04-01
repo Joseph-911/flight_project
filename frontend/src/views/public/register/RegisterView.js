@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
 import { RegisterForm } from "components/Forms";
@@ -14,6 +14,9 @@ const RegisterView = () => {
     // Form fields
     const [formInputs, setFormInputs] = useState({});
 
+    // Use navigate to redirect to login after successul register
+    const navigate = useNavigate();
+
     // Handle form submit
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +29,7 @@ const RegisterView = () => {
             });
 
             if (data) {
+                navigate("/login");
                 await userLogin(formInputs.username, formInputs.password1);
             }
 

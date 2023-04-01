@@ -1,11 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
-import Message from "components/Message";
+import MessagesContext from "context/MessagesContext";
+// import Message from "components/Message";
 
 const LoginView = () => {
     const { userLogin } = useContext(AuthContext);
+    const { addMessage } = useContext(MessagesContext);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -30,11 +32,14 @@ const LoginView = () => {
         }
     };
 
+    useEffect(() => {
+        if (error) {
+            addMessage(error, "error");
+        }
+    }, [error, addMessage]);
+
     return (
         <div className="form-wrapper">
-            {error && (
-                <Message level="error" message={error} setState={setError} />
-            )}
             <form method="POST" onSubmit={handleLogin} className="form">
                 <h2 className="form-title">Welcome Back</h2>
                 <div className="form-block">

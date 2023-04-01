@@ -1,7 +1,14 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, {
+    createContext,
+    useState,
+    useEffect,
+    useCallback,
+    useContext,
+} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import MessagesContext from "./MessagesContext";
 
 const AuthContext = createContext();
 
@@ -18,6 +25,7 @@ export const AuthProvider = (props) => {
 
     const [user, setUser] = useState(() => Cookies.get("user") || null);
     const [userDetails, setUserDetails] = useState([]);
+    const { addMessage } = useContext(MessagesContext);
 
     const navigate = useNavigate();
 
@@ -34,6 +42,7 @@ export const AuthProvider = (props) => {
             if (data) {
                 Cookies.set("user", data);
                 setUser(data);
+                addMessage("Logged in successfully", "success");
             }
         } catch (error) {
             setError(error.response.data.message);
@@ -60,7 +69,8 @@ export const AuthProvider = (props) => {
         Cookies.remove("user");
         setUser(null);
         navigate("/");
-    }, [api, navigate]);
+        addMessage("Your logged out", "info");
+    }, [api, navigate, addMessage]);
 
     useEffect(() => {
         const timer = setInterval(() => {

@@ -18,6 +18,12 @@
         animation-delay: 4.7s;
         animation-fill-mode: forwards;
 
+        &.deactive {
+            transition: all 0.2s;
+            opacity: 0;
+            transform: translateY(-7px);
+        }
+
         &:not(:last-child) {
             margin-bottom: 30px;
         }
