@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ActionsList = (props) => {
+    const navigate = useNavigate();
+
+    const handleChangeRoute = (link, target) => {
+        navigate(`${props.actionPath}${link}`, {
+            state: { target: target, sender: props.sender },
+        });
+    };
+
     return (
         <ul className="actions-list">
             {props.actionsList.map((action, idx) => {
@@ -12,8 +20,13 @@ const ActionsList = (props) => {
                             {action.actions.map((item, idx) => {
                                 return (
                                     <li key={`action-item-${idx}`}>
-                                        <Link
-                                            to={`${props.actionPath}${item.link}`}
+                                        <button
+                                            onClick={() => {
+                                                handleChangeRoute(
+                                                    item.link,
+                                                    action.target
+                                                );
+                                            }}
                                         >
                                             <span className="icon">
                                                 <ion-icon
@@ -23,7 +36,7 @@ const ActionsList = (props) => {
                                             <span className="text">
                                                 {item.title}
                                             </span>
-                                        </Link>
+                                        </button>
                                     </li>
                                 );
                             })}

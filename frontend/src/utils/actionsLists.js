@@ -1,9 +1,10 @@
 export const adminActionsList = [
     {
         title: "Users",
+        target: "users",
         actions: [
-            { title: "View All Users", icon: "eye", link: "/users" },
-            { title: "Add User", icon: "add", link: "/users/add" },
+            { title: "View All Users", icon: "eye", link: "/all" },
+            { title: "Add User", icon: "add", link: "/add" },
         ],
     },
     {
@@ -40,6 +41,21 @@ export const adminActionsList = [
                 title: "Add Administrator",
                 icon: "add",
                 link: "/administrators/add",
+            },
+        ],
+    },
+    {
+        title: "Countries",
+        actions: [
+            {
+                title: "View All Countries",
+                icon: "eye",
+                link: "countries/",
+            },
+            {
+                title: "Add Country",
+                icon: "add",
+                link: "countries/add",
             },
         ],
     },

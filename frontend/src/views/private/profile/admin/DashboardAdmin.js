@@ -6,10 +6,14 @@ import { useLocation } from "react-router-dom";
 const DashboardAdmin = () => {
     let location = useLocation();
 
-    const actionPath = `${location.pathname}/administrator`;
+    const actionPath = `${location.pathname}`;
 
     return (
-        <ActionsList actionsList={adminActionsList} actionPath={actionPath} />
+        <ActionsList
+            sender="administrator"
+            actionsList={adminActionsList}
+            actionPath={actionPath}
+        />
     );
 };
 

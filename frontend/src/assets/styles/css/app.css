@@ -781,10 +781,9 @@ button {
 .actions-list > li > ul > li:hover {
   border: 1px solid var(--blue-2);
 }
-.actions-list > li > ul > li > a {
+.actions-list > li > ul > li > button {
   transition: all 0.2s;
-}
-.actions-list > li > ul > li > a:link, .actions-list > li > ul > li > a:visited {
+  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -797,16 +796,16 @@ button {
   background-color: var(--white-1);
   transition: all 0.2s;
 }
-.actions-list > li > ul > li > a:link span, .actions-list > li > ul > li > a:visited span {
+.actions-list > li > ul > li > button span {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
 }
-.actions-list > li > ul > li > a:link .icon, .actions-list > li > ul > li > a:visited .icon {
+.actions-list > li > ul > li > button .icon {
   font-size: 1.3rem;
   margin-right: 5px;
 }
-.actions-list > li > ul > li > a:hover, .actions-list > li > ul > li > a:active {
+.actions-list > li > ul > li > button:hover, .actions-list > li > ul > li > button:active {
   color: var(--blue-2);
 }/*# sourceMappingURL=app.css.map */
