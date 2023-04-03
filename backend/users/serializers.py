@@ -4,16 +4,19 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.files import File
 
 from rest_framework import serializers
+from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
-from utils.validators import *
 
-# from users.models import User
+from utils.validators import *
+from flights.serializers import *
 
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     user_role = serializers.SerializerMethodField(read_only=True) 
+    role_obj = serializers.SerializerMethodField()
+    created = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -25,6 +28,22 @@ class UserSerializer(serializers.ModelSerializer):
             return obj.user_role.role_name
         else:
             return None
+        
+    def get_created(self, obj):
+        return obj.created.date();
+
+
+    def get_role_obj(self, obj):
+        if obj.user_role:
+            match obj.user_role.role_name:
+                case 'admin':
+                    return AdministratorSerializer(obj.administrator).data
+                case 'airline company':
+                    return AirlineCompanySerializer(obj.airlinecompany).data
+                case 'customer':
+                    return CustomerSerializer(obj.customer).data
+        else: 
+            None
         
 
 class UserWithTokenSerializer(serializers.ModelSerializer):

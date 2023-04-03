@@ -14,6 +14,15 @@ def view_all_users(request):
 
 
 # --------------------------------------------- #
+# ----------------- View User ----------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@user_has_permission('view_user')
+def view_user(request, pk):
+    return administrator_facade.get_user(pk)
+
+
+# --------------------------------------------- #
 # ------------ View All Customers ------------- #
 # --------------------------------------------- #
 @api_view(['GET','POST'])

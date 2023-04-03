@@ -1,5 +1,8 @@
 import React from "react";
 
+import { getUser } from "api/administratorsActions";
+import ViewButton from "components/ViewButton";
+
 const TableCustomers = (props) => {
     const customers = props.data;
     return (
@@ -29,9 +32,7 @@ const TableCustomers = (props) => {
                                 {" ****".repeat(3)}
                             </td>
                             <td>
-                                <button className="btn btn-md btn-primary">
-                                    View
-                                </button>
+                                <ViewButton func={getUser} pk={customer.user_id} />
                             </td>
                         </tr>
                     );

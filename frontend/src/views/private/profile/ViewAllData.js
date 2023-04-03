@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 import PageTitle from "components/PageTitle";
 import Page403 from "components/Page403";
-// import { getAllData } from "api/administratorActions";
 import { getAllData } from "api/rolesActions";
 import { SearchForm } from "components/Forms";
 import AuthContext from "context/AuthContext";

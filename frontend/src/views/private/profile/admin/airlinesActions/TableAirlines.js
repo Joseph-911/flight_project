@@ -1,5 +1,8 @@
 import React from "react";
 
+import { getUser } from "api/administratorsActions";
+import ViewButton from "components/ViewButton";
+
 const TableAirlines = (props) => {
     const airlines = props.data;
 
@@ -23,9 +26,7 @@ const TableAirlines = (props) => {
                             <td>{airline.name}</td>
                             <td>{airline.country_name}</td>
                             <td>
-                                <button className="btn btn-md btn-primary">
-                                    View
-                                </button>
+                                <ViewButton func={getUser} pk={airline.user_id} />
                             </td>
                         </tr>
                     );

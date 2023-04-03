@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import ViewButton from "components/ViewButton";
+import React from "react";
 
 const TableCountries = (props) => {
     const countries = props.data;
@@ -19,9 +20,7 @@ const TableCountries = (props) => {
                             <td>{country.id}</td>
                             <td>{country.name}</td>
                             <td>
-                                <button className="btn btn-md btn-primary">
-                                    View
-                                </button>
+                                <ViewButton />
                             </td>
                         </tr>
                     );

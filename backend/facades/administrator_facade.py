@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.response import Response
 
 from facades.facade_base import FacadeBase
@@ -8,6 +9,14 @@ from flights.models import *
 from flights.serializers import *
 
 class AdministratorFacade(FacadeBase):
+
+    def get_user(self, pk):
+        user = self.dal.read_object(User, pk)
+        if (user == None):
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
     def get_all_users(self, request):
         users = []

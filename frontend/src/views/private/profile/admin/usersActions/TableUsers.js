@@ -1,5 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
+import { getUser } from "api/administratorsActions";
+import ViewButton from "components/ViewButton";
 
 const TableUsers = (props) => {
     const users = props.data;
@@ -29,9 +31,7 @@ const TableUsers = (props) => {
                                 {user.user_role ? user.user_role : "----------"}
                             </td>
                             <td>
-                                <Link to="/" className="btn btn-md btn-primary">
-                                    View
-                                </Link>
+                                <ViewButton func={getUser} pk={user.id} />
                             </td>
                         </tr>
                     );

@@ -1,5 +1,8 @@
 import React from "react";
 
+import { getUser } from "api/administratorsActions";
+import ViewButton from "components/ViewButton";
+
 const TableAdministrators = (props) => {
     const administrators = props.data;
     return (
@@ -27,9 +30,10 @@ const TableAdministrators = (props) => {
                             </td>
                             <td>{administrator.full_name}</td>
                             <td>
-                                <button className="btn btn-md btn-primary">
-                                    View
-                                </button>
+                                <ViewButton
+                                    func={getUser}
+                                    pk={administrator.user_id}
+                                />
                             </td>
                         </tr>
                     );
