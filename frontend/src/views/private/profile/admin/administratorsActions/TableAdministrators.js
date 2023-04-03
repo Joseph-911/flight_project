@@ -1,37 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const TableUsers = (props) => {
-    const users = props.data;
-
+const TableAdministrators = (props) => {
+    const administrators = props.data;
     return (
         <table className="table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
-                    <th>Role</th>
+                    <th>Full name</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {users.map((user, idx) => {
+                {administrators.map((administrator, idx) => {
                     return (
-                        <tr key={`all-users-${idx}`}>
-                            <td>{user.id}</td>
-                            <td>{user.username}</td>
+                        <tr key={`all-administrators-${idx}`}>
+                            <td>{administrator.id}</td>
                             <td>
-                                {user.is_superuser ? (
+                                {administrator.is_superuser === "True" ? (
                                     <span>&#128081;</span>
                                 ) : (
                                     ""
                                 )}
-                                {user.user_role ? user.user_role : "----------"}
+                                {administrator.username}
                             </td>
+                            <td>{administrator.full_name}</td>
                             <td>
-                                <Link to="/" className="btn btn-md btn-primary">
+                                <button className="btn btn-md btn-primary">
                                     View
-                                </Link>
+                                </button>
                             </td>
                         </tr>
                     );
@@ -41,4 +39,4 @@ const TableUsers = (props) => {
     );
 };
 
-export default TableUsers;
+export default TableAdministrators;

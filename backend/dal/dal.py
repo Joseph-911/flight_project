@@ -26,7 +26,16 @@ class GenericDAL:
         return objects
     
 
-    def read_objects_filter_username(self, username):
-        users =  User.objects.filter(username__icontains=username)
-        return users
+    def read_objects_filter_username(self, model_class, username):
+        if model_class != User:
+            objects = model_class.objects.filter(user_id__username__icontains=username)
+        else:
+            objects = model_class.objects.filter(username__icontains=username)
+
+        return objects
+    
+    
+    def read_objects_filter_name(self, model_class, name):
+        objects = model_class.objects.filter(name__icontains=name)
+        return objects
 

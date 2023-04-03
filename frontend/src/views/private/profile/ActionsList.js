@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 const ActionsList = (props) => {
     const navigate = useNavigate();
 
-    const handleChangeRoute = (link, target) => {
+    const handleChangeRoute = (link, target, isForm) => {
         navigate(`${props.actionPath}${link}`, {
-            state: { target: target, sender: props.sender },
+            state: { target: target, sender: props.sender, isForm: isForm },
         });
     };
 
@@ -24,7 +24,8 @@ const ActionsList = (props) => {
                                             onClick={() => {
                                                 handleChangeRoute(
                                                     item.link,
-                                                    action.target
+                                                    action.target,
+                                                    action.isForm
                                                 );
                                             }}
                                         >

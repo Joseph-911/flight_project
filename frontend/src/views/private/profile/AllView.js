@@ -13,9 +13,17 @@ const AllView = () => {
         }
     });
 
-    return <>
-        {locationState && <ViewAllData isForm={true} sender={locationState.sender} dataName={locationState.target} />}
-    </>;
+    return (
+        <>
+            {locationState && (
+                <ViewAllData
+                    isForm={locationState.isForm}
+                    sender={locationState.sender}
+                    dataName={locationState.target}
+                />
+            )}
+        </>
+    );
 };
 
 export default AllView;

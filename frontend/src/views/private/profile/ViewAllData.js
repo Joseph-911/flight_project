@@ -48,7 +48,12 @@ const ViewAllData = (props) => {
                 <p>Loading...</p>
             ) : (
                 <>
-                    <PageTitle title={`All ${props.dataName}`} />
+                    <PageTitle
+                        title={`All ${
+                            props.dataName.charAt(0).toUpperCase() +
+                            props.dataName.slice(1)
+                        }`}
+                    />
                     {props.isForm ? (
                         <SearchForm
                             searchQuery={searchQuery}
