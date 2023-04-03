@@ -33,6 +33,7 @@ const TableAdministrators = (props) => {
                                 <ViewButton
                                     func={getUser}
                                     pk={administrator.user_id}
+                                    theTarget="users"
                                 />
                             </td>
                         </tr>

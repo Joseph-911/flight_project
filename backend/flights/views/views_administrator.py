@@ -14,15 +14,6 @@ def view_all_users(request):
 
 
 # --------------------------------------------- #
-# ----------------- View User ----------------- #
-# --------------------------------------------- #
-@api_view(['GET'])
-@user_has_permission('view_user')
-def view_user(request, pk):
-    return administrator_facade.get_user(pk)
-
-
-# --------------------------------------------- #
 # ------------ View All Customers ------------- #
 # --------------------------------------------- #
 @api_view(['GET','POST'])
@@ -56,3 +47,21 @@ def view_all_administrators(request):
 @user_has_permission('view_country')
 def view_all_countries(request):
     return administrator_facade.get_all_countries(request)
+
+
+# --------------------------------------------- #
+# ----------------- View User ----------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@user_has_permission('view_user')
+def view_user(request, pk):
+    return administrator_facade.get_user(pk)
+
+
+# --------------------------------------------- #
+# ---------------- View Country --------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@user_has_permission('view_country')
+def view_country(request, pk):
+    return administrator_facade.get_country_by_id(request, pk)

@@ -26,7 +26,7 @@ const Avatar = (props) => {
                             <span className="bold">Name: </span>
                             {user.role_obj.full_name}
                         </p>
-                    ) : user.user_role === 'airline company' ? (
+                    ) : user.user_role === "airline company" ? (
                         <>
                             <p>
                                 <span className="bold">Company: </span>
@@ -37,7 +37,9 @@ const Avatar = (props) => {
                                 {user.role_obj.country_name}
                             </p>
                         </>
-                    ) : ""}
+                    ) : (
+                        ""
+                    )}
                 </div>
             )}
         </div>

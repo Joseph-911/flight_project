@@ -18,6 +18,14 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+    def get_country(self, pk):
+        country = self.dal.read_object(Country, pk)
+        if (country == None):
+            return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = CountrySerializer(country)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
     def get_all_users(self, request):
         users = []
         

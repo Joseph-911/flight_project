@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 
 import ProfileView from "views/private/profile/ProfileView";
 import AllView from "views/private/profile/AllView";
+import AddView from "views/private/profile/AddView";
 
 export const Profile = () => {
     return (
@@ -25,6 +26,19 @@ export const ProfileAll = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <AllView />
+            </div>
+        </>
+    );
+};
+
+export const ProfileAdd = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Add</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <AddView />
             </div>
         </>
     );

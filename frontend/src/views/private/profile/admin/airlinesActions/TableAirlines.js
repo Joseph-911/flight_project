@@ -26,7 +26,11 @@ const TableAirlines = (props) => {
                             <td>{airline.name}</td>
                             <td>{airline.country_name}</td>
                             <td>
-                                <ViewButton func={getUser} pk={airline.user_id} />
+                                <ViewButton
+                                    func={getUser}
+                                    pk={airline.user_id}
+                                    theTarget="users"
+                                />
                             </td>
                         </tr>
                     );

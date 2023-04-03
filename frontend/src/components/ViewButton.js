@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 
 import AuthContext from "context/AuthContext";
 import Modal from "./Modal";
-import Avatar from "views/private/profile/Avatar";
+import ViewedItemDetails from "views/private/profile/ViewedItemDetails";
+import { useNavigate } from "react-router-dom";
 
 const ViewButton = (props) => {
     const { api } = useContext(AuthContext);
+
     const [data, setData] = useState(null);
-    const [error, setError] = useState([]);
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleButtonClicked = () => {
         props.func(api, props.pk, setData, setError);
@@ -16,6 +20,12 @@ const ViewButton = (props) => {
     const handleCloseModal = () => {
         setData(null);
     };
+
+    useEffect(() => {
+        if (error) {
+            navigate("/");
+        }
+    });
 
     return (
         <>
@@ -27,7 +37,10 @@ const ViewButton = (props) => {
             </button>
             {data && (
                 <Modal closeModal={handleCloseModal}>
-                    <Avatar user={data} details={true} />
+                    <ViewedItemDetails
+                        data={data}
+                        theTarget={props.theTarget}
+                    />
                 </Modal>
             )}
         </>

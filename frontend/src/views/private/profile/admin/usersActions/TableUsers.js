@@ -31,7 +31,11 @@ const TableUsers = (props) => {
                                 {user.user_role ? user.user_role : "----------"}
                             </td>
                             <td>
-                                <ViewButton func={getUser} pk={user.id} />
+                                <ViewButton
+                                    func={getUser}
+                                    pk={user.id}
+                                    theTarget="users"
+                                />
                             </td>
                         </tr>
                     );

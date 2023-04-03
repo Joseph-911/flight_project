@@ -1,3 +1,4 @@
+import { getCountry } from "api/administratorsActions";
 import ViewButton from "components/ViewButton";
 import React from "react";
 
@@ -20,7 +21,11 @@ const TableCountries = (props) => {
                             <td>{country.id}</td>
                             <td>{country.name}</td>
                             <td>
-                                <ViewButton />
+                                <ViewButton
+                                    func={getCountry}
+                                    pk={country.id}
+                                    theTarget="countries"
+                                />
                             </td>
                         </tr>
                     );

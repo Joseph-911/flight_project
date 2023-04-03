@@ -32,7 +32,11 @@ const TableCustomers = (props) => {
                                 {" ****".repeat(3)}
                             </td>
                             <td>
-                                <ViewButton func={getUser} pk={customer.user_id} />
+                                <ViewButton
+                                    func={getUser}
+                                    pk={customer.user_id}
+                                    theTarget="users"
+                                />
                             </td>
                         </tr>
                     );
