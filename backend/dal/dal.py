@@ -38,4 +38,7 @@ class GenericDAL:
     def read_objects_filter_name(self, model_class, name):
         objects = model_class.objects.filter(name__icontains=name)
         return objects
+    
 
+    def read_object_filter_by(self, model_class, filter_dict):
+        return model_class.objects.filter(**filter_dict)

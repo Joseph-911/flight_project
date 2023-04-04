@@ -1,0 +1,9 @@
+.tab-btns {
+    @include flexCenter(); 
+    width: 100%;
+    padding: 20px 0;
+
+    button {
+        margin: 0 10px;
+    }
+}

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from flights.models import *
+from users.models import *
+from utils.validators import *
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -47,3 +49,28 @@ class AdministratorSerializer(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return f'{obj.first_name} {obj.last_name}'
+    
+
+
+class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
+    user_id = serializers.CharField(required=True, validators=[validate_user_id])
+    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical])
+    country_id = serializers.CharField(required=True, validators=[validate_country_id])
+
+    class Meta:
+        model = AirlineCompany
+        fields = ['user_id', 'name', 'country_id']
+
+    def create(self, validated_data):
+        user = User.objects.get(id=validated_data.get('user_id'))
+        country = Country.objects.get(id=validated_data.get('country_id'))
+        name = validated_data.get('name')
+
+        name = name.title()
+        user.user_role = UserRole.objects.get(role_name='airline company')
+        user.save()
+
+        airline_company = AirlineCompany(user_id=user, country_id=country, name=name)
+        airline_company.save()
+        return airline_company
+        

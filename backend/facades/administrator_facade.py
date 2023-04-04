@@ -10,6 +10,11 @@ from flights.serializers import *
 
 class AdministratorFacade(FacadeBase):
 
+    def get_users_no_role(self):
+        users = self.dal.read_object_filter_by(User, {'user_role': None})
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def get_user(self, pk):
         user = self.dal.read_object(User, pk)
         if (user == None):
@@ -88,6 +93,21 @@ class AdministratorFacade(FacadeBase):
 
         serializer = CountrySerializer(countries, many=True)
         return Response(serializer.data)
+    
+
+    def add_customer(self, request):
+        pass
+        
+    
+    def add_airline(self, request):
+        if 'user_id' in request.data:
+            serializer = AirlineCompanyCreationSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'message': 'Airline company added successfully'}, status=status.HTTP_200_OK)
+                    
+
+    
 
 
 administrator_facade = AdministratorFacade()

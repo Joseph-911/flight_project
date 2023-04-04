@@ -7,7 +7,7 @@ import MessagesContext from "context/MessagesContext";
 import { RegisterForm } from "components/Forms";
 import { handleInputChange, handleImageInputChange } from "utils/HandleStates";
 
-const AddUserView = () => {
+const AddUser = () => {
     const { api } = useContext(AuthContext);
     const { addMessage } = useContext(MessagesContext);
 
@@ -68,4 +68,4 @@ const AddUserView = () => {
     );
 };
 
-export default AddUserView;
+export default AddUser;

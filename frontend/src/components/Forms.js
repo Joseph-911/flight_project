@@ -1,40 +1,16 @@
 import React, { useRef, useState } from "react";
+
 import user_default from "../assets/images/users/user_default.png";
+import {
+    FormBlock,
+    FormBlockSelectCountry,
+    FormBlockSelectUsers,
+    FieldError,
+} from "./FormsUtils";
 
-export const FormBlock = (props) => {
-    return (
-        <div className="form-block">
-            <label htmlFor={props.id}>{props.label}</label>
-            <input
-                type={props.type}
-                name={props.name}
-                maxLength={props.maxLength}
-                autoFocus={props.autoFocus}
-                className="form-control"
-                required={props.required}
-                id={props.id}
-                autoComplete={props.autoComplete}
-                value={props.value}
-                onChange={props.onChange}
-            />
-            {props.children}
-            <FieldError error={props.error} field={props.name} />
-        </div>
-    );
-};
-
-export const FieldError = (props) => {
-    return (
-        <div className="field-errors">
-            {props.error &&
-                props.error[props.field] &&
-                props.error[props.field].map((err, idx) => {
-                    return <p key={`${props.field}-error-${idx}`}>{err}</p>;
-                })}
-        </div>
-    );
-};
-
+/* --------------------------------------------- */
+/* ---------------- Search Form ---------------- */
+/* --------------------------------------------- */
 export const SearchForm = (props) => {
     return (
         <div className="form-wrapper">
@@ -65,6 +41,9 @@ export const SearchForm = (props) => {
     );
 };
 
+/* --------------------------------------------- */
+/* --------------- Register Form --------------- */
+/* --------------------------------------------- */
 export const RegisterForm = (props) => {
     // Ref to file input (thumbnail)
     const imgInputRef = useRef();
@@ -183,6 +162,131 @@ export const RegisterForm = (props) => {
                 onChange={(e) =>
                     props.handleInputChange(e, props.setFormInputs)
                 }
+                error={props.error}
+            />
+        </>
+    );
+};
+
+/* --------------------------------------------- */
+/* --------------- Customer Form --------------- */
+/* --------------------------------------------- */
+export const CustomerForm = (props) => {
+    return (
+        <>
+            {props.userSelect ? (
+                <FormBlockSelectUsers
+                    value={props.formInputs.user_id || ""}
+                    onChange={(e) => {
+                        props.handleInputChange(e, props.setFormInputs);
+                    }}
+                    error={props.error}
+                    target={props.target}
+                    sender={props.sender}
+                />
+            ) : (
+                ""
+            )}
+            <FormBlock
+                label="First name"
+                name="first_name"
+                type="text"
+                required
+                id="first_name"
+                value={props.formInputs.first_name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Last name"
+                name="last_name"
+                type="text"
+                required
+                id="last_name"
+                value={props.formInputs.last_name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Address"
+                name="address"
+                type="text"
+                required
+                id="address"
+                value={props.formInputs.address || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Credit card number"
+                name="credit_card_no"
+                type="text"
+                required
+                id="credit_card_no"
+                value={props.formInputs.credit_card_no || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Phone number"
+                name="phone_no"
+                type="text"
+                required
+                id="phone_no"
+                value={props.formInputs.phone_no || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
+
+/* --------------------------------------------- */
+/* --------------- Airline Form ---------------- */
+/* --------------------------------------------- */
+export const AirlineForm = (props) => {
+    return (
+        <>
+            {props.userSelect ? (
+                <FormBlockSelectUsers
+                    value={props.formInputs.user_id || ""}
+                    onChange={(e) => {
+                        props.handleInputChange(e, props.setFormInputs);
+                    }}
+                    error={props.error}
+                    target={props.target}
+                    sender={props.sender}
+                />
+            ) : (
+                ""
+            )}
+            <FormBlock
+                label="Company Name"
+                name="name"
+                type="text"
+                required
+                id="name"
+                value={props.formInputs.name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlockSelectCountry
+                value={props.formInputs.country_id || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
                 error={props.error}
             />
         </>

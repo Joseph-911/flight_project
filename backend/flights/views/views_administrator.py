@@ -59,9 +59,37 @@ def view_user(request, pk):
 
 
 # --------------------------------------------- #
+# ------------- View Users No Role ------------ #
+# --------------------------------------------- #
+@api_view(['GET'])
+@user_has_permission('view_user')
+def view_user_no_role(request):
+    return administrator_facade.get_users_no_role()
+
+
+
+# --------------------------------------------- #
 # ---------------- View Country --------------- #
 # --------------------------------------------- #
 @api_view(['GET'])
 @user_has_permission('view_country')
 def view_country(request, pk):
     return administrator_facade.get_country_by_id(request, pk)
+
+
+# --------------------------------------------- #
+# ---------------- Add Customer --------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('add_customer')
+def add_customer(request):
+    return administrator_facade.add_customer(request)
+
+
+# --------------------------------------------- #
+# ----------------- Add Airline --------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('add_airlinecompany')
+def add_airline(request):
+    return administrator_facade.add_airline(request)

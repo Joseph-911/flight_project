@@ -416,7 +416,7 @@ button {
 }
 .btn.btn-primary-outline {
   background-color: var(--white);
-  border: 2px solid var(--blue-1);
+  border: 1px solid var(--blue-1);
   color: var(--blue-1);
 }
 .btn.btn-primary-outline:hover, .btn.btn-primary-outline:active {
@@ -740,6 +740,18 @@ button {
 .modal .modal-content {
   position: relative;
   z-index: 6;
+}
+
+.tab-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px 0;
+}
+.tab-btns button {
+  margin: 0 10px;
 }
 
 .animate-up {

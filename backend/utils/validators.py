@@ -6,8 +6,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
 from rest_framework import serializers
-
 from users.models import User
+from flights.models import *
 
 
 def validate_user_username(username):
@@ -56,3 +56,42 @@ def validate_user_thumbnail(file):
         return True
     except Exception:
         return False
+    
+
+def validate_name_length(value):
+    # Check for at least 2 characters
+    if len(value) < 2:
+        raise serializers.ValidationError('Name must be at least 2 characters long.')
+    
+
+def validate_name_with_alphabetical(value):
+    # Check for at least one alphabetical character
+    if not re.search('[a-zA-Z]', value):
+        raise serializers.ValidationError('Name must contain at least 1 alphabetical character.')
+    
+
+def validate_id(value):
+    # Check if user_id is an int
+    if not value.isnumeric():
+        raise serializers.ValidationError('Please type a valid ID (integer)')
+
+
+def validate_user_id(value):
+    # Check if user is exists and it's role in null
+    validate_id(value)
+    try:
+        user = User.objects.get(id=value)
+        if user:
+            if user.user_role != None:
+                raise serializers.ValidationError('User has a role already')
+    except User.DoesNotExist:
+        raise serializers.ValidationError('User is not found')
+    
+
+def validate_country_id(value):
+    # Check if user is exists and it's role in null
+    validate_id(value)
+    try:
+        Country.objects.get(id=value)
+    except Country.DoesNotExist:
+        raise serializers.ValidationError('Country is not found')
