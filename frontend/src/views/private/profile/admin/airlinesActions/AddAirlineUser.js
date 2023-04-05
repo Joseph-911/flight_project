@@ -18,9 +18,18 @@ const AddAirlineUser = () => {
     // // Form fields states
     const [formInputs, setFormInputs] = useState({});
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <div className="form-wrapper">
-            <form method="POST" encType="multipart/form-data" className="form">
+            <form
+                method="POST"
+                encType="multipart/form-data"
+                className="form"
+                onSubmit={handleFormSubmit}
+            >
                 <h2 className="form-title">Register Airline</h2>
 
                 <RegisterForm
