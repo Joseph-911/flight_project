@@ -13,11 +13,11 @@ import {
 /* --------------------------------------------- */
 export const SearchForm = (props) => {
     return (
-        <div className="form-wrapper">
+        <div className="form-wrapper-oneline">
             <form
                 id="searchForm"
                 method="GET"
-                className="form"
+                className="form-inline"
                 onSubmit={props.handleSearch}
             >
                 <div className="form-block">

@@ -123,3 +123,27 @@
         }
     }
 }
+
+
+.form-wrapper-oneline {
+    margin: 0 0 20px;
+    max-width: 300px;
+    .form-inline {
+        display: flex;
+
+        input[type="submit"] {
+            width: 100px;
+        }
+
+        .form-block {
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0;
+            margin-right: 8px;
+            input {
+                height: 40px;
+                @include card()
+            }
+        }
+    }
+}
