@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import AddUser from "./usersActions/AddUser";
 import FormsCustomerCombined from "./customersActions/FormsCustomerCombined";
 import FormsAirlineCombined from "./airlinesActions/FormsAirlineCombined";
+import FormsAdministratorCombined from "./administratorsActions/FormsAdministratorCombined";
 
 const AdminAddingActions = (props) => {
     const [formComponent, setFormComponent] = useState(props.target);
@@ -26,6 +27,14 @@ const AdminAddingActions = (props) => {
             case "airlines":
                 setComponent(
                     <FormsAirlineCombined
+                        target={props.target}
+                        sender={props.sender}
+                    />
+                );
+                break;
+            case "administrators":
+                setComponent(
+                    <FormsAdministratorCombined
                         target={props.target}
                         sender={props.sender}
                     />

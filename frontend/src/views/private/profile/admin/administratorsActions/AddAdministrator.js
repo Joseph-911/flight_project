@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
 import MessagesContext from "context/MessagesContext";
-import { AirlineForm } from "components/Forms";
+import { AdministratorForm } from "components/Forms";
 import { handleInputChange } from "utils/HandleStates";
-import { addAirline } from "api/administratorsActions";
+import { addAdministrator } from "api/administratorsActions";
 
-const AddAirline = () => {
+const AddAdministrator = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { target } = location.state;
@@ -24,12 +24,12 @@ const AddAirline = () => {
     // Handle Form Submit
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        addAirline(api, target, setError, setIsValid, formInputs);
+        addAdministrator(api, target, setError, setIsValid, formInputs);
     };
 
     useEffect(() => {
         if (isValid) {
-            addMessage("Airline company added successfully", "success");
+            addMessage("Administrator added successfully", "success");
             navigate("/profile");
         }
     }, [isValid, addMessage, navigate]);
@@ -37,9 +37,9 @@ const AddAirline = () => {
     return (
         <div className="form-wrapper">
             <form method="POST" className="form" onSubmit={handleFormSubmit}>
-                <h2 className="form-title">Add Airline</h2>
+                <h2 className="form-title">Add Administrator</h2>
 
-                <AirlineForm
+                <AdministratorForm
                     formInputs={formInputs}
                     setFormInputs={setFormInputs}
                     handleInputChange={handleInputChange}
@@ -57,4 +57,4 @@ const AddAirline = () => {
     );
 };
 
-export default AddAirline;
+export default AddAdministrator;

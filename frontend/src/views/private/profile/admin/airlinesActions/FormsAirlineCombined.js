@@ -1,5 +1,6 @@
-import Tabs from "components/Tabs";
 import React, { useState } from "react";
+
+import Tabs from "components/Tabs";
 import AddAirlineUser from "./AddAirlineUser";
 import AddAirline from "./AddAirline";
 

@@ -75,3 +75,26 @@ class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
         airline_company.save()
         return airline_company
         
+
+class AdministratorCreationSerializer(serializers.ModelSerializer):
+    user_id = serializers.CharField(required=True, validators=[validate_user_id])
+    first_name = serializers.CharField(required=True, max_length=30, validators=[validate_name, validate_name_length])
+    last_name = serializers.CharField(required=True, max_length=30, validators=[validate_name, validate_name_length])
+
+    class Meta:
+        model = Administrator
+        fields = ['user_id', 'first_name', 'last_name'] 
+
+    def create(self, validated_data):
+        user = User.objects.get(id=validated_data.get('user_id'))
+        first_name = validated_data.get('first_name')
+        last_name = validated_data.get('last_name')
+
+        first_name = first_name.title()
+        last_name = last_name.title()
+        user.user_role = UserRole.objects.get(role_name='admin')
+        user.save()
+
+        administrator = Administrator(user_id=user, first_name=first_name, last_name=last_name)
+        administrator.save()
+        return administrator

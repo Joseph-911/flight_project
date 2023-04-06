@@ -34,7 +34,6 @@ def validate_user_username(username):
         
     return username
 
-    
 
 def validate_user_password1(password):
     validate_password(password)
@@ -57,6 +56,12 @@ def validate_user_thumbnail(file):
         return True
     except Exception:
         return False
+    
+
+def validate_name(value):
+    # Check for valid name only with alphabetical characters
+    if not re.match('^[a-zA-Z]+$', value):
+        raise serializers.ValidationError('Name must contain only alphabetical characters.')
     
 
 def validate_name_length(value):

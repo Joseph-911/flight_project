@@ -93,3 +93,12 @@ def add_customer(request):
 @user_has_permission('add_airlinecompany')
 def add_airline(request):
     return administrator_facade.add_airline(request)
+
+
+# --------------------------------------------- #
+# ------------- Add Administrator ------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('add_administrator')
+def add_administrator(request):
+    return administrator_facade.add_administrator(request)

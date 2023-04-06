@@ -16,6 +16,7 @@ administrator_url_patterns = [
     path('airlines/add', views_administrator.add_airline, name='add-airline'),
     # Administrators
     path('administrators/', views_administrator.view_all_administrators, name='administrators-list'),
+    path('administrators/add', views_administrator.add_administrator, name='add-administrator'),
     # Countries
     path('countries/', views_administrator.view_all_countries, name='countries-list'),
     path('country/<str:pk>/', views_administrator.view_country, name='country-details')

@@ -292,3 +292,49 @@ export const AirlineForm = (props) => {
         </>
     );
 };
+
+/* --------------------------------------------- */
+/* ------------ Administrator Form ------------- */
+/* --------------------------------------------- */
+export const AdministratorForm = (props) => {
+    return (
+        <>
+            {props.userSelect && (
+                <FormBlockSelectUsers
+                    value={props.formInputs.user_id || ""}
+                    onChange={(e) => {
+                        props.handleInputChange(e, props.setFormInputs);
+                    }}
+                    error={props.error}
+                    target={props.target}
+                    sender={props.sender}
+                />
+            )}
+
+            <FormBlock
+                label="First Name"
+                name="first_name"
+                type="text"
+                required
+                id="first_name"
+                value={props.formInputs.first_name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Last Name"
+                name="last_name"
+                type="text"
+                required
+                id="last_name"
+                value={props.formInputs.last_name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
