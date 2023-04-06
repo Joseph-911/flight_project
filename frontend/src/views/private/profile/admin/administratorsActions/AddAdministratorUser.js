@@ -5,6 +5,7 @@ import AuthContext from "context/AuthContext";
 import MessagesContext from "context/MessagesContext";
 import { AdministratorForm, RegisterForm } from "components/Forms";
 import { handleImageInputChange, handleInputChange } from "utils/HandleStates";
+import { addAdministrator } from "api/administratorsActions";
 
 const AddAdministratorUser = () => {
     const location = useLocation();
@@ -22,7 +23,15 @@ const AddAdministratorUser = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        addAdministrator(api, target, setError, setIsValid, formInputs);
     };
+
+    useEffect(() => {
+        if (isValid) {
+            addMessage("User administrator created successfully", "success");
+            navigate("/profile");
+        }
+    }, [isValid, addMessage, navigate]);
 
     return (
         <div className="form-wrapper">

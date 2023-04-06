@@ -28,10 +28,7 @@ const AddAirlineUser = () => {
 
     useEffect(() => {
         if (isValid) {
-            addMessage(
-                "User and the airline company added successfully",
-                "success"
-            );
+            addMessage("User airline company created successfully", "success");
             navigate("/profile");
         }
     }, [isValid, addMessage, navigate]);

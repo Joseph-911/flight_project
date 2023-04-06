@@ -109,7 +109,7 @@ class AdministratorFacade(FacadeBase):
             serializer = UserAirlineCompanyCreationSerializer(data=request.data, context={'request': request})
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response({'message': 'User airline company added successfully'}, status=status.HTTP_200_OK)
+                return Response({'message': 'User airline company created successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Error during creating an airline'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -121,7 +121,10 @@ class AdministratorFacade(FacadeBase):
                 serializer.save()
                 return Response({'message': 'Administrator added successfully'}, status=status.HTTP_200_OK)
         elif 'username' in request.data:
-            pass
+            serializer = UserAdministratorCreationSerializer(data=request.data, context={'request': request})
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'message': 'User administrator created successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Error during creating an administrator'}, status=status.HTTP_400_BAD_REQUEST)
 

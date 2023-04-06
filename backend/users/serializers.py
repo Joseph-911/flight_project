@@ -168,3 +168,36 @@ class UserAirlineCompanyCreationSerializer(UserRegisterSerializer, AirlineCompan
 
             return airline_company
 
+
+
+class UserAdministratorCreationSerializer(UserRegisterSerializer, AdministratorCreationSerializer):
+    
+    def create(self, validated_data):
+        with transaction.atomic():
+
+            username = validated_data['username']
+
+            thumbnail = self.initial_data['thumbnail']
+            del validated_data['thumbnail']
+
+            user_serializer = UserRegisterSerializer(data=validated_data)
+
+            user_serializer.is_valid(raise_exception=True)
+            user = user_serializer.save()
+            user.thumbnail = thumbnail
+            user.save()
+
+            user = User.objects.get(username=username)
+
+            user_id = user.id
+
+            administrator_serializer = AdministratorCreationSerializer(data={'user_id': user_id, 
+            'first_name': self.context['request'].data['first_name'], 
+            'last_name': self.context['request'].data['last_name'], 
+            })
+
+            administrator_serializer.is_valid(raise_exception=True)
+            administrator = administrator_serializer.save()
+
+            return administrator
+
