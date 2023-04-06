@@ -8,6 +8,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from users.models import User
 from flights.models import *
+from users.models import *
 
 
 def validate_user_username(username):
@@ -95,3 +96,8 @@ def validate_country_id(value):
         Country.objects.get(id=value)
     except Country.DoesNotExist:
         raise serializers.ValidationError('Country is not found')
+    
+
+def validate_unique_name(value):
+    if AirlineCompany.objects.filter(name__iexact=value).exists():
+        raise serializers.ValidationError('Name already exists.')

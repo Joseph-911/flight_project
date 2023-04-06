@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from flights.models import *
 from users.models import *
@@ -54,7 +55,7 @@ class AdministratorSerializer(serializers.ModelSerializer):
 
 class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(required=True, validators=[validate_user_id])
-    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical])
+    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical,validate_unique_name])
     country_id = serializers.CharField(required=True, validators=[validate_country_id])
 
     class Meta:

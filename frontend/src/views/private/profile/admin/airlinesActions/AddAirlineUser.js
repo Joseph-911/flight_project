@@ -1,26 +1,40 @@
-import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
 import MessagesContext from "context/MessagesContext";
 import { AirlineForm, RegisterForm } from "components/Forms";
 import { handleImageInputChange, handleInputChange } from "utils/HandleStates";
+import { addAirline } from "api/administratorsActions";
 
 const AddAirlineUser = () => {
     const location = useLocation();
-    const { target, sender } = location.state;
+    const navigate = useNavigate();
+    const { target } = location.state;
     const { api } = useContext(AuthContext);
     const { addMessage } = useContext(MessagesContext);
 
     // Form fields errors
     const [error, setError] = useState(null);
+    const [isValid, setIsValid] = useState(false);
 
     // // Form fields states
     const [formInputs, setFormInputs] = useState({});
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        addAirline(api, target, setError, setIsValid, formInputs);
     };
+
+    useEffect(() => {
+        if (isValid) {
+            addMessage(
+                "User and the airline company added successfully",
+                "success"
+            );
+            navigate("/profile");
+        }
+    }, [isValid, addMessage, navigate]);
 
     return (
         <div className="form-wrapper">

@@ -2,6 +2,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.files import File
+from django.db import transaction
 
 from rest_framework import serializers
 from rest_framework.response import Response
@@ -134,3 +135,36 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             thumbnail = validated_data['thumbnail']
             user.thumbnail.save(thumbnail.name, thumbnail)
         return user
+    
+
+class UserAirlineCompanyCreationSerializer(UserRegisterSerializer, AirlineCompanyCreationSerializer):
+    
+    def create(self, validated_data):
+        with transaction.atomic():
+
+            username = validated_data['username']
+
+            thumbnail = self.initial_data['thumbnail']
+            del validated_data['thumbnail']
+
+            user_serializer = UserRegisterSerializer(data=validated_data)
+
+            user_serializer.is_valid(raise_exception=True)
+            user = user_serializer.save()
+            user.thumbnail = thumbnail
+            user.save()
+
+            user = User.objects.get(username=username)
+
+            user_id = user.id
+
+            airline_serializer = AirlineCompanyCreationSerializer(data={'user_id': user_id, 
+            'name': self.context['request'].data['name'], 
+            'country_id': self.context['request'].data['country_id'], 
+            })
+
+            airline_serializer.is_valid(raise_exception=True)
+            airline_company = airline_serializer.save()
+
+            return airline_company
+

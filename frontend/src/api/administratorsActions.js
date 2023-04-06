@@ -30,13 +30,24 @@ export const addCustomer = async (api, target, setState, setError, inputs) => {
 };
 
 export const addAirline = async (api, target, setError, setIsValid, inputs) => {
+    let data;
     try {
-        const { data } = await api.post(`${baseURL}/${target}/add`, inputs);
+        if (inputs["username"]) {
+            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }));
+        } else {
+            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs));
+        }
         if (data) {
-            setError(null);
+            // setError(null);
             setIsValid(true);
         }
     } catch (error) {
+        console.log(error);
+        console.log(error.response.data);
         setError(error.response.data);
     }
 };
