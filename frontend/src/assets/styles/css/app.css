@@ -321,6 +321,11 @@ button {
 .form-block .field-errors ul {
   margin-top: 5px;
 }
+.form-block .field-errors ul li {
+  color: var(--blue-1);
+  display: flex;
+  align-items: center;
+}
 .form-block .field-errors ul li:not(:last-of-type) {
   margin-bottom: 5px;
 }
@@ -437,6 +442,14 @@ button {
 .btn.btn-primary:hover, .btn.btn-primary:active {
   background-color: var(--blue-3);
 }
+.btn.btn-primary-underline {
+  border-radius: unset;
+  border-bottom: 2px solid transparent;
+  color: var(--blue-1);
+}
+.btn.btn-primary-underline:hover, .btn.btn-primary-underline:active {
+  border-bottom: 2px solid var(--blue-1);
+}
 .btn.btn-primary-outline {
   background-color: var(--white);
   border: 1px solid var(--blue-1);
@@ -479,6 +492,11 @@ button {
   width: -moz-fit-content;
   width: fit-content;
   padding: 5px 10px;
+}
+.btn.btn-xs {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 3px;
 }
 
 /* --------------------------------------------- */
@@ -729,9 +747,13 @@ button {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  width: -moz-fit-content;
+  width: fit-content;
+  transform: translate(-50%, -50%);
+  z-index: 6;
   transform: translate(-50%, -50%);
   z-index: 6;
 }

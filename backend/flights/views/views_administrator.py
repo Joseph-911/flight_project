@@ -102,3 +102,12 @@ def add_airline(request):
 @user_has_permission('add_administrator')
 def add_administrator(request):
     return administrator_facade.add_administrator(request)
+
+
+# --------------------------------------------- #
+# --------------------------------------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('add_country')
+def add_country(request):
+    return administrator_facade.add_country(request)

@@ -129,6 +129,11 @@ class AdministratorFacade(FacadeBase):
             return Response({'message': 'Error during creating an administrator'}, status=status.HTTP_400_BAD_REQUEST)
 
     
-
+    def add_country(self, request):
+        serializer = CountryCreationSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': 'Country added successfully'}, status=status.HTTP_200_OK)
+        return Response({'message': 'not valid'}, status=status.HTTP_400_BAD_REQUEST)
 
 administrator_facade = AdministratorFacade()

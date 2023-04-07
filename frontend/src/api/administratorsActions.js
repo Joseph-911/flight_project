@@ -86,3 +86,18 @@ export const getCountry = async (api, pk, setState, setError) => {
         setError(error);
     }
 };
+
+export const addCountry = async (api, target, setError, setIsValid, inputs) => {
+    try {
+        const { data } = await api.post(`${baseURL}/${target}/add/`, inputs, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        if (data) {
+            setIsValid(data.message);
+        }
+    } catch (error) {
+        setError(error.response.data);
+    }
+};

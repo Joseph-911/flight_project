@@ -1,4 +1,7 @@
 import re
+import pycountry
+
+from fuzzywuzzy import fuzz, process
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
@@ -86,6 +89,12 @@ def validate_name_with_alphabetical(value):
         raise serializers.ValidationError('Name must contain at least 1 alphabetical character.')
     
 
+def validate_hyphenated_word_pair(value):
+    # Check for valid country name, examples: Japan, Guinea-Bissau
+    if not re.match('^[a-zA-Z ]+(-[a-zA-Z]+)*$', value):
+        raise serializers.ValidationError('Name must contain only alphabetical characters, spaces and hyphen in the middle.')
+    
+
 def validate_id(value):
     # Check if user_id is an int
     if not value.isnumeric():
@@ -117,3 +126,43 @@ def validate_unique_name(value):
     # Check if company name is taken
     if AirlineCompany.objects.filter(name__iexact=value).exists():
         raise serializers.ValidationError('Name already exists.')
+    
+
+
+def suggest_country_name(value):
+    countries = [c.name.title() for c in pycountry.countries]
+    suggestions = process.extract(value.title(), countries, limit=5)
+    suggested_countries = []
+    for suggestion in suggestions:
+        if fuzz.ratio(value.title(), suggestion[0]) >= 60:
+            suggested_countries.append(pycountry.countries.lookup(suggestion[0]).name)
+    return suggested_countries
+
+
+def validate_country(value):
+    if Country.objects.filter(name__iexact=value).exists():
+        raise serializers.ValidationError('Country already exists.')
+    
+    validate_hyphenated_word_pair(value)
+    validate_name_length(value)
+
+    try:
+        country = pycountry.countries.get(name=value.title())
+        if country is None:
+            raise LookupError
+    except LookupError:
+        suggestions = suggest_country_name(value)
+        
+        if suggestions:
+            suggestions_str = ''.join([f'<li>- <span value="{suggestion}" role="button" class="btn btn-xs btn-primary-underline">{suggestion}</span></li>' for suggestion in suggestions])
+            raise serializers.ValidationError(f'''
+            Country doesn\'t exist! Suggestions based on your input:<br />
+            <ul id="suggestions-list">{suggestions_str}</ul>
+            ''')
+        else:
+            raise serializers.ValidationError(f'''
+            Invalid country name.
+            <p><br /><a target="_blank" href="https://www.worldometers.info/geography/alphabetical-list-of-countries/">Check: All countries list</a>.<br />Or simply try few letters you remember of the name and choose from the suggestions. Examples: united, itl, grmn</p>
+            ''')
+        
+    return value

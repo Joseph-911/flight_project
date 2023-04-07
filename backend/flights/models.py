@@ -9,7 +9,7 @@ from users.models import User
 # --------------------------------------------- #
 class Country(models.Model):
     name = models.CharField(max_length=25, unique=True)
-    flag = models.ImageField(blank=True, null=True, default='countries/country-default.png', upload_to='countries/')
+    flag = models.ImageField(blank=True, null=True, default='defaults/country-default.png', upload_to='countries/')
 
     class Meta:
         verbose_name_plural = "Countries"

@@ -13,12 +13,17 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class CountryCreationSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True, max_length=25, validators=[])
-    flag = serializers.ImageField(required=False)
+    name = serializers.CharField(required=True, max_length=25, validators=[validate_country])
+    flag = serializers.ImageField(required=False, validators=[validate_image_field])
 
     class Meta:
         model = Country
         fields = ['name', 'flag']
+
+
+    def create(self, validated_data):
+        validated_data['name'] = validated_data['name'].title()
+        return super().create(validated_data)
 
     
 class AirlineCompanySerializer(serializers.ModelSerializer):

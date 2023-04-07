@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
 
 import user_default from "../assets/images/users/user_default.png";
+import country_default from "../assets/images/countries/country-default.png";
+
 import {
     FormBlock,
     FormBlockSelectCountry,
     FormBlockSelectUsers,
     FieldError,
+    FormBlockImage,
 } from "./FormsUtils";
 
 /* --------------------------------------------- */
@@ -195,7 +198,7 @@ export const CustomerForm = (props) => {
                 id="first_name"
                 value={props.formInputs.first_name || ""}
                 onChange={(e) => {
-                    props.handleInputChange(e, props.setFormInputs);
+                    props.handleImageInputChange(e, props.setFormInputs);
                 }}
                 error={props.error}
             />
@@ -330,6 +333,40 @@ export const AdministratorForm = (props) => {
                 required
                 id="last_name"
                 value={props.formInputs.last_name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
+
+/* --------------------------------------------- */
+/* ---------------- Country Form --------------- */
+/* --------------------------------------------- */
+export const CountryForm = (props) => {
+    return (
+        <>
+            <FormBlockImage
+                id="flag"
+                label="Flag"
+                name="flag"
+                defaultImage={country_default}
+                setFormInputs={props.setFormInputs}
+                error={props.error}
+                onChange={(e) => {
+                    props.handleImageInputChange(e, props.setFormInputs);
+                }}
+            />
+
+            <FormBlock
+                label="Name"
+                name="name"
+                type="text"
+                required
+                id="name"
+                value={props.formInputs.name || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}

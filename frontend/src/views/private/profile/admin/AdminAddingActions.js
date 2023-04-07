@@ -4,6 +4,7 @@ import AddUser from "./usersActions/AddUser";
 import FormsCustomerCombined from "./customersActions/FormsCustomerCombined";
 import FormsAirlineCombined from "./airlinesActions/FormsAirlineCombined";
 import FormsAdministratorCombined from "./administratorsActions/FormsAdministratorCombined";
+import AddCountry from "./countriesActions/AddCountry";
 
 const AdminAddingActions = (props) => {
     const [formComponent, setFormComponent] = useState(props.target);
@@ -38,6 +39,11 @@ const AdminAddingActions = (props) => {
                         target={props.target}
                         sender={props.sender}
                     />
+                );
+                break;
+            case "countries":
+                setComponent(
+                    <AddCountry target={props.target} sender={props.sender} />
                 );
                 break;
             default:

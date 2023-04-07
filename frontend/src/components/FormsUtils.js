@@ -39,7 +39,12 @@ export const FieldError = (props) => {
             {props.error &&
                 props.error[props.field] &&
                 props.error[props.field].map((err, idx) => {
-                    return <p key={`${props.field}-error-${idx}`}>{err}</p>;
+                    return (
+                        <p
+                            key={`${props.field}-error-${idx}`}
+                            dangerouslySetInnerHTML={{ __html: err }}
+                        ></p>
+                    );
                 })}
         </div>
     );
@@ -121,6 +126,74 @@ export const FormBlockSelectCountry = (props) => {
                     );
                 })}
             </select>
+        </div>
+    );
+};
+
+/* --------------------------------------------- */
+/* ----------- Form Block Image Field ---------- */
+/* --------------------------------------------- */
+export const FormBlockImage = (props) => {
+    // Image preview
+    const [imgPreview, setImagePreview] = useState(props.defaultImage);
+    const [removeBtnActive, setRemoveBtnActive] = useState(false);
+
+    // Handle image change preview
+    const handleThumbnailChange = (e) => {
+        const [file] = e.target.files;
+        if (file) {
+            setImagePreview(URL.createObjectURL(file));
+            setRemoveBtnActive(true);
+        } else {
+            setImagePreview(props.defaultImage);
+            setRemoveBtnActive(false);
+        }
+    };
+
+    // Handle image remove
+    const handleRemoveThumbnail = () => {
+        setImagePreview(props.defaultImage);
+        setRemoveBtnActive(false);
+        props.setFormInputs((formInputs) => ({
+            ...formInputs,
+            [props.name]: "",
+        }));
+    };
+
+    return (
+        <div className="form-block">
+            <label htmlFor={props.id}>
+                <span>{props.label}</span>
+                <img
+                    src={imgPreview}
+                    alt="Default"
+                    className="form-thumbnail"
+                />
+            </label>
+            {removeBtnActive && (
+                <span
+                    id="remove-thumbnail"
+                    onClick={() => {
+                        handleRemoveThumbnail(props.id);
+                    }}
+                    className="btn btn-md btn-danger-outline"
+                    role="button"
+                >
+                    Remove image
+                </span>
+            )}
+            <input
+                type="file"
+                name={props.name}
+                accept="image/*"
+                className="form-control"
+                id={props.id}
+                onChange={(e) => {
+                    handleThumbnailChange(e);
+                    props.onChange(e);
+                }}
+            />
+            <FieldError error={props.error} field={props.id} />
         </div>
     );
 };

@@ -23,6 +23,15 @@
             background-color: var(--blue-3);
         }
     }
+    &.btn-primary-underline {
+        border-radius: unset;
+        border-bottom: 2px solid transparent;
+        color: var(--blue-1);
+        &:hover,
+        &:active {
+            border-bottom: 2px solid var(--blue-1);
+        }
+    }
 
     &.btn-primary-outline {
         background-color: var(--white);
@@ -71,5 +80,9 @@
     &.btn-sm {
         width: fit-content;
         padding: 5px 10px;
+    }
+    &.btn-xs {
+        width: fit-content;
+        padding: 3px;
     }
 }
