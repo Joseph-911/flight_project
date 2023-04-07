@@ -126,9 +126,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     
 
     def create(self, validated_data):
+        username = validated_data['username'].lower()
+        email = validated_data['email'].lower()
+        
         user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
+            username=username,
+            email=email,
             password=validated_data['password1']
         )
         if 'thumbnail' in validated_data:
