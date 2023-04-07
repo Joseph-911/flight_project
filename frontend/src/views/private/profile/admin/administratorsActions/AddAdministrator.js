@@ -29,7 +29,7 @@ const AddAdministrator = () => {
 
     useEffect(() => {
         if (isValid) {
-            addMessage("Administrator added successfully", "success");
+            addMessage(isValid, "success");
             navigate("/profile");
         }
     }, [isValid, addMessage, navigate]);

@@ -2,7 +2,7 @@ const baseURL = "profile/administrator";
 
 export const getUser = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.get(`${baseURL}/user/${pk}`);
+        const { data } = await api.get(`${baseURL}/user/${pk}/`);
         if (data) {
             setState(data);
         }
@@ -12,7 +12,7 @@ export const getUser = async (api, pk, setState, setError) => {
 };
 
 export const getUserNoRole = async (api, theState) => {
-    const { data } = await api.get(`${baseURL}/users/no-role`);
+    const { data } = await api.get(`${baseURL}/users/no-role/`);
     if (data) {
         theState(data);
     }
@@ -20,7 +20,7 @@ export const getUserNoRole = async (api, theState) => {
 
 export const addCustomer = async (api, target, setState, setError, inputs) => {
     try {
-        const { data } = await api.post(`${baseURL}/${target}/add`, inputs);
+        const { data } = await api.post(`${baseURL}/${target}/add/`, inputs);
         if (data) {
             console.log(data);
         }
@@ -33,17 +33,17 @@ export const addAirline = async (api, target, setError, setIsValid, inputs) => {
     let data;
     try {
         if (inputs["username"]) {
-            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs, {
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             }));
         } else {
-            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs));
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs));
         }
         if (data) {
             setError(null);
-            setIsValid(true);
+            setIsValid(data.message);
         }
     } catch (error) {
         setError(error.response.data);
@@ -60,17 +60,17 @@ export const addAdministrator = async (
     let data;
     try {
         if (inputs["username"]) {
-            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs, {
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             }));
         } else {
-            ({ data } = await api.post(`${baseURL}/${target}/add`, inputs));
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs));
         }
         if (data) {
             setError(null);
-            setIsValid(true);
+            setIsValid(data.message);
         }
     } catch (error) {
         setError(error.response.data);
@@ -78,7 +78,7 @@ export const addAdministrator = async (
 };
 export const getCountry = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.get(`${baseURL}/country/${pk}`);
+        const { data } = await api.get(`${baseURL}/country/${pk}/`);
         if (data) {
             setState(data);
         }

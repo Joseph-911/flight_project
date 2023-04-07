@@ -28,7 +28,7 @@ const AddAdministratorUser = () => {
 
     useEffect(() => {
         if (isValid) {
-            addMessage("User administrator created successfully", "success");
+            addMessage(isValid, "success");
             navigate("/profile");
         }
     }, [isValid, addMessage, navigate]);

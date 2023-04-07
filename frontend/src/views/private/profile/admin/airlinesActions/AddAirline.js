@@ -29,7 +29,7 @@ const AddAirline = () => {
 
     useEffect(() => {
         if (isValid) {
-            addMessage("Airline company added successfully", "success");
+            addMessage(isValid, "success");
             navigate("/profile");
         }
     }, [isValid, addMessage, navigate]);
