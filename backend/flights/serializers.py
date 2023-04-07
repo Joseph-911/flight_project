@@ -12,6 +12,15 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CountryCreationSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=True, max_length=25, validators=[])
+    flag = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Country
+        fields = ['name', 'flag']
+
+    
 class AirlineCompanySerializer(serializers.ModelSerializer):
     flight_count = serializers.SerializerMethodField()
     country_name = serializers.CharField(source='country_id.name')
@@ -37,7 +46,6 @@ class CustomerSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return f'{obj.first_name} {obj.last_name}'
     
-
 
 class AdministratorSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()

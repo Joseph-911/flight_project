@@ -103,7 +103,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.ImageField(required=False)
+    thumbnail = serializers.ImageField(required=False, validators=[validate_image_field])
     username = serializers.CharField(required=True, max_length=15, validators=[validate_user_username])
     password1 = serializers.CharField(required=True, validators=[validate_user_password1])
     password2 = serializers.CharField(required=True)
@@ -115,13 +115,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def validate(self, data):
         data = super().validate(data)
         data = validate_user_passwords(data)
-
-        if 'thumbnail' in data:
-            thumbnail = data['thumbnail']
-            try:
-                validate_user_thumbnail(thumbnail)
-            except:
-                raise serializers.ValidationError("Invalid image file.")
         return data
     
 
@@ -134,7 +127,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             email=email,
             password=validated_data['password1']
         )
+        print(validated_data)
         if 'thumbnail' in validated_data:
+            print(validated_data['thumbnail'])
             thumbnail = validated_data['thumbnail']
             user.thumbnail.save(thumbnail.name, thumbnail)
         return user
@@ -147,18 +142,11 @@ class UserAirlineCompanyCreationSerializer(UserRegisterSerializer, AirlineCompan
 
             username = validated_data['username']
 
-            thumbnail = self.initial_data['thumbnail']
-            del validated_data['thumbnail']
-
             user_serializer = UserRegisterSerializer(data=validated_data)
-
             user_serializer.is_valid(raise_exception=True)
             user = user_serializer.save()
-            user.thumbnail = thumbnail
-            user.save()
 
             user = User.objects.get(username=username)
-
             user_id = user.id
 
             airline_serializer = AirlineCompanyCreationSerializer(data={'user_id': user_id, 
@@ -180,18 +168,11 @@ class UserAdministratorCreationSerializer(UserRegisterSerializer, AdministratorC
 
             username = validated_data['username']
 
-            thumbnail = self.initial_data['thumbnail']
-            del validated_data['thumbnail']
-
             user_serializer = UserRegisterSerializer(data=validated_data)
-
             user_serializer.is_valid(raise_exception=True)
             user = user_serializer.save()
-            user.thumbnail = thumbnail
-            user.save()
 
             user = User.objects.get(username=username)
-
             user_id = user.id
 
             administrator_serializer = AdministratorCreationSerializer(data={'user_id': user_id, 
