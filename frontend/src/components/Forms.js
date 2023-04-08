@@ -286,6 +286,9 @@ export const AirlineForm = (props) => {
                 error={props.error}
             />
             <FormBlockSelectCountry
+                label="Country"
+                name="country_id"
+                id="country_id"
                 value={props.formInputs.country_id || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
@@ -367,6 +370,84 @@ export const CountryForm = (props) => {
                 required
                 id="name"
                 value={props.formInputs.name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
+
+/* --------------------------------------------- */
+/* ---------------- Flight Form ---------------- */
+/* --------------------------------------------- */
+export const FlightForm = (props) => {
+    return (
+        <>
+            <FormBlockSelectCountry
+                label="Origin Country"
+                name="origin_country_id"
+                id="origin_country_id"
+                value={props.formInputs.origin_country_id || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlockSelectCountry
+                label="Destination Country"
+                name="destination_country_id"
+                id="destination_country_id"
+                value={props.formInputs.destination_country_id || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Departure time"
+                name="departure_time"
+                type="datetime-local"
+                required
+                id="departure_time"
+                value={props.formInputs.departure_time || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Landing time"
+                name="landing_time"
+                type="datetime-local"
+                required
+                id="landing_time"
+                value={props.formInputs.landing_time || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Price"
+                name="price"
+                type="number"
+                required
+                id="price"
+                value={props.formInputs.price || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Remaining Tickets"
+                name="remaining_tickets"
+                type="number"
+                required
+                id="remaining_tickets"
+                value={props.formInputs.remaining_tickets || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}

@@ -1,5 +1,4 @@
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
 
 from facades.administrator_facade import administrator_facade
 from utils.decorators import *
@@ -65,7 +64,6 @@ def view_user(request, pk):
 @user_has_permission('view_user')
 def view_user_no_role(request):
     return administrator_facade.get_users_no_role()
-
 
 
 # --------------------------------------------- #

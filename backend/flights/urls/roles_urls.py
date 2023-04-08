@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from flights.views import views_administrator
+from flights.views import views_administrator, views_airline
 
 
 administrator_url_patterns = [
@@ -24,8 +24,14 @@ administrator_url_patterns = [
 ]
 
 
+airline_url_patterns = [
+    path('flights/', views_airline.view_my_flights, name='company-all-flights'),
+    path('flights/add/', views_airline.add_flight, name='add-flight'),
+]
+
 roles_urls = [
     path('administrator/', include(administrator_url_patterns)),
+    path('airline/', include(airline_url_patterns)),
 ]
 
 

@@ -26,5 +26,6 @@
     thead tr th,
     tbody tr td {
         border: 1px solid var(--gray-1);
+        white-space: nowrap;
     }
 }

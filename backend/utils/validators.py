@@ -2,10 +2,12 @@ import re
 import pycountry
 
 from fuzzywuzzy import fuzz, process
+from datetime import timedelta
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.core.files.images import get_image_dimensions
+from django.utils import timezone
 
 from rest_framework import serializers
 from users.models import User
@@ -121,13 +123,50 @@ def validate_country_id(value):
     except Country.DoesNotExist:
         raise serializers.ValidationError('Country is not found')
     
+def validate_airline_id(value):
+    # Check if the ID is valid, and if the country exists
+    validate_id(value)
+    try:
+        AirlineCompany.objects.get(id=value)
+    except AirlineCompany.DoesNotExist:
+        raise serializers.ValidationError('Airline company is not found')
+    
 
 def validate_unique_name(value):
     # Check if company name is taken
     if AirlineCompany.objects.filter(name__iexact=value).exists():
         raise serializers.ValidationError('Name already exists.')
     
+def validate_number_positive(value):
+    # Check for positive number
+    if value is None or value <= 0:
+        raise ValidationError('Field must be a relavant positive number.')
+    
+def validate_time_is_future(value):
+    # Check that time is in the future
+    now = timezone.now()
+    if value and value <= now:
+        raise ValidationError('Date and time must be in the future.')
+    
 
+def validate_time_gap(date1, date1field, date2, date2field):
+    # Check that date2 is greater than date1 and not equal
+    if date1 and date2 and date1 >= date2:
+        raise ValidationError({
+                date1field: 'Departure time must be before landing time.',
+                date2field: 'Departure time must be before landing time.'
+            })
+
+
+def validate_time_duration(date1, date2, date2field, min_duration, max_duration):
+    # Check time duration is between min and max
+    if date2 and date1:
+        duration = date2 - date1
+        print(duration)
+        min_duration = timedelta(hours=min_duration)
+        max_duration = timedelta(hours=max_duration)
+        if duration < min_duration or duration > max_duration:
+            raise ValidationError({date2field: 'Flight duration must be between 1 hour and 18 hours.'})
 
 def suggest_country_name(value):
     countries = [c.name.title() for c in pycountry.countries]

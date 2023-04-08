@@ -38,3 +38,11 @@ export const adminActionsList = [
         actions: createActions("Countries", "Country"),
     },
 ];
+
+export const airlineActionsList = [
+    {
+        title: "Flights",
+        target: "flights",
+        actions: createActions("Flights", "Flight"),
+    },
+];

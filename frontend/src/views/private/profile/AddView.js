@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import AdminAddingActions from "./admin/AdminAddingActions";
+import AirlineAddingActions from "./airline/AirlineAddingActions";
 
 const AddView = () => {
     const location = useLocation();
@@ -20,6 +21,11 @@ const AddView = () => {
                 case "administrator":
                     setComponent(
                         <AdminAddingActions sender={sender} target={target} />
+                    );
+                    break;
+                case "airline":
+                    setComponent(
+                        <AirlineAddingActions sender={sender} target={target} />
                     );
                     break;
                 default:

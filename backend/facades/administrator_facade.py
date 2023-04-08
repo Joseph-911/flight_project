@@ -10,11 +10,18 @@ from flights.serializers import *
 
 class AdministratorFacade(FacadeBase):
 
+    # --------------------------------------------- # 
+    # ------------- Get User No Role -------------- # 
+    # --------------------------------------------- # 
     def get_users_no_role(self):
         users = self.dal.read_object_filter_by(User, {'user_role': None})
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+    # --------------------------------------------- # 
+    # ------------------ Get User ----------------- # 
+    # --------------------------------------------- # 
     def get_user(self, pk):
         user = self.dal.read_object(User, pk)
         if (user == None):
@@ -23,6 +30,9 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+    # --------------------------------------------- # 
+    # ---------------- Get Country ---------------- # 
+    # --------------------------------------------- # 
     def get_country(self, pk):
         country = self.dal.read_object(Country, pk)
         if (country == None):
@@ -31,6 +41,9 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+    # --------------------------------------------- # 
+    # --------------- Get All Users --------------- # 
+    # --------------------------------------------- # 
     def get_all_users(self, request):
         users = []
         
@@ -44,6 +57,9 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data)
     
 
+    # --------------------------------------------- # 
+    # ------------ Get All Customers -------------- # 
+    # --------------------------------------------- # 
     def get_all_customers(self, request):
         customers = []
 
@@ -56,6 +72,9 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data)
     
 
+    # --------------------------------------------- # 
+    # --------- Get All Airline Companies --------- # 
+    # --------------------------------------------- # 
     def get_all_airlinecompanies(self, request):
         airlines = []
 
@@ -69,6 +88,9 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data)
     
 
+    # --------------------------------------------- # 
+    # ----------- Get All Administrators ---------- # 
+    # --------------------------------------------- # 
     def get_all_administrators(self, request):
         administrators = []
 
@@ -81,7 +103,10 @@ class AdministratorFacade(FacadeBase):
         serializer = AdministratorSerializer(administrators, many=True)
         return Response(serializer.data)
         
-    
+
+    # --------------------------------------------- # 
+    # ------------- Get All Countries ------------- # 
+    # --------------------------------------------- # 
     def get_all_countries(self, request):
         countries = []
 
@@ -95,10 +120,16 @@ class AdministratorFacade(FacadeBase):
         return Response(serializer.data)
     
 
+    # --------------------------------------------- # 
+    # ---------------- Add Customer --------------- # 
+    # --------------------------------------------- #
     def add_customer(self, request):
         pass
         
     
+    # --------------------------------------------- # 
+    # ---------------- Add Airline ---------------- # 
+    # --------------------------------------------- #
     def add_airline(self, request):
         if 'user_id' in request.data:
             serializer = AirlineCompanyCreationSerializer(data=request.data)
@@ -114,6 +145,9 @@ class AdministratorFacade(FacadeBase):
             return Response({'message': 'Error during creating an airline'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+    # --------------------------------------------- # 
+    # ------------- Add Administrator ------------- # 
+    # --------------------------------------------- # 
     def add_administrator(self, request):
         if 'user_id' in request.data:
             serializer = AdministratorCreationSerializer(data=request.data)
@@ -129,11 +163,16 @@ class AdministratorFacade(FacadeBase):
             return Response({'message': 'Error during creating an administrator'}, status=status.HTTP_400_BAD_REQUEST)
 
     
+    # --------------------------------------------- # 
+    # ---------------- Add Country ---------------- # 
+    # --------------------------------------------- # 
     def add_country(self, request):
         serializer = CountryCreationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'message': 'Country added successfully'}, status=status.HTTP_200_OK)
         return Response({'message': 'not valid'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 administrator_facade = AdministratorFacade()

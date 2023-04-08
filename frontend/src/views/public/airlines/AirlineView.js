@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { getAirlineById } from "api/airlinesActions";
+import { getAirlineById } from "api/common/airlinesAPI";
 import { fetchData } from "utils/fetchData";
 
 const AirlineView = () => {

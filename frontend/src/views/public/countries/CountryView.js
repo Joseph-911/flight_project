@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { getCountryById } from "api/countriesActions";
+import { getCountryById } from "api/common/countriesAPI";
 import { fetchData } from "utils/fetchData";
 
 const CountryView = () => {

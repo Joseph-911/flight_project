@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import PageTitle from "components/PageTitle";
 import { fetchData } from "utils/fetchData";
-import { getAllCountries } from "api/countriesActions";
+import { getAllCountries } from "api/common/countriesAPI";
 
 const CountriesView = () => {
     const [countries, setCountries] = useState([]);

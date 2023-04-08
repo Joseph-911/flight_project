@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { getUserNoRole } from "api/administratorsActions";
-import { getAllCountries } from "api/countriesActions";
+import { getAllCountries } from "api/common/countriesAPI";
 import AuthContext from "context/AuthContext";
 
 /* --------------------------------------------- */
@@ -107,10 +107,10 @@ export const FormBlockSelectCountry = (props) => {
 
     return (
         <div className="form-block">
-            <label htmlFor="country_id">Country</label>
+            <label htmlFor={props.id}>{props.label}</label>
             <select
-                name="country_id"
-                id="country_id"
+                name={props.name}
+                id={props.id}
                 required
                 value={props.value}
                 onChange={props.onChange}

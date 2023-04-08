@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import PageTitle from "components/PageTitle";
 import { fetchData } from "utils/fetchData";
-import { getAllAirlines } from "api/airlinesActions";
+import { getAllAirlines } from "api/common/airlinesAPI";
 
 const AirlinesView = () => {
     const [airlines, setAirlines] = useState([]);

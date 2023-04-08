@@ -24,7 +24,80 @@ class CountryCreationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['name'] = validated_data['name'].title()
         return super().create(validated_data)
+    
 
+class FlightSerializer(serializers.ModelSerializer):
+    from_to = serializers.SerializerMethodField()
+    tickets_sold = serializers.SerializerMethodField()
+    flight_duration = serializers.SerializerMethodField()
+    formatted_departure_date = serializers.SerializerMethodField()
+    formatted_landing_date = serializers.SerializerMethodField()
+    formatted_departure_time = serializers.SerializerMethodField()
+    formatted_landing_time = serializers.SerializerMethodField()
+    formatted_departure_datetime = serializers.SerializerMethodField()
+    formatted_landing_datetime = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Flight
+        fields = '__all__'
+
+    def get_from_to(self, obj):
+        return obj.get_from_to()
+
+    def get_tickets_sold(self, obj):
+        return obj.get_tickets_sold()
+
+    def get_flight_duration(self, obj):
+        return obj.get_flight_duration()
+
+    def get_formatted_departure_date(self, obj):
+        return obj.formatted_departure_date()
+
+    def get_formatted_landing_date(self, obj):
+        return obj.formatted_landing_date()
+
+    def get_formatted_departure_time(self, obj):
+        return obj.formatted_departure_time()
+
+    def get_formatted_landing_time(self, obj):
+        return obj.formatted_landing_time()
+
+    def get_formatted_departure_datetime(self, obj):
+        return obj.formatted_departure_datetime()
+
+    def get_formatted_landing_datetime(self, obj):
+        return obj.formatted_landing_datetime()
+    
+
+
+class FlightCreationSerializer(serializers.ModelSerializer):
+    airline_company_id = serializers.CharField(required=True, validators=[validate_airline_id])
+    origin_country_id = serializers.CharField(required=True, validators=[validate_country_id])
+    destination_country_id = serializers.CharField(required=True, validators=[validate_country_id])
+    departure_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
+    landing_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
+    price = serializers.IntegerField(validators=[validate_number_positive])
+    remaining_tickets = serializers.IntegerField(validators=[validate_number_positive])
+
+    class Meta:
+        model = Flight
+        fields = ['airline_company_id', 'origin_country_id', 'destination_country_id', 'departure_time', 'landing_time', 'price', 'remaining_tickets']
+
+
+    def validate(self, data):
+        data = super().validate(data)
+        departure_time = data['departure_time']
+        landing_time = data['landing_time']
+
+        validate_time_gap(departure_time, 'departure_time', landing_time, 'landing_time')
+        validate_time_duration(departure_time, landing_time, 'landing_time', 1, 18)
+        return data
+
+    def create(self, validated_data):
+        validated_data['airline_company_id'] = AirlineCompany.objects.get(id=validated_data['airline_company_id'])
+        validated_data['origin_country_id'] = Country.objects.get(id=validated_data['origin_country_id'])
+        validated_data['destination_country_id'] = Country.objects.get(id=validated_data['destination_country_id'])
+        return super().create(validated_data)
     
 class AirlineCompanySerializer(serializers.ModelSerializer):
     flight_count = serializers.SerializerMethodField()
