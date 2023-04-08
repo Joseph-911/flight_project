@@ -9,6 +9,7 @@ import AirlinesView from "views/public/airlines/AirlinesView";
 import AirlineView from "views/public/airlines/AirlineView";
 import RegisterView from "views/public/register/RegisterView";
 import PageNotFoundView from "views/public/404/Page404View";
+import FlightsView from "views/public/flights/FlightsView";
 
 export const Page404 = () => {
     return (
@@ -107,6 +108,19 @@ export const Airline = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <AirlineView />
+            </div>
+        </>
+    );
+};
+
+export const Flights = () => {
+    return (
+        <>
+            <Helmet>
+                <title>All Flights</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <FlightsView />
             </div>
         </>
     );

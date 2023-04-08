@@ -10,4 +10,6 @@ urlpatterns = [
     # Airlines
     path('airlines/', views_flights.get_all_airlines, name='airlines'),
     path('airlines/<str:pk>/', views_flights.get_airline, name='airline'),
+    # Flights
+    path('flights/', views_flights.get_all_flights, name='flights'),
 ]

@@ -921,4 +921,135 @@ button {
 }
 .actions-list > li > ul > li > button:hover, .actions-list > li > ul > li > button:active {
   color: var(--blue-2);
+}
+
+.flights-list .flight-section-title {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.flights-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.flights-list .flight-item {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  width: 30%;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.flights-list .flight-item > div:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+.flights-list .flight-item .flight-locations .locations {
+  display: flex;
+  justify-content: space-between;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.flights-list .flight-item .flight-locations .locations .location {
+  height: 100%;
+  width: 49%;
+}
+.flights-list .flight-item .flight-locations .location {
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  background-color: var(--white-1);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flights-list .flight-item .flight-locations .location:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+.flights-list .flight-item .flight-locations .location > p span {
+  display: block;
+}
+.flights-list .flight-item .flight-locations .location > p span:last-of-type {
+  color: var(--blue-1);
+  margin-top: 4px;
+}
+.flights-list .flight-item .flight-locations .location.location-from > div {
+  transform: rotate(-30deg);
+  opacity: 0.9;
+}
+.flights-list .flight-item .flight-locations .location.location-to > div {
+  transform: rotate(30deg);
+}
+.flights-list .flight-item .flight-locations .location > div {
+  font-size: 1.3rem;
+}
+
+.flights-list .flight-item .flight-date .dates {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.flights-list .flight-item .flight-date .dates .date {
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  background-color: var(--white-1);
+  padding: 10px;
+  width: 48%;
+}
+.flights-list .flight-item .flight-date .dates .date span {
+  display: block;
+  margin-bottom: 7px;
+}
+.flights-list .flight-item .flight-date .dates .date p {
+  font-size: 0.9rem;
+}
+.flights-list .flight-item .flight-date .dates .date p:not(:last-of-type) {
+  margin-bottom: 5px;
+}
+.flights-list .flight-item .flight-date .flight-duration {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+.flights-list .flight-item .flight-date .flight-duration ion-icon {
+  display: block;
+  font-size: 1rem;
+  margin-right: 3px;
+  opacity: 0.9;
+}
+
+.flights-list .flight-item .flight-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flights-list .flight-item .flight-footer .flight-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.flights-list .flight-item .flight-footer .flight-price .price {
+  font-weight: 500;
+  color: var(--blue-1);
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.flights-list .flight-item .flight-company {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.flights-list .flight-item .flight-company .flight-company-img {
+  width: 45px;
+  height: auto;
+  border-radius: 50%;
+}
+.flights-list .flight-item .flight-company .flight-company-img img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=app.css.map */

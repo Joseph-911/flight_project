@@ -1,0 +1,165 @@
+.flights-list {
+    .flight-section-title {
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+    }
+}
+
+.flights-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .flight-item {
+        @include card();
+        width: 30%;
+        padding: 20px;
+        margin-bottom: 30px;
+
+        & > div {
+            &:not(:last-of-type) {
+                margin-bottom: 20px;
+            }
+        }
+
+        .flight-locations {
+            .locations {
+                display: flex;
+                justify-content: space-between;
+                height: fit-content;
+
+                .location {
+                    height: 100%;
+                    width: 49%;
+                }
+            }
+            
+            .location {
+                border: 1px solid var(--gray-1);
+                border-radius: 5px;
+                background-color: var(--white-1);
+                padding: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &:not(:last-of-type) {
+                    margin-bottom: 10px;
+                }
+                
+                & > p {
+                    span {
+                        display: block;
+                        &:last-of-type {
+                            color: var(--blue-1);
+                            margin-top: 4px;
+                        }
+                    }
+                }
+                
+                &.location-from {
+                    & > div {
+                        transform: rotate(-30deg);
+                        opacity: 0.9;
+                    }
+                }
+
+                &.location-to {
+                    & > div {
+                        transform: rotate(30deg);
+                    }
+                }
+                & > div {
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
+}
+
+.flights-list {
+    .flight-item {
+        .flight-date {
+            .dates {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+
+                .date {
+                    border: 1px solid var(--gray-1);
+                    border-radius: 5px;
+                    background-color: var(--white-1);
+                    padding: 10px;
+                    width: 48%;
+                    span {
+                        display: block;
+                        margin-bottom: 7px;
+                    }
+
+                    p {
+                        font-size: 0.9rem;
+                        &:not(:last-of-type) {
+                            margin-bottom: 5px;
+                        }
+                    }
+                }
+            }
+
+            .flight-duration {
+                margin-top: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+                ion-icon {
+                    display: block;
+                    font-size: 1rem;
+                    margin-right: 3px;
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}
+
+
+.flights-list {
+    .flight-item {
+        .flight-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+    
+            .flight-price {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .price {
+                    font-weight: 500;
+                    color: var(--blue-1);
+                    font-size: 1.5rem;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+.flights-list {
+    .flight-item {
+        .flight-company {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .flight-company-img {
+                width: 45px;
+                height: auto;
+                border-radius: 50%;
+                img {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+            } 
+        }
+    }
+}

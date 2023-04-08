@@ -50,7 +50,6 @@ class FacadeBase:
             response.set_cookie(key='user', value='', max_age=0, expires=0)
             return response
   
-        
 
     # --------------------------------------------- # 
     # -------------- Create New User -------------- # 
@@ -109,6 +108,15 @@ class FacadeBase:
                 return Response(serializer.data)
             else:
                 return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # --------------------------------------------- # 
+    # ---------------- All Flights ---------------- # 
+    # --------------------------------------------- #
+    def get_all_flights(self):
+        countries = self.dal.read_all_objects(Flight)
+        serializer = FlightSerializer(countries, many=True)
+        return Response(serializer.data)
 
 
 facade_base = FacadeBase()

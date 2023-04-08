@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django.http import JsonResponse
 
 from flights.models import *
 from users.models import *
@@ -36,10 +37,23 @@ class FlightSerializer(serializers.ModelSerializer):
     formatted_landing_time = serializers.SerializerMethodField()
     formatted_departure_datetime = serializers.SerializerMethodField()
     formatted_landing_datetime = serializers.SerializerMethodField()
+    origin_country = serializers.SerializerMethodField()
+    destination_country = serializers.SerializerMethodField()
+    airline_company = serializers.SerializerMethodField()
+    airline_company_thumbnail = serializers.CharField(source='airline_company_id.user_id.thumbnail.url')
 
     class Meta:
         model = Flight
         fields = '__all__'
+
+    def get_origin_country(self, obj):
+        return obj.origin_country_id.name
+    
+    def get_destination_country(self, obj):
+        return obj.destination_country_id.name
+    
+    def get_airline_company(self, obj):
+        return obj.airline_company_id.name
 
     def get_from_to(self, obj):
         return obj.get_from_to()
