@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import PageTitle from "components/PageTitle";
-import { fetchData } from "utils/fetchData";
 import { getAllAirlines } from "api/common/airlinesAPI";
 
 const AirlinesView = () => {
@@ -10,8 +9,7 @@ const AirlinesView = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchData(getAllAirlines, setAirlines);
-        setLoading(false);
+        getAllAirlines(setAirlines, setLoading);
     }, []);
 
     return (

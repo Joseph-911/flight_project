@@ -42,6 +42,15 @@ def get_country(request, pk):
 
 
 # --------------------------------------------- #
+# ------------- Country Airlines -------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_country_airlines(request, pk):
+    return facade_base.get_country_airlines(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- View All Flights ------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

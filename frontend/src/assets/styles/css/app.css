@@ -519,13 +519,14 @@ button {
   height: 100%;
   padding: 20px;
   text-decoration: none;
+  min-width: 150px;
 }
 .display-list .display-item .display-link:link .display-image, .display-list .display-item .display-link:visited .display-image {
   width: 100px;
   height: 100px;
   overflow: hidden;
   border-radius: 50%;
-  margin-bottom: 7px;
+  margin: 0 auto 7px;
 }
 .display-list .display-item .display-link:link .display-image img, .display-list .display-item .display-link:visited .display-image img {
   width: 100%;
@@ -930,8 +931,8 @@ button {
 
 .flights-list {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 1%;
 }
 .flights-list .flight-item {
   background-color: var(--white);
@@ -1044,12 +1045,14 @@ button {
 }
 .flights-list .flight-item .flight-company .flight-company-img {
   width: 45px;
-  height: auto;
+  height: 45px;
   border-radius: 50%;
+  border: 1px solid var(--gray-1);
+  overflow: hidden;
 }
 .flights-list .flight-item .flight-company .flight-company-img img {
   width: 100%;
-  height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }/*# sourceMappingURL=app.css.map */

@@ -1,4 +1,4 @@
-export const fetchData = async (apiFunction, setState, setError) => {
+export const fetchData = async (apiFunction, setState, setError = null) => {
     try {
         const data = await apiFunction();
         setState(data);

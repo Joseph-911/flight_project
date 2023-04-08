@@ -84,7 +84,7 @@ class FacadeBase:
                 serializer = AirlineCompanySerializer(airline)
                 return Response(serializer.data)
             else:
-                return Response({'message': 'Airline company not found'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': 'No airline company found'}, status=status.HTTP_404_NOT_FOUND)
     
     
     # --------------------------------------------- # 
@@ -107,7 +107,18 @@ class FacadeBase:
                 serializer = CountrySerializer(country)
                 return Response(serializer.data)
             else:
-                return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': 'No country found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # --------------------------------------------- #
+    # ----------- Get Country Airlines ------------ #
+    # --------------------------------------------- #
+    def get_country_airlines(self, request, pk):
+        airlines = self.dal.get_airlines_by_county(pk)
+        if airlines:
+            serializer = AirlineCompanySerializer(airlines, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
     # --------------------------------------------- # 

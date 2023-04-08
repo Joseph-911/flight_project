@@ -1,6 +1,6 @@
 import React from "react";
 
-const CountryItem = (props) => {
+const CountryCard = (props) => {
     const country = props.data;
 
     return (
@@ -15,4 +15,4 @@ const CountryItem = (props) => {
     );
 };
 
-export default CountryItem;
+export default CountryCard;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { getCountryById } from "api/common/countriesAPI";
-import { fetchData } from "utils/fetchData";
 
 const CountryView = () => {
     const [country, setCountry] = useState(null);
@@ -10,17 +9,12 @@ const CountryView = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        const getCountry = () => {
-            fetchData(() => getCountryById(id), setCountry, setError);
-        };
-        getCountry();
+        getCountryById(id, setCountry, setError);
     }, [id]);
 
     return (
         <>
-            {error ? (
-                <p>{error}</p>
-            ) : country ? (
+            {country ? (
                 <div className="displayed-item">
                     <div className="displayed-item-info">
                         <div className="displayed-item-image">
@@ -29,7 +23,10 @@ const CountryView = () => {
                         <p className="displayed-item-title">{country.name}</p>
                     </div>
                     <div className="displayed-item-links">
-                        <Link className="btn btn-md btn-primary" to="/">
+                        <Link
+                            className="btn btn-md btn-primary"
+                            to={`/countries/${id}/airlines`}
+                        >
                             All Airlines
                         </Link>
                         <Link className="btn btn-md btn-primary" to="/">
@@ -41,7 +38,7 @@ const CountryView = () => {
                     </div>
                 </div>
             ) : (
-                <p>Loading...</p>
+                <p>{error}</p>
             )}
         </>
     );

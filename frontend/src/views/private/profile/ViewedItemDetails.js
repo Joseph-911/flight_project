@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "./Avatar";
-import CountryItem from "components/CountryItem";
+import CountryCard from "components/CountryCard";
 
 const ViewedItemDetails = (props) => {
     const [component, setComponent] = useState();
@@ -11,7 +11,7 @@ const ViewedItemDetails = (props) => {
                 setComponent(<Avatar user={props.data} details={true} />);
                 break;
             case "countries":
-                setComponent(<CountryItem data={props.data} />);
+                setComponent(<CountryCard data={props.data} />);
                 break;
             default:
                 break;

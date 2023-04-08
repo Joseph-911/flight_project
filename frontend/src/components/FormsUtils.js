@@ -98,11 +98,7 @@ export const FormBlockSelectCountry = (props) => {
     const [countries, setCountries] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const allCountries = await getAllCountries();
-            setCountries(allCountries);
-        };
-        fetchData();
+        getAllCountries(setCountries);
     }, []);
 
     return (

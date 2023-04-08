@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 
 import PageTitle from "components/PageTitle";
-import { fetchData } from "utils/fetchData";
 import { getAllFlights } from "api/common/flightsAPI";
 import Flight from "components/Flight";
 
 const FlightsView = () => {
     const [flights, setFlights] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchData(getAllFlights, setFlights);
+        getAllFlights(setFlights, setLoading);
     }, []);
 
     return (
         <>
             <PageTitle title="All Flights" />
 
-            {flights.length === 0 ? (
+            {loading ? (
+                <p>Loading...</p>
+            ) : flights.length === 0 ? (
                 <p>No flights found</p>
             ) : (
                 <ul className="flights-list">

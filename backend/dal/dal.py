@@ -42,3 +42,10 @@ class GenericDAL:
 
     def read_object_filter_by(self, model_class, filter_dict):
         return model_class.objects.filter(**filter_dict)
+
+
+    def get_airlines_by_county(self, pk):
+        country = self.read_object(Country, pk)
+        if country:
+            return self.read_object_filter_by(AirlineCompany, {'country_id': pk})
+        return None

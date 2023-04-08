@@ -10,6 +10,7 @@ import AirlineView from "views/public/airlines/AirlineView";
 import RegisterView from "views/public/register/RegisterView";
 import PageNotFoundView from "views/public/404/Page404View";
 import FlightsView from "views/public/flights/FlightsView";
+import CountryAirlinesView from "views/public/countries/CountryAirlinesView";
 
 export const Page404 = () => {
     return (
@@ -82,6 +83,19 @@ export const Country = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <CountryView />
+            </div>
+        </>
+    );
+};
+
+export const CountryAirlines = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Country Airlines</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <CountryAirlinesView />
             </div>
         </>
     );

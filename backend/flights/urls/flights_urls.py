@@ -7,6 +7,7 @@ urlpatterns = [
     # Countries
     path('countries/', views_flights.get_all_countries, name='countries'),
     path('countries/<str:pk>/', views_flights.get_country, name='country'),
+    path('countries/<str:pk>/airlines/', views_flights.get_country_airlines, name='country-airlines'),
     # Airlines
     path('airlines/', views_flights.get_all_airlines, name='airlines'),
     path('airlines/<str:pk>/', views_flights.get_airline, name='airline'),
