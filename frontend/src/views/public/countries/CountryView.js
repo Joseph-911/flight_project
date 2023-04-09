@@ -29,10 +29,16 @@ const CountryView = () => {
                         >
                             All Airlines
                         </Link>
-                        <Link className="btn btn-md btn-primary" to={`/countries/${id}/flights/origin`}>
+                        <Link
+                            className="btn btn-md btn-primary"
+                            to={`/countries/${id}/flights/origin`}
+                        >
                             Origin Flights
                         </Link>
-                        <Link className="btn btn-md btn-primary" to={`/countries/${id}/flights/destination`}>
+                        <Link
+                            className="btn btn-md btn-primary"
+                            to={`/countries/${id}/flights/destination`}
+                        >
                             Destination Flights
                         </Link>
                     </div>

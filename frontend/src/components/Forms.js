@@ -26,7 +26,7 @@ export const SearchForm = (props) => {
                 <div className="form-block">
                     <input
                         type="search"
-                        placeholder="Type here"
+                        placeholder={props.placeholder}
                         name="search_query"
                         value={props.searchQuery}
                         onChange={(e) => {

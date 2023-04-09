@@ -58,6 +58,11 @@ const ViewAllData = (props) => {
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
                             handleSearch={handleSearch}
+                            placeholder={
+                                props.dataName === "countries"
+                                    ? "Enter country name"
+                                    : "Enter username"
+                            }
                         />
                     ) : (
                         " "
