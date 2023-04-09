@@ -11,6 +11,8 @@ import RegisterView from "views/public/register/RegisterView";
 import PageNotFoundView from "views/public/404/Page404View";
 import FlightsView from "views/public/flights/FlightsView";
 import CountryAirlinesView from "views/public/countries/CountryAirlinesView";
+import CountryOriginFlightsView from "views/public/countries/CountryOriginFlightsView";
+import CountryDestinationFlightsView from "views/public/countries/CountryDestinationFlightsView";
 
 export const Page404 = () => {
     return (
@@ -96,6 +98,32 @@ export const CountryAirlines = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <CountryAirlinesView />
+            </div>
+        </>
+    );
+};
+
+export const CountryOriginFlights = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Country Origin Flights</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <CountryOriginFlightsView />
+            </div>
+        </>
+    );
+};
+
+export const CountryDestinationFlights = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Country Destination Flights</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <CountryDestinationFlightsView />
             </div>
         </>
     );

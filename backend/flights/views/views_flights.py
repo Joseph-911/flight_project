@@ -51,6 +51,24 @@ def get_country_airlines(request, pk):
 
 
 # --------------------------------------------- #
+# ---------- Country Origin Flights ----------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_country_origin_flights(request, pk):
+    return facade_base.get_country_origin_flights(request, pk)
+
+
+# --------------------------------------------- #
+# -------- Country Destination Flights -------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_country_destination_flights(request, pk):
+    return facade_base.get_country_destination_flights(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- View All Flights ------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

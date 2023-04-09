@@ -12,6 +12,8 @@ import {
     Page404,
     Flights,
     CountryAirlines,
+    CountryOriginFlights,
+    CountryDestinationFlights,
 } from "routes/publicRoutes";
 
 import { RestrictedRoute } from "utils/CustomRoutes";
@@ -23,6 +25,8 @@ const PublicViewsLayout = () => {
             <Route path="/countries" element={<Countries />} />
             <Route path="/countries/:id" element={<Country />} />
             <Route path="/countries/:id/airlines" element={<CountryAirlines />} />
+            <Route path="/countries/:id/flights/origin/" element={<CountryOriginFlights />} />
+            <Route path="/countries/:id/flights/destination/" element={<CountryDestinationFlights />} />
             <Route path="/airlines" element={<Airlines />} />
             <Route path="/airlines/:id" element={<Airline />} />
             <Route path="/flights" element={<Flights />} />

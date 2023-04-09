@@ -111,12 +111,34 @@ class FacadeBase:
 
 
     # --------------------------------------------- #
-    # ----------- Get Country Airlines ------------ #
+    # ------------ Get Country Airlines ----------- #
     # --------------------------------------------- #
     def get_country_airlines(self, request, pk):
         airlines = self.dal.get_airlines_by_county(pk)
-        if airlines:
+        if airlines is not None:
             serializer = AirlineCompanySerializer(airlines, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+    # --------------------------------------------- #
+    # -------- Get Country Origin Flights --------- #
+    # --------------------------------------------- #
+    def get_country_origin_flights(self, request, pk):
+        flights = self.dal.get_flights_by_origin_country_id(pk)
+        if flights is not None:
+            serializer = FlightSerializer(flights, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # --------------------------------------------- #
+    # ------ Get Country Destination Flights ------ #
+    # --------------------------------------------- #
+    def get_country_destination_flights(self, request, pk):
+        flights = self.dal.get_flights_by_destination_country_id(pk)
+        if flights is not None:
+            serializer = FlightSerializer(flights, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({'message': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
 

@@ -29,3 +29,25 @@ export const getCountryAirlines = async (id, setState) => {
         return;
     }
 };
+
+export const getCountryOriginFlights = async (id, setState) => {
+    try {
+        const { data } = await axios.get(`${baseURL}${id}/flights/origin/`);
+        if (data) {
+            setState(data);
+        }
+    } catch (error) {
+        return;
+    }
+}
+
+export const getCountryDestinationFlights = async (id, setState) => {
+    try {
+        const { data } = await axios.get(`${baseURL}${id}/flights/destination/`);
+        if (data) {
+            setState(data);
+        }
+    } catch (error) {
+        return;
+    }
+}
