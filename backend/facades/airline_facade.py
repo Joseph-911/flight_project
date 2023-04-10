@@ -7,6 +7,20 @@ from flights.serializers import *
 
 class AirlineFacade(FacadeBase):
 
+    # --------------------------------------------- #
+    # -------------- Update Airline --------------- #
+    # --------------------------------------------- #
+    def update_airline(self, request, airline):
+        if request.method == 'GET':
+            serializer = AirlineCompanySerializer(airline)
+            return Response(serializer.data)
+        if request.method == 'POST':
+            serializer = AirlineCompanyCreationSerializer(instance=airline, data=request.data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'message': 'Airline company updated successfully'}, status=status.HTTP_200_OK)
+
+
     # --------------------------------------------- # 
     # ----------------- Add Flight ---------------- # 
     # --------------------------------------------- #  

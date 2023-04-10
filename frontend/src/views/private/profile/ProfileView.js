@@ -5,11 +5,11 @@ import Avatar from "./Avatar";
 import Dashboard from "./Dashboard";
 
 const ProfileView = () => {
-    const { userDetails } = useContext(AuthContext);
+    const { userDetails, userRole } = useContext(AuthContext);
 
     return (
         <div className="profile-wrapper">
-            <Avatar user={userDetails} details={false} />
+            <Avatar user={userDetails} userRole={userRole} details={false} />
             <Dashboard />
         </div>
     );

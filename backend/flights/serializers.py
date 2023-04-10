@@ -175,6 +175,15 @@ class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
         airline_company.save()
         return airline_company
         
+    
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name).title()
+        instance.user_id = validated_data.get('user_id', instance.user_id)
+        instance.country_id = validated_data.get('country_id', instance.country_id)
+        instance.save()
+
+        return instance
+
 
 class AdministratorCreationSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(required=True, validators=[validate_user_id])

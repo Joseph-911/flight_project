@@ -3,6 +3,15 @@ from rest_framework.decorators import api_view
 from facades.airline_facade import airline_facade
 from utils.decorators import *
 
+# --------------------------------------------- #
+# -------------- Update Airline --------------- #
+# --------------------------------------------- #
+@api_view(['GET','POST'])
+@user_has_permission('change_airlinecompany')
+def update_airline(request):
+    airline = request.user.airlinecompany
+    return airline_facade.update_airline(request, airline)
+
 
 # --------------------------------------------- #
 # ----------------- Add Flight ---------------- #

@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Avatar = (props) => {
     const user = props.user;
+    const userRole = props.userRole;
+    const navigate = useNavigate();
+
+    const [editComponent, setEditComponent] = useState();
+
+    useEffect(() => {
+        const handleChangeRoute = (role) => {
+            navigate("/profile/edit", {
+                state: { user: user, role: role },
+            });
+        };
+
+        const fetchData = async () => {
+            const data = await userRole();
+            if (data) {
+                const role = data.role;
+                if (role === "airline company" || role === "customer") {
+                    setEditComponent(
+                        <button
+                            className="btn btn-sm btn-primary-outline"
+                            onClick={() => {
+                                handleChangeRoute(role);
+                            }}
+                        >
+                            Edit
+                        </button>
+                    );
+                }
+            }
+        };
+        fetchData();
+    }, [userRole, navigate, user]);
 
     return (
         <div className="avatar-wrapper">
+            {!props.details && editComponent && (
+                <div className="avatar-actions">{editComponent}</div>
+            )}
             <div className="avatar-image">
                 <img src={user.thumbnail} alt="User Profile" />
             </div>
