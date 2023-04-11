@@ -1,6 +1,12 @@
 const baseURL = "profile/airline";
 
-export const updateAirline = async (api, method, setState) => {
+export const updateAirline = async (
+    api,
+    method,
+    setState,
+    setError,
+    inputs
+) => {
     if (method === "get") {
         try {
             const { data } = await api.get(`${baseURL}/edit/`);
@@ -9,6 +15,16 @@ export const updateAirline = async (api, method, setState) => {
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+    if (method === "put") {
+        try {
+            const { data } = await api.put(`${baseURL}/edit/`, inputs);
+            if (data) {
+                setState(data.message);
+            }
+        } catch (error) {
+            setError(error.response.data);
         }
     }
 };
@@ -21,7 +37,6 @@ export const addFlight = async (api, target, setError, setIsValid, inputs) => {
             setIsValid(data.message);
         }
     } catch (error) {
-        console.log(error);
         setError(error.response.data);
     }
 };

@@ -135,7 +135,7 @@ def validate_airline_id(value):
 def validate_unique_name(value):
     # Check if company name is taken
     if AirlineCompany.objects.filter(name__iexact=value).exists():
-        raise serializers.ValidationError('Name already exists.')
+        raise ValidationError('Name already exists.')
     
 def validate_number_positive(value):
     # Check for positive number

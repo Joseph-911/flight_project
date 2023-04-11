@@ -14,7 +14,7 @@ class AirlineFacade(FacadeBase):
         if request.method == 'GET':
             serializer = AirlineCompanySerializer(airline)
             return Response(serializer.data)
-        if request.method == 'POST':
+        if request.method == 'PUT':
             serializer = AirlineCompanyCreationSerializer(instance=airline, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()

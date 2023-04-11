@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import AuthContext from "context/AuthContext";
+import MessagesContext from "context/MessagesContext";
 import { updateAirline } from "api/airlineActions";
 import { handleInputChange } from "utils/HandleStates";
 import { AirlineForm } from "components/Forms";
+import { useNavigate } from "react-router-dom";
 
 const UpdateAirline = () => {
     const { api } = useContext(AuthContext);
-    const [airlineData, setAirlineData] = useState([]);
+    const { addMessage } = useContext(MessagesContext);
+    const navigate = useNavigate();
 
+    const [airlineData, setAirlineData] = useState([]);
     const [formInputs, setFormInputs] = useState({});
     const [error, setError] = useState(null);
+    const [isValid, setIsValid] = useState(false);
 
     useEffect(() => {
-        updateAirline(api, "get", setAirlineData);
+        updateAirline(api, "get", setAirlineData, setError);
     }, [api]);
 
     useEffect(() => {
@@ -22,9 +27,17 @@ const UpdateAirline = () => {
     }, [airlineData]);
 
     const handleFormSubmit = (e) => {
-        e.preventDefault();
         console.log(formInputs);
+        e.preventDefault();
+        updateAirline(api, "put", setIsValid, setError, formInputs);
     };
+
+    useEffect(() => {
+        if (isValid) {
+            addMessage(isValid, "success");
+            navigate("/profile");
+        }
+    }, [isValid, addMessage, navigate]);
 
     return (
         <div className="form-wrapper">

@@ -155,7 +155,7 @@ class AdministratorSerializer(serializers.ModelSerializer):
 
 class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(required=True, validators=[validate_user_id])
-    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical,validate_unique_name])
+    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical, UniqueValidator(queryset=AirlineCompany.objects.all())])
     country_id = serializers.CharField(required=True, validators=[validate_country_id])
 
     class Meta:
@@ -177,13 +177,13 @@ class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
         
     
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name).title()
-        instance.user_id = validated_data.get('user_id', instance.user_id)
-        instance.country_id = validated_data.get('country_id', instance.country_id)
-        instance.save()
+        if validated_data['name']:
+            validated_data['name'] = validated_data['name'].title()
+        if validated_data['country_id']:
+            validated_data['country_id'] = Country.objects.get(id=validated_data.get('country_id'))
 
-        return instance
-
+        return super().update(instance, validated_data)
+    
 
 class AdministratorCreationSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(required=True, validators=[validate_user_id])

@@ -6,7 +6,7 @@ from utils.decorators import *
 # --------------------------------------------- #
 # -------------- Update Airline --------------- #
 # --------------------------------------------- #
-@api_view(['GET','POST'])
+@api_view(['GET','PUT'])
 @user_has_permission('change_airlinecompany')
 def update_airline(request):
     airline = request.user.airlinecompany
