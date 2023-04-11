@@ -177,6 +177,10 @@ class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
         
     
     def update(self, instance, validated_data):
+        user_id = validated_data.get('user_id')
+        if user_id:
+            validate_reassign_user_id()
+
         name = validated_data.get('name')
         if name:
             validated_data['name'] = name.title()

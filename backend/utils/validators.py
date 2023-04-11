@@ -14,7 +14,9 @@ from users.models import User
 from flights.models import *
 from users.models import *
 
-
+# --------------------------------------------- #
+# ------------- Validate Username ------------- #
+# --------------------------------------------- #
 def validate_user_username(username):
     errors = []
 
@@ -41,11 +43,17 @@ def validate_user_username(username):
     return username
 
 
+# --------------------------------------------- #
+# ------------- Validate Password ------------- #
+# --------------------------------------------- #
 def validate_user_password1(password):
     # Check for Django-built password validation
     validate_password(password)
 
 
+# --------------------------------------------- #
+# -------- Validate Matching Passwords -------- #
+# --------------------------------------------- #
 def validate_user_passwords(data):
     # Get the two passwords
     password1 = data.get('password1')
@@ -58,6 +66,9 @@ def validate_user_passwords(data):
     return data
 
 
+# --------------------------------------------- #
+# ----------- Validate Image Field ------------ #
+# --------------------------------------------- #
 def validate_image_field(file):
     # Check the content type of the image
     valid_extensions = ['jpg', 'jpeg', 'png']
@@ -73,36 +84,55 @@ def validate_image_field(file):
     # Return the validated image
     return file    
 
+
+# --------------------------------------------- #
+# --------------- Validate Name --------------- #
+# --------------------------------------------- #
 def validate_name(value):
     # Check for valid name only with alphabetical characters
     if not re.match('^[a-zA-Z]+$', value):
         raise serializers.ValidationError('Name must contain only alphabetical characters.')
     
 
+# --------------------------------------------- #
+# ------------ Validate Name Length ----------- #
+# --------------------------------------------- #
 def validate_name_length(value):
     # Check for at least 2 characters
     if len(value) < 2:
         raise serializers.ValidationError('Name must be at least 2 characters long.')
     
 
+# --------------------------------------------- #
+# -------- Validate Alphabetical Name --------- #
+# --------------------------------------------- #
 def validate_name_with_alphabetical(value):
     # Check for at least one alphabetical character
     if not re.search('[a-zA-Z]', value):
         raise serializers.ValidationError('Name must contain at least 1 alphabetical character.')
     
 
+# --------------------------------------------- #
+# ------- Validate Hyphenated Word Pair ------- #
+# --------------------------------------------- #
 def validate_hyphenated_word_pair(value):
     # Check for valid country name, examples: Japan, Guinea-Bissau
     if not re.match('^[a-zA-Z ]+(-[a-zA-Z]+)*$', value):
         raise serializers.ValidationError('Name must contain only alphabetical characters, spaces and hyphen in the middle.')
     
 
+# --------------------------------------------- #
+# ---------------- Validate ID ---------------- #
+# --------------------------------------------- #
 def validate_id(value):
     # Check if user_id is an int
     if not value.isnumeric():
         raise serializers.ValidationError('Please type a valid ID (integer)')
 
 
+# --------------------------------------------- #
+# --------- Validate Existed User ID ---------- #
+# --------------------------------------------- #
 def validate_user_id(value):
     # Check if user is exists and it's role in null
     validate_id(value)
@@ -115,6 +145,16 @@ def validate_user_id(value):
         raise serializers.ValidationError('User is not found')
     
 
+# --------------------------------------------- #
+# --------- Validate Reassign User ID --------- #
+# --------------------------------------------- #
+def validate_reassign_user_id():
+    return serializers.ValidationError({'user_id': 'User ID cannot be changed'})
+    
+
+# --------------------------------------------- #
+# -------- Validate Existed Country ID -------- #
+# --------------------------------------------- #
 def validate_country_id(value):
     # Check if the ID is valid, and if the country exists
     validate_id(value)
@@ -122,7 +162,11 @@ def validate_country_id(value):
         Country.objects.get(id=value)
     except Country.DoesNotExist:
         raise serializers.ValidationError('Country is not found')
-    
+
+
+# --------------------------------------------- #
+# -------- Validate Existed Airline ID -------- #
+# --------------------------------------------- #
 def validate_airline_id(value):
     # Check if the ID is valid, and if the country exists
     validate_id(value)
@@ -132,16 +176,27 @@ def validate_airline_id(value):
         raise serializers.ValidationError('Airline company is not found')
     
 
+# --------------------------------------------- #
+# ----------- Validate Unique Value ----------- #
+# --------------------------------------------- #
 def validate_unique_name(value):
     # Check if company name is taken
     if AirlineCompany.objects.filter(name__iexact=value).exists():
         raise ValidationError('Name already exists.')
     
+
+# --------------------------------------------- #
+# --------- Validate Positive Number ---------- #
+# --------------------------------------------- #
 def validate_number_positive(value):
     # Check for positive number
     if value is None or value <= 0:
         raise ValidationError('Field must be a relavant positive number.')
     
+
+# --------------------------------------------- #
+# -------- Validate Time is in Future --------- #
+# --------------------------------------------- #
 def validate_time_is_future(value):
     # Check that time is in the future
     now = timezone.now()
@@ -149,6 +204,9 @@ def validate_time_is_future(value):
         raise ValidationError('Date and time must be in the future.')
     
 
+# --------------------------------------------- #
+# ------------- Validate Time Gap ------------- #
+# --------------------------------------------- #
 def validate_time_gap(date1, date1field, date2, date2field):
     # Check that date2 is greater than date1 and not equal
     if date1 and date2 and date1 >= date2:
@@ -158,6 +216,9 @@ def validate_time_gap(date1, date1field, date2, date2field):
             })
 
 
+# --------------------------------------------- #
+# ----------- Validate Time Duration ---------- #
+# --------------------------------------------- #
 def validate_time_duration(date1, date2, date2field, min_duration, max_duration):
     # Check time duration is between min and max
     if date2 and date1:
@@ -168,36 +229,53 @@ def validate_time_duration(date1, date2, date2field, min_duration, max_duration)
         if duration < min_duration or duration > max_duration:
             raise ValidationError({date2field: 'Flight duration must be between 1 hour and 18 hours.'})
 
+
+# --------------------------------------------- #
+# --------------------------------------------- #
+# --------------------------------------------- #
 def suggest_country_name(value):
+    # Check for similar country name and limit the suggestions to 5
     countries = [c.name.title() for c in pycountry.countries]
     suggestions = process.extract(value.title(), countries, limit=5)
     suggested_countries = []
+
+    # If 60% match or more, append the suggest to the list
     for suggestion in suggestions:
         if fuzz.ratio(value.title(), suggestion[0]) >= 60:
             suggested_countries.append(pycountry.countries.lookup(suggestion[0]).name)
+        # Return the suggestions list
     return suggested_countries
 
 
+# --------------------------------------------- #
+# ------ Validate Real Country Name ----------- #
+# --------------------------------------------- #
 def validate_country(value):
+    # Check if country already exists in the database
     if Country.objects.filter(name__iexact=value).exists():
         raise serializers.ValidationError('Country already exists.')
     
+    # Validate country name rules
     validate_hyphenated_word_pair(value)
     validate_name_length(value)
 
+    # Check if the name is a real country name
     try:
         country = pycountry.countries.get(name=value.title())
         if country is None:
             raise LookupError
     except LookupError:
+        # Check for suggestions
         suggestions = suggest_country_name(value)
         
+        # If suggestions found, return a list of them
         if suggestions:
             suggestions_str = ''.join([f'<li>- <span value="{suggestion}" role="button" class="btn btn-xs btn-primary-underline">{suggestion}</span></li>' for suggestion in suggestions])
             raise serializers.ValidationError(f'''
             Country doesn\'t exist! Suggestions based on your input:<br />
             <ul id="suggestions-list">{suggestions_str}</ul>
             ''')
+        # If no suggestions found, return an error of invalid country name
         else:
             raise serializers.ValidationError(f'''
             Invalid country name.
