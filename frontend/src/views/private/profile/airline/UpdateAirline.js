@@ -27,7 +27,6 @@ const UpdateAirline = () => {
     }, [airlineData]);
 
     const handleFormSubmit = (e) => {
-        console.log(formInputs);
         e.preventDefault();
         updateAirline(api, "put", setIsValid, setError, formInputs);
     };

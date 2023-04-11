@@ -39,16 +39,10 @@ export const addFlight = async (api, target, setError, setIsValid, inputs) => {
 
 export const updateFlight = async (api, method, target, setState, setError) => {
     if (method === "get") {
-        try {
-            const { data } = await api.get(
-                `${baseURL}/flights/${target}/edit/`
-            );
+        const { data } = await api.get(`${baseURL}/flights/${target}/edit/`);
 
-            if (data) {
-                setState(data);
-            }
-        } catch (error) {
-            console.log(error);
+        if (data) {
+            setState(data);
         }
     }
 };

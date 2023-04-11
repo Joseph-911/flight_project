@@ -25,7 +25,6 @@ const UpdateFlight = (props) => {
 
     useEffect(() => {
         if (flightData && flightData.length !== 0) {
-            console.log("YES");
             let {
                 origin_country_id,
                 destination_country_id,
@@ -35,9 +34,9 @@ const UpdateFlight = (props) => {
                 price,
             } = flightData;
 
-            console.log(flightData);
             departure_time = departure_time.slice(0, 16);
             landing_time = landing_time.slice(0, 16);
+
             setFormInputs({
                 origin_country_id,
                 destination_country_id,
@@ -47,20 +46,12 @@ const UpdateFlight = (props) => {
                 price,
             });
         }
-        // console.log(departure_time);
-
-        // const formattedDatetime1 = datetime1.toISOString().slice(0, 16);
-        // const formattedDatetime2 = datetime2.toISOString().slice(0, 16);
-        // console.log(flightData);
     }, [flightData]);
-
-    // useEffect(() => {
-    //     console.log(formInputs);
-    // }, [formInputs]);
 
     return (
         <div className="form-wrapper">
             <div className="form">
+                <h2 className="form-title">Update Flight</h2>
                 <FlightForm
                     formInputs={formInputs}
                     setFormInputs={setFormInputs}
