@@ -177,10 +177,13 @@ class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
         
     
     def update(self, instance, validated_data):
-        if validated_data['name']:
-            validated_data['name'] = validated_data['name'].title()
-        if validated_data['country_id']:
-            validated_data['country_id'] = Country.objects.get(id=validated_data.get('country_id'))
+        name = validated_data.get('name')
+        if name:
+            validated_data['name'] = name.title()
+
+        country_id = validated_data.get('country_id')
+        if country_id:
+            validated_data['country_id'] = Country.objects.get(id=country_id)
 
         return super().update(instance, validated_data)
     
