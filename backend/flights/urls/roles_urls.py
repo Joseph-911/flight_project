@@ -27,6 +27,7 @@ administrator_url_patterns = [
 airline_url_patterns = [
     path('edit/', views_airline.update_airline, name='update-airline'),
     path('flights/', views_airline.view_my_flights, name='company-all-flights'),
+    path('flights/<str:pk>/edit/', views_airline.update_flight, name='company-flight-edit'),
     path('flights/add/', views_airline.add_flight, name='add-flight'),
 ]
 

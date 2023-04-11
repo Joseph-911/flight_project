@@ -33,6 +33,20 @@ class AirlineFacade(FacadeBase):
         return Response({'error': 'An error has occurred during adding flight'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+    # --------------------------------------------- #
+    # --------------- Update Flight --------------- #
+    # --------------------------------------------- #
+    def update_flight(self, request, pk):
+        if request.method == 'GET':
+            flight = self.dal.read_object_filter_by(Flight, {'id': pk, 'airline_company_id': request.user.airlinecompany.id})
+            if flight:
+                flight = flight.first()
+                serializer = FlightSerializer(flight)
+                return Response(serializer.data)
+            else:
+                return Response({'message': 'Flight is not found, it\'s either not in the database or doesn\'t belong to you'}, status=status.HTTP_404_NOT_FOUND)
+
+
     # --------------------------------------------- # 
     # --------------- Get My Flight --------------- # 
     # --------------------------------------------- # 

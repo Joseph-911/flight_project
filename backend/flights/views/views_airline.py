@@ -23,6 +23,15 @@ def add_flight(request):
 
 
 # --------------------------------------------- #
+# --------------- Update Flight --------------- #
+# --------------------------------------------- #
+@api_view(['GET', 'PUT'])
+@user_has_permission('change_flight')
+def update_flight(request, pk):
+    return airline_facade.update_flight(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- Get My Flights --------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

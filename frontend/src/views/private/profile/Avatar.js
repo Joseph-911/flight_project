@@ -11,7 +11,7 @@ const Avatar = (props) => {
     useEffect(() => {
         const handleChangeRoute = (role) => {
             navigate("/profile/edit", {
-                state: { user: user, role: role },
+                state: { user: user, target: role },
             });
         };
 
