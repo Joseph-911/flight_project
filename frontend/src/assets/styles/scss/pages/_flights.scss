@@ -9,10 +9,10 @@
     display: flex;
     // justify-content: space-between;
     flex-wrap: wrap;
-    gap: 1%;
+    gap: 2%;
     .flight-item {
         @include card();
-        width: 30%;
+        width: 31%;
         padding: 20px;
         margin-bottom: 30px;
 

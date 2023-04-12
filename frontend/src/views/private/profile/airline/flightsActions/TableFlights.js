@@ -17,6 +17,7 @@ const TableFlights = (props) => {
         <table className="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>From - To</th>
                     <th>Departure Time</th>
                     <th>Landing Time</th>
@@ -32,6 +33,7 @@ const TableFlights = (props) => {
                 {flights.map((flight, idx) => {
                     return (
                         <tr key={`company-all-flight-${idx}`}>
+                            <td>{flight.id}</td>
                             <td>{flight.from_to}</td>
                             <td>{flight.formatted_departure_datetime}</td>
                             <td>{flight.formatted_landing_datetime}</td>

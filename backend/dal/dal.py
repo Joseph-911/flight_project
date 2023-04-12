@@ -12,13 +12,24 @@ class GenericDAL:
             return error
 
 
-
     def read_object(self, model_class, id):
         try:
             obj = model_class.objects.get(id=id)
             return obj
         except model_class.DoesNotExist:
             return None
+        
+    def read_object_by(self, model_class, field, value):
+        try:
+            obj = model_class.objects.get(**{field: value})
+            return obj
+        except model_class.DoesNotExist:
+            return None
+        
+    def update_object(self, obj, fields):
+        for field, value in fields.items():
+            setattr(obj, field, value)
+        obj.save()
         
     
     def read_all_objects(self, model_class):
@@ -54,7 +65,6 @@ class GenericDAL:
     def get_flights_by_origin_country_id(self, pk):
         country = self.read_object(Country, pk)
         if country:
-            print("YES")
             return self.read_object_filter_by(Flight, {'origin_country_id': pk})
         return None
     

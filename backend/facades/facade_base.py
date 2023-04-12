@@ -58,7 +58,15 @@ class FacadeBase:
         if request.method == 'POST':
             serializer = UserRegisterSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                validated_data = serializer.validated_data
+                username = validated_data['username'].lower()
+                email = validated_data['email'].lower()
+                password = validated_data['password1']
+                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+
+                if 'thumbnail' in validated_data:
+                    thumbnail = validated_data['thumbnail']
+                    self.dal.update_object(user, {'thumbnail': thumbnail})
                 return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
             return Response({'error': 'An error during registeration'}, status=status.HTTP_400_BAD_REQUEST)  

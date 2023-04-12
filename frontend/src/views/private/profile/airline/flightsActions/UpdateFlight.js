@@ -47,10 +47,14 @@ const UpdateFlight = (props) => {
             });
         }
     }, [flightData]);
+    
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+    }
 
     return (
         <div className="form-wrapper">
-            <div className="form">
+            <form method="PUT" className="form" onSubmit={handleFormSubmit}>
                 <h2 className="form-title">Update Flight</h2>
                 <FlightForm
                     formInputs={formInputs}
@@ -63,7 +67,7 @@ const UpdateFlight = (props) => {
                     value="Update"
                     className="btn btn-xl btn-primary"
                 />
-            </div>
+            </form>
         </div>
     );
 };

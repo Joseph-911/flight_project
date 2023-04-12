@@ -40,7 +40,7 @@ const UpdateAirline = () => {
 
     return (
         <div className="form-wrapper">
-            <form method="POST" className="form" onSubmit={handleFormSubmit}>
+            <form method="PUT" className="form" onSubmit={handleFormSubmit}>
                 <h2 className="form-title">Update Airline</h2>
 
                 <AirlineForm

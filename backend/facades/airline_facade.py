@@ -17,10 +17,13 @@ class AirlineFacade(FacadeBase):
             return Response(serializer.data)
         # Update the request user airline company
         if request.method == 'PUT':
-            serializer = AirlineCompanyCreationSerializer(instance=airline, data=request.data, partial=True)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response({'message': 'Airline company updated successfully'}, status=status.HTTP_200_OK)
+            country = self.dal.read_object_by(Country, 'id', request.data['country_id'])
+            request.data['country_id'] = country.id
+            serializer = AirlineCompanySerializer(instance=airline, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.validated_data['country_id'] = country
+            self.dal.update_object(airline, serializer.validated_data)
+            return Response({'message': 'Airline company updated successfully'}, status=status.HTTP_200_OK)
 
 
     # --------------------------------------------- # 
@@ -29,10 +32,21 @@ class AirlineFacade(FacadeBase):
     def add_flight(self, request):
         # Assign the airline company ID to the request user
         request.data['airline_company_id'] = request.user.airlinecompany.id
-        
-        serializer = FlightCreationSerializer(data=request.data)
+
+        serializer = FlightSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            validated_data = serializer.validated_data
+
+            airline_company = self.dal.read_object(AirlineCompany, validated_data['airline_company_id'])
+            origin_country = self.dal.read_object(Country, validated_data['origin_country_id'])
+            destination_country = self.dal.read_object(Country, validated_data['destination_country_id'])
+
+            validated_data['airline_company_id'] = airline_company
+            validated_data['origin_country_id'] = origin_country
+            validated_data['destination_country_id'] = destination_country
+
+            self.dal.create_object(Flight, validated_data)
+            
             return Response({'message': 'Flight added successfully'}, status=status.HTTP_200_OK)
         return Response({'error': 'An error has occurred during adding flight'}, status=status.HTTP_400_BAD_REQUEST)
 

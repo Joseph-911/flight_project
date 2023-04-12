@@ -1,3 +1,6 @@
+from django.db import transaction
+from rest_framework.exceptions import ValidationError
+
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -132,14 +135,57 @@ class AdministratorFacade(FacadeBase):
     # --------------------------------------------- #
     def add_airline(self, request):
         if 'user_id' in request.data:
-            serializer = AirlineCompanyCreationSerializer(data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response({'message': 'Airline company added successfully'}, status=status.HTTP_200_OK)
+            serializer = AirlineCompanySerializer(data=request.data)
+            # Check if serializer is valid
+            serializer.is_valid(raise_exception=True)
+            validated_data = serializer._validated_data
+
+            # Get the user and the country
+            user = self.dal.read_object_by(User, 'id', validated_data['user_id'])
+            country = self.dal.read_object_by(Country, 'id', validated_data['country_id'])
+            # Assign the values to the validated data 
+            validated_data['user_id'] = user
+            validated_data['country_id'] = country
+            validated_data['name'] = validated_data['name'].title()
+
+            # Get airline company role (object)
+            role = self.dal.read_object_by(UserRole, 'role_name', 'airline company')
+            # Update the user role
+            self.dal.update_object(user, {'user_role': role})
+            # Create airline company object
+            self.dal.create_object(AirlineCompany, validated_data)
+
+            return Response({'message': 'Airline company added successfully'}, status=status.HTTP_200_OK)
         elif 'username' in request.data:
-            serializer = UserAirlineCompanyCreationSerializer(data=request.data, context={'request': request})
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                data = request.data.dict()
+                airline_fields = {'name': data.pop('name').title(), 'country_id': data.pop('country_id')}
+                user_fields = data
+
+                with transaction.atomic():
+                    # Get username, email and password from request data
+                    username = user_fields['username'].lower()
+                    email = user_fields['email'].lower()
+                    password = user_fields['password1']
+
+                    # Create user 
+                    user_serializer = UserRegisterSerializer(data=user_fields)
+                    user_serializer.is_valid(raise_exception=True)
+                    user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+
+                    # Create airline company
+                    airline_fields['user_id'] = str(user.id)
+                    airline_serializer = AirlineCompanySerializer(data=airline_fields)
+                    airline_serializer.is_valid(raise_exception=True)
+                    airline_fields['user_id'] = user
+                    airline_fields['country_id'] = self.dal.read_object(Country, airline_fields['country_id'])
+                    self.dal.create_object(AirlineCompany, airline_fields)
+
+                    # Update user (role and thumbnail if found)
+                    role = self.dal.read_object_by(UserRole, 'role_name', 'airline company')
+                    self.dal.update_object(user, {'user_role': role})     
+                    if 'thumbnail' in user_fields:
+                        self.dal.update_object(user, {'thumbnail': user_fields['thumbnail']})
+                    
                 return Response({'message': 'User airline company created successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Error during creating an airline'}, status=status.HTTP_400_BAD_REQUEST)
@@ -150,15 +196,53 @@ class AdministratorFacade(FacadeBase):
     # --------------------------------------------- # 
     def add_administrator(self, request):
         if 'user_id' in request.data:
-            serializer = AdministratorCreationSerializer(data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response({'message': 'Administrator added successfully'}, status=status.HTTP_200_OK)
+            # Check if serializer is valid
+            serializer = AdministratorSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            validated_data = serializer._validated_data
+            
+            # Update the validated data
+            user = self.dal.read_object_by(User, 'id', validated_data['user_id'])
+            validated_data['user_id'] = user
+            validated_data['first_name'] = validated_data['first_name'].title()
+            validated_data['last_name'] = validated_data['last_name'].title()
+
+            # Update user role and create Administrator object
+            role = self.dal.read_object_by(UserRole, 'role_name', 'admin')
+            self.dal.update_object(user, {'user_role': role})
+            self.dal.create_object(Administrator, validated_data)
+
+            return Response({'message': 'Administrator added successfully'}, status=status.HTTP_200_OK)
         elif 'username' in request.data:
-            serializer = UserAdministratorCreationSerializer(data=request.data, context={'request': request})
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response({'message': 'User administrator created successfully'}, status=status.HTTP_200_OK)
+            data = request.data.dict()
+            admin_fields = {'first_name': data.pop('first_name').title(), 'last_name': data.pop('last_name').title()}
+            user_fields = data
+
+            with transaction.atomic():
+                # Get username, email and password from request data
+                username = user_fields['username'].lower()
+                email = user_fields['email'].lower()
+                password = user_fields['password1']
+
+                # Create user 
+                user_serializer = UserRegisterSerializer(data=user_fields)
+                user_serializer.is_valid(raise_exception=True)
+                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+
+                # Create administrator
+                admin_fields['user_id'] = str(user.id)
+                admin_serializer = AdministratorSerializer(data=admin_fields)
+                admin_serializer.is_valid(raise_exception=True)
+                admin_fields['user_id'] = user
+                self.dal.create_object(Administrator, admin_fields)
+
+                # Update user (role and thumbnail if found)
+                role = self.dal.read_object_by(UserRole, 'role_name', 'admin')
+                self.dal.update_object(user, {'user_role': role})
+                if 'thumbnail' in user_fields:
+                    self.dal.update_object(user, {'thumbnail': user_fields['thumbnail']})
+
+            return Response({'message': 'User administrator created successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Error during creating an administrator'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -169,7 +253,9 @@ class AdministratorFacade(FacadeBase):
     def add_country(self, request):
         serializer = CountryCreationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            validated_data = serializer.validated_data
+            validated_data['name'] = validated_data['name'].title()
+            self.dal.create_object(Country, validated_data)
             return Response({'message': 'Country added successfully'}, status=status.HTTP_200_OK)
         return Response({'message': 'not valid'}, status=status.HTTP_400_BAD_REQUEST)
 

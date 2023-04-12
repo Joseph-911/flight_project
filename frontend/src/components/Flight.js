@@ -56,7 +56,7 @@ const Flight = (props) => {
                     <div className="flight-company-img">
                         <img src={flight.airline_company_thumbnail} alt="Airline Company Thumbnail" />
                     </div>
-                    <p>{flight.airline_company}</p>
+                    <p>{flight.airline_company_id}</p>
                 </div>
                 <div className="flight-price">
                     <span className="price">${flight.price}</span>

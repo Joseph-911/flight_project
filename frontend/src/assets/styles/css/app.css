@@ -932,13 +932,13 @@ button {
 .flights-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1%;
+  gap: 2%;
 }
 .flights-list .flight-item {
   background-color: var(--white);
   border: 1px solid var(--gray-1);
   border-radius: 5px;
-  width: 30%;
+  width: 31%;
   padding: 20px;
   margin-bottom: 30px;
 }

@@ -7,6 +7,9 @@ from users.models import *
 from utils.validators import *
 
 
+# --------------------------------------------- # 
+# ------------- Country Serializer ------------ # 
+# --------------------------------------------- # 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
@@ -22,11 +25,9 @@ class CountryCreationSerializer(serializers.ModelSerializer):
         fields = ['name', 'flag']
 
 
-    def create(self, validated_data):
-        validated_data['name'] = validated_data['name'].title()
-        return super().create(validated_data)
-    
-
+# --------------------------------------------- # 
+# ------------- Flight Serializer ------------- # 
+# --------------------------------------------- # 
 class FlightSerializer(serializers.ModelSerializer):
     from_to = serializers.SerializerMethodField()
     tickets_sold = serializers.SerializerMethodField()
@@ -39,22 +40,32 @@ class FlightSerializer(serializers.ModelSerializer):
     formatted_landing_datetime = serializers.SerializerMethodField()
     origin_country = serializers.SerializerMethodField()
     destination_country = serializers.SerializerMethodField()
-    airline_company = serializers.SerializerMethodField()
-    airline_company_thumbnail = serializers.CharField(source='airline_company_id.user_id.thumbnail.url')
+    airline_company_thumbnail = serializers.CharField(source='airline_company_id.user_id.thumbnail.url', read_only=True)
+
+    airline_company_id = serializers.CharField(required=True, validators=[validate_airline_id])
+    origin_country_id = serializers.CharField(required=True, validators=[validate_country_id])
+    destination_country_id = serializers.CharField(required=True, validators=[validate_country_id])
+    departure_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
+    landing_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
+    price = serializers.IntegerField(validators=[validate_number_positive])
+    remaining_tickets = serializers.IntegerField(validators=[validate_number_positive])
 
     class Meta:
         model = Flight
         fields = '__all__'
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['origin_country_id'] = instance.origin_country_id.id
+        ret['destination_country_id'] = instance.destination_country_id.id
+        return ret
+    
     def get_origin_country(self, obj):
         return obj.origin_country_id.name
-    
+
     def get_destination_country(self, obj):
         return obj.destination_country_id.name
     
-    def get_airline_company(self, obj):
-        return obj.airline_company_id.name
-
     def get_from_to(self, obj):
         return obj.get_from_to()
 
@@ -83,21 +94,6 @@ class FlightSerializer(serializers.ModelSerializer):
         return obj.formatted_landing_datetime()
     
 
-
-class FlightCreationSerializer(serializers.ModelSerializer):
-    airline_company_id = serializers.CharField(required=True, validators=[validate_airline_id])
-    origin_country_id = serializers.CharField(required=True, validators=[validate_country_id])
-    destination_country_id = serializers.CharField(required=True, validators=[validate_country_id])
-    departure_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
-    landing_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
-    price = serializers.IntegerField(validators=[validate_number_positive])
-    remaining_tickets = serializers.IntegerField(validators=[validate_number_positive])
-
-    class Meta:
-        model = Flight
-        fields = ['airline_company_id', 'origin_country_id', 'destination_country_id', 'departure_time', 'landing_time', 'price', 'remaining_tickets']
-
-
     def validate(self, data):
         data = super().validate(data)
         departure_time = data['departure_time']
@@ -106,30 +102,41 @@ class FlightCreationSerializer(serializers.ModelSerializer):
         validate_time_gap(departure_time, 'departure_time', landing_time, 'landing_time')
         validate_time_duration(departure_time, landing_time, 'landing_time', 1, 18)
         return data
-
-    def create(self, validated_data):
-        validated_data['airline_company_id'] = AirlineCompany.objects.get(id=validated_data['airline_company_id'])
-        validated_data['origin_country_id'] = Country.objects.get(id=validated_data['origin_country_id'])
-        validated_data['destination_country_id'] = Country.objects.get(id=validated_data['destination_country_id'])
-        return super().create(validated_data)
     
+
+
+# --------------------------------------------- # 
+# -------- Airline Company Serializer --------- # 
+# --------------------------------------------- # 
 class AirlineCompanySerializer(serializers.ModelSerializer):
     flight_count = serializers.SerializerMethodField()
-    country_name = serializers.CharField(source='country_id.name')
-    user_thumbnail = serializers.ImageField(source='user_id.thumbnail')
-    username = serializers.CharField(source='user_id.username')
+    user_thumbnail = serializers.ImageField(source='user_id.thumbnail', read_only=True)
+    country_name = serializers.CharField(source='country_id.name', read_only=True)
+    username = serializers.CharField(source='user_id.username', read_only=True)
+
+    user_id = serializers.CharField(required=True, validators=[validate_user_id])
+    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical, UniqueValidator(queryset=AirlineCompany.objects.all())])
+    country_id = serializers.CharField(required=True, validators=[validate_country_id])
 
     class Meta:
         model = AirlineCompany
         fields = '__all__'
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['user_id'] = instance.user_id.id
+        ret['country_id'] = instance.country_id.id
+        return ret
+
+    
     def get_flight_count(self, obj):
         return obj.flight_set.count()
+    
 
 
 class CustomerSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
-    username = serializers.CharField(source='user_id.username')
+    username = serializers.CharField(source='user_id.username', read_only=True)
 
     class Meta:
         model = Customer
@@ -141,76 +148,22 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class AdministratorSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
-    username = serializers.CharField(source='user_id.username')
-    is_superuser = serializers.CharField(source='user_id.is_superuser')
+    username = serializers.CharField(source='user_id.username', read_only=True)
+    is_superuser = serializers.CharField(source='user_id.is_superuser', read_only=True)
 
-    class Meta:
-        model = Administrator
-        fields = '__all__'
-
-    def get_full_name(self, obj):
-        return f'{obj.first_name} {obj.last_name}'
-    
-
-
-class AirlineCompanyCreationSerializer(serializers.ModelSerializer):
-    user_id = serializers.CharField(required=True, validators=[validate_user_id])
-    name = serializers.CharField(required=True, max_length=30, validators=[validate_name_length, validate_name_with_alphabetical, UniqueValidator(queryset=AirlineCompany.objects.all())])
-    country_id = serializers.CharField(required=True, validators=[validate_country_id])
-
-    class Meta:
-        model = AirlineCompany
-        fields = ['user_id', 'name', 'country_id']
-
-    def create(self, validated_data):
-        user = User.objects.get(id=validated_data.get('user_id'))
-        country = Country.objects.get(id=validated_data.get('country_id'))
-        name = validated_data.get('name')
-
-        name = name.title()
-        user.user_role = UserRole.objects.get(role_name='airline company')
-        user.save()
-
-        airline_company = AirlineCompany(user_id=user, country_id=country, name=name)
-        airline_company.save()
-        return airline_company
-        
-    
-    def update(self, instance, validated_data):
-        user_id = validated_data.get('user_id')
-        if user_id:
-            validate_reassign_user_id()
-
-        name = validated_data.get('name')
-        if name:
-            validated_data['name'] = name.title()
-
-        country_id = validated_data.get('country_id')
-        if country_id:
-            validated_data['country_id'] = Country.objects.get(id=country_id)
-
-        return super().update(instance, validated_data)
-    
-
-class AdministratorCreationSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(required=True, validators=[validate_user_id])
     first_name = serializers.CharField(required=True, max_length=30, validators=[validate_name, validate_name_length])
     last_name = serializers.CharField(required=True, max_length=30, validators=[validate_name, validate_name_length])
 
     class Meta:
         model = Administrator
-        fields = ['user_id', 'first_name', 'last_name'] 
+        fields = '__all__'
 
-    def create(self, validated_data):
-        user = User.objects.get(id=validated_data.get('user_id'))
-        first_name = validated_data.get('first_name')
-        last_name = validated_data.get('last_name')
-
-        first_name = first_name.title()
-        last_name = last_name.title()
-        user.user_role = UserRole.objects.get(role_name='admin')
-        user.save()
-
-        administrator = Administrator(user_id=user, first_name=first_name, last_name=last_name)
-        administrator.save()
-        return administrator
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['user_id'] = instance.user_id.id
+        return ret
+    
+    def get_full_name(self, obj):
+        return f'{obj.first_name} {obj.last_name}'
+    

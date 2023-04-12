@@ -9,31 +9,33 @@ const Avatar = (props) => {
     const [editComponent, setEditComponent] = useState();
 
     useEffect(() => {
-        const handleChangeRoute = (role) => {
-            navigate("/profile/edit", {
-                state: { user: user, target: role },
-            });
-        };
-
-        const fetchData = async () => {
-            const data = await userRole();
-            if (data) {
-                const role = data.role;
-                if (role === "airline company" || role === "customer") {
-                    setEditComponent(
-                        <button
-                            className="btn btn-sm btn-primary-outline"
-                            onClick={() => {
-                                handleChangeRoute(role);
-                            }}
-                        >
-                            Edit
-                        </button>
-                    );
+        if (userRole) {
+            const handleChangeRoute = (role) => {
+                navigate("/profile/edit", {
+                    state: { user: user, target: role },
+                });
+            };
+    
+            const fetchData = async () => {
+                const data = await userRole();
+                if (data) {
+                    const role = data.role;
+                    if (role === "airline company" || role === "customer") {
+                        setEditComponent(
+                            <button
+                                className="btn btn-sm btn-primary-outline"
+                                onClick={() => {
+                                    handleChangeRoute(role);
+                                }}
+                            >
+                                Edit
+                            </button>
+                        );
+                    }
                 }
-            }
-        };
-        fetchData();
+            };
+            fetchData();
+        }
     }, [userRole, navigate, user]);
 
     return (

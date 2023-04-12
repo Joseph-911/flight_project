@@ -223,7 +223,6 @@ def validate_time_duration(date1, date2, date2field, min_duration, max_duration)
     # Check time duration is between min and max
     if date2 and date1:
         duration = date2 - date1
-        print(duration)
         min_duration = timedelta(hours=min_duration)
         max_duration = timedelta(hours=max_duration)
         if duration < min_duration or duration > max_duration:
