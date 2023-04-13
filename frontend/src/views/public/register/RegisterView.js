@@ -28,8 +28,6 @@ const RegisterView = () => {
             if (data) {
                 await userLogin(formInputs.username, formInputs.password1);
             }
-
-            setError(null);
         } catch (error) {
             setError(error.response.data);
         }

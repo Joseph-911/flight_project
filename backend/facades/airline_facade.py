@@ -21,8 +21,11 @@ class AirlineFacade(FacadeBase):
             request.data['country_id'] = country.id
             serializer = AirlineCompanySerializer(instance=airline, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
-            serializer.validated_data['country_id'] = country
-            self.dal.update_object(airline, serializer.validated_data)
+
+            validated_data = serializer.validated_data
+            validated_data['country_id'] = country
+            validated_data['name'] = validated_data['name'].title()
+            self.dal.update_object(airline, validated_data)
             return Response({'message': 'Airline company updated successfully'}, status=status.HTTP_200_OK)
 
 
@@ -66,6 +69,18 @@ class AirlineFacade(FacadeBase):
             # If flight is not found, return 404 Error 
             else:
                 return Response({'message': 'Flight is not found. It\'s either not in the database or doesn\'t belong to you'}, status=status.HTTP_404_NOT_FOUND)
+        if request.method == 'PUT':
+            flight = self.dal.read_object_filter_by(Flight, {'id': pk, 'airline_company_id': request.user.airlinecompany.id})
+            
+            serializer = FlightSerializer(instance=flight.first(), data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            validated_data = serializer.validated_data
+
+            validated_data['origin_country_id'] = self.dal.read_object(Country, validated_data['origin_country_id'])
+            validated_data['destination_country_id'] = self.dal.read_object(Country, validated_data['destination_country_id'])
+
+            self.dal.update_object(flight.first(), validated_data)
+            return Response({'message': 'Flight updated successfully'}, status=status.HTTP_200_OK)
 
 
     # --------------------------------------------- # 

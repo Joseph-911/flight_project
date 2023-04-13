@@ -1,5 +1,5 @@
 from django.db import transaction
-from rest_framework.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -166,11 +166,12 @@ class AdministratorFacade(FacadeBase):
                     username = user_fields['username'].lower()
                     email = user_fields['email'].lower()
                     password = user_fields['password1']
+                    hashed_password = make_password(password)
 
                     # Create user 
                     user_serializer = UserRegisterSerializer(data=user_fields)
                     user_serializer.is_valid(raise_exception=True)
-                    user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+                    user = self.dal.create_object(User, {'username': username, 'email': email, 'password': hashed_password})
 
                     # Create airline company
                     airline_fields['user_id'] = str(user.id)
@@ -223,11 +224,12 @@ class AdministratorFacade(FacadeBase):
                 username = user_fields['username'].lower()
                 email = user_fields['email'].lower()
                 password = user_fields['password1']
+                hashed_password = make_password(password)
 
                 # Create user 
                 user_serializer = UserRegisterSerializer(data=user_fields)
                 user_serializer.is_valid(raise_exception=True)
-                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': hashed_password})
 
                 # Create administrator
                 admin_fields['user_id'] = str(user.id)

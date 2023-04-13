@@ -1,13 +1,9 @@
-import base64
-
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.hashers import make_password
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import MethodNotAllowed
-
-from PIL import Image
-from io import BytesIO
 
 from dal.dal import GenericDAL
 from users.serializers import *
@@ -27,7 +23,7 @@ class FacadeBase:
     def user_login(self, request):
         if request.method == 'POST':
             data = request.data
-            username = data['username']
+            username = data['username'].lower()
             password = data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
@@ -62,7 +58,9 @@ class FacadeBase:
                 username = validated_data['username'].lower()
                 email = validated_data['email'].lower()
                 password = validated_data['password1']
-                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': password})
+                hashed_password = make_password(password)
+                
+                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': hashed_password})
 
                 if 'thumbnail' in validated_data:
                     thumbnail = validated_data['thumbnail']

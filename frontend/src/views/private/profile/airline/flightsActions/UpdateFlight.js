@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
-// import MessagesContext from "context/MessagesContext";
+import MessagesContext from "context/MessagesContext";
 import { updateFlight } from "api/airlineActions";
 import { handleInputChange } from "utils/HandleStates";
 import { FlightForm } from "components/Forms";
@@ -12,11 +12,12 @@ const UpdateFlight = (props) => {
     const flightID = location.state.id;
 
     const { api } = useContext(AuthContext);
-    // const { addMessage } = useContext(MessagesContext);
-    // const navigate = useNavigate();
+    const { addMessage } = useContext(MessagesContext);
+    const navigate = useNavigate();
 
     const [flightData, setFlightData] = useState([]);
     const [formInputs, setFormInputs] = useState({});
+    const [isValid, setIsValid] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -47,10 +48,18 @@ const UpdateFlight = (props) => {
             });
         }
     }, [flightData]);
-    
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
-    }
+        updateFlight(api, "put", flightID, setIsValid, setError, formInputs);
+    };
+
+    useEffect(() => {
+        if (isValid) {
+            addMessage(isValid, "success");
+            navigate("/profile");
+        }
+    }, [addMessage, isValid, navigate]);
 
     return (
         <div className="form-wrapper">

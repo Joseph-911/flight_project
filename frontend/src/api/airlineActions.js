@@ -37,12 +37,33 @@ export const addFlight = async (api, target, setError, setIsValid, inputs) => {
     }
 };
 
-export const updateFlight = async (api, method, target, setState, setError) => {
+export const updateFlight = async (
+    api,
+    method,
+    target,
+    setState,
+    setError,
+    inputs
+) => {
     if (method === "get") {
         const { data } = await api.get(`${baseURL}/flights/${target}/edit/`);
 
         if (data) {
             setState(data);
+        }
+    }
+    if (method === "put") {
+        try {
+            const { data } = await api.put(
+                `${baseURL}/flights/${target}/edit/`,
+                inputs
+            );
+
+            if (data) {
+                setState(data.message);
+            }
+        } catch (error) {
+            setError(error.response.data);
         }
     }
 };
