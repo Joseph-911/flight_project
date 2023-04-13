@@ -104,7 +104,20 @@ class FlightSerializer(serializers.ModelSerializer):
         return data
     
 
+# --------------------------------------------- # 
+# ------------- Ticket Serializer ------------- # 
+# --------------------------------------------- # 
+class TicketSerializer(serializers.ModelSerializer):
+    flight = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
+    def get_flight(self, obj):
+        return FlightSerializer(obj.flight_id).data
+
+    
 # --------------------------------------------- # 
 # -------- Airline Company Serializer --------- # 
 # --------------------------------------------- # 
@@ -131,7 +144,6 @@ class AirlineCompanySerializer(serializers.ModelSerializer):
     
     def get_flight_count(self, obj):
         return obj.flight_set.count()
-    
 
 
 # --------------------------------------------- # 
@@ -161,6 +173,9 @@ class CustomerSerializer(serializers.ModelSerializer):
         return f'{obj.first_name} {obj.last_name}'
     
 
+# --------------------------------------------- # 
+# --------- Administrator Serializer ---------- # 
+# --------------------------------------------- # 
 class AdministratorSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     username = serializers.CharField(source='user_id.username', read_only=True)

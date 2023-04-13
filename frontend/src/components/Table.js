@@ -5,6 +5,7 @@ import TableCountries from "views/private/profile/admin/countriesActions/TableCo
 import TableCustomers from "views/private/profile/admin/customersActions/TableCustomers";
 import TableUsers from "views/private/profile/admin/usersActions/TableUsers";
 import TableFlights from "views/private/profile/airline/flightsActions/TableFlights";
+import TableTickets from "views/private/profile/customer/ticketsActions/TableTickets";
 
 const Table = (props) => {
     const [component, setComponent] = useState();
@@ -28,6 +29,9 @@ const Table = (props) => {
                 break;
             case "flights":
                 setComponent(<TableFlights data={props.data} />);
+                break;
+            case "tickets":
+                setComponent(<TableTickets data={props.data} />);
                 break;
             default:
                 break;

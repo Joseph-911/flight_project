@@ -81,3 +81,7 @@ class GenericDAL:
         if country:
             return self.read_object_filter_by(Flight, {'destination_country_id': pk})
         return None
+
+
+    def get_tickets_by_customer(self, pk):
+        return self.read_object_filter_by(Ticket, {'customer_id': pk})
