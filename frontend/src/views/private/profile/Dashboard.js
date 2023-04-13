@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "context/AuthContext";
 import DashboardAdmin from "./admin/DashboardAdmin";
 import DashboardAirline from "./airline/DashboardAirline";
+import DashboardCustomer from "./customer/DashboardCustomer";
 
 const Dashboard = () => {
     const { userRole } = useContext(AuthContext);
@@ -16,8 +17,10 @@ const Dashboard = () => {
                 const role = roleData.role;
                 if (role === "admin") {
                     setComponent(<DashboardAdmin />);
-                } else if (role === 'airline company') {
-                    setComponent(<DashboardAirline />)
+                } else if (role === "airline company") {
+                    setComponent(<DashboardAirline />);
+                } else if (role === "customer") {
+                    setComponent(<DashboardCustomer />);
                 }
             } else {
                 setDashboard(false);

@@ -1,8 +1,14 @@
-const createActions = (plural, singular) => {
-    let actions = [
-        { title: `View All ${plural}`, icon: "eye", link: "/all" },
-        { title: `Add ${singular}`, icon: "add", link: "/add" },
-    ];
+const createActions = (plural, singular, singleItem = false) => {
+    let actions;
+
+    if (singleItem) {
+        actions = [{ title: `View All ${plural}`, icon: "eye", link: "/all" }];
+    } else {
+        actions = [
+            { title: `View All ${plural}`, icon: "eye", link: "/all" },
+            { title: `Add ${singular}`, icon: "add", link: "/add" },
+        ];
+    }
     return actions;
 };
 
@@ -44,5 +50,13 @@ export const airlineActionsList = [
         title: "Flights",
         target: "flights",
         actions: createActions("Flights", "Flight"),
+    },
+];
+
+export const customerActionsList = [
+    {
+        title: "Tickets",
+        target: "tickets",
+        actions: createActions("Tickets", "Ticket", true),
     },
 ];
