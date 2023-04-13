@@ -152,6 +152,11 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = '__all__'
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['user_id'] = instance.user_id.id
+        return ret
+
     def get_full_name(self, obj):
         return f'{obj.first_name} {obj.last_name}'
     
