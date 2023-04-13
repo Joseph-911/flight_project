@@ -177,7 +177,7 @@ export const RegisterForm = (props) => {
 export const CustomerForm = (props) => {
     return (
         <>
-            {props.userSelect ? (
+            {props.userSelect && (
                 <FormBlockSelectUsers
                     value={props.formInputs.user_id || ""}
                     onChange={(e) => {
@@ -187,8 +187,6 @@ export const CustomerForm = (props) => {
                     target={props.target}
                     sender={props.sender}
                 />
-            ) : (
-                ""
             )}
             <FormBlock
                 label="First name"
@@ -198,7 +196,7 @@ export const CustomerForm = (props) => {
                 id="first_name"
                 value={props.formInputs.first_name || ""}
                 onChange={(e) => {
-                    props.handleImageInputChange(e, props.setFormInputs);
+                    props.handleInputChange(e, props.setFormInputs);
                 }}
                 error={props.error}
             />
@@ -237,6 +235,7 @@ export const CustomerForm = (props) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}
                 error={props.error}
+                maxLength="16"
             />
             <FormBlock
                 label="Phone number"
@@ -249,6 +248,7 @@ export const CustomerForm = (props) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}
                 error={props.error}
+                maxLength="10"
             />
         </>
     );
@@ -260,7 +260,7 @@ export const CustomerForm = (props) => {
 export const AirlineForm = (props) => {
     return (
         <>
-            {props.userSelect ? (
+            {props.userSelect && (
                 <FormBlockSelectUsers
                     value={props.formInputs.user_id || ""}
                     onChange={(e) => {
@@ -270,8 +270,6 @@ export const AirlineForm = (props) => {
                     target={props.target}
                     sender={props.sender}
                 />
-            ) : (
-                ""
             )}
             <FormBlock
                 label="Company Name"

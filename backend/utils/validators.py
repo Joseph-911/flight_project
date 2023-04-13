@@ -143,7 +143,34 @@ def validate_user_id(value):
                 raise serializers.ValidationError('User has a role already')
     except User.DoesNotExist:
         raise serializers.ValidationError('User is not found')
+
+
+# --------------------------------------------- #
+# -------------- Validate Address ------------- #
+# --------------------------------------------- #
+def validate_address(value):
+    # Check for valid address, example: New York, Main st, 5
+    if not re.match('^(?!^[\s,-])([a-zA-Z\s,-]){2,},\s*(?!^[\s,-])([a-zA-Z0-9\s,-]){2,},\s*([1-9][0-9]*)$', value):
+        raise serializers.ValidationError('Invalid address. Example: New York, Main St, 5')
     
+
+# --------------------------------------------- #
+# ----------- Validate Phone Number ----------- #
+# --------------------------------------------- #
+def validate_phone_number(value):
+    # Check for valid phone number, example: 0501111111
+    if not re.match('^05\d{8}$', value):
+        raise serializers.ValidationError('Invalid phone number. Example: 0540000000')
+    
+
+# --------------------------------------------- #
+# -------- Validate Credit Card Number -------- #
+# --------------------------------------------- #
+def validate_credit_card(value):
+    # Check for valid credir card number, example: 1234123412341234
+    if not re.match('^\d{16}$', value):
+        raise serializers.ValidationError('Invalid credit card number. Example: 4580777788889999')
+
 
 # --------------------------------------------- #
 # --------- Validate Reassign User ID --------- #

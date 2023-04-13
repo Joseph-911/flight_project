@@ -134,9 +134,19 @@ class AirlineCompanySerializer(serializers.ModelSerializer):
     
 
 
+# --------------------------------------------- # 
+# ------------ Customer Serializer ------------ # 
+# --------------------------------------------- # 
 class CustomerSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     username = serializers.CharField(source='user_id.username', read_only=True)
+
+    user_id = serializers.CharField(required=True, validators=[validate_user_id])
+    first_name = serializers.CharField(required=True, max_length=15, validators=[validate_name, validate_name_length])
+    last_name = serializers.CharField(required=True, max_length=15, validators=[validate_name, validate_name_length])
+    address = serializers.CharField(required=True, max_length=100, validators=[validate_address])
+    credit_card_no = serializers.CharField(required=True, max_length=16, validators=[validate_credit_card, UniqueValidator(queryset=Customer.objects.all())])
+    phone_no = serializers.CharField(required=True, max_length=10, validators=[validate_phone_number, UniqueValidator(queryset=Customer.objects.all())])
 
     class Meta:
         model = Customer

@@ -70,7 +70,6 @@ class Flight(models.Model):
         return date_obj.strftime(f'%d %b %Y')
 
 
-
     def formatted_departure_date(self):
         return self.formatted_date(self.departure_time)
 

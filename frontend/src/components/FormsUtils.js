@@ -23,6 +23,7 @@ export const FormBlock = (props) => {
                 autoComplete={props.autoComplete}
                 value={props.value}
                 onChange={props.onChange}
+                pattern={props.pattern}
             />
             {props.children}
             <FieldError error={props.error} field={props.name} />

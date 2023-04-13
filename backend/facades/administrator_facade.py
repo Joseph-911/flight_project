@@ -127,7 +127,31 @@ class AdministratorFacade(FacadeBase):
     # ---------------- Add Customer --------------- # 
     # --------------------------------------------- #
     def add_customer(self, request):
-        pass
+        if 'user_id' in request.data:
+            serializer = CustomerSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            validated_data = serializer.validated_data
+
+            # Get the user
+            user = self.dal.read_object_by(User, 'id', validated_data['user_id'])
+            # Format validated data
+            validated_data['user_id'] = user
+            validated_data['first_name'] = validated_data['first_name'].title()
+            validated_data['last_name'] = validated_data['last_name'].title()
+            validated_data['address'] = validated_data['address'].title()
+
+            # Get customer role (object)
+            role = self.dal.read_object_by(UserRole, 'role_name', 'customer')
+            # Update the user role
+            self.dal.update_object(user, {'user_role': role})
+            # Create customer object
+            self.dal.create_object(Customer, validated_data)
+
+            return Response({'message': 'Customer added successfully'}, status=status.HTTP_200_OK)
+        elif 'username' in request.data:
+            return Response({'message': 'message'})
+        else:
+            return Response({'message': 'Error during creating an airline'}, status=status.HTTP_400_BAD_REQUEST)
         
     
     # --------------------------------------------- # 
@@ -138,7 +162,7 @@ class AdministratorFacade(FacadeBase):
             serializer = AirlineCompanySerializer(data=request.data)
             # Check if serializer is valid
             serializer.is_valid(raise_exception=True)
-            validated_data = serializer._validated_data
+            validated_data = serializer.validated_data
 
             # Get the user and the country
             user = self.dal.read_object_by(User, 'id', validated_data['user_id'])
@@ -200,7 +224,7 @@ class AdministratorFacade(FacadeBase):
             # Check if serializer is valid
             serializer = AdministratorSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            validated_data = serializer._validated_data
+            validated_data = serializer.validated_data
             
             # Update the validated data
             user = self.dal.read_object_by(User, 'id', validated_data['user_id'])

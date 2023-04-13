@@ -18,14 +18,30 @@ export const getUserNoRole = async (api, theState) => {
     }
 };
 
-export const addCustomer = async (api, target, setState, setError, inputs) => {
+export const addCustomer = async (
+    api,
+    target,
+    setError,
+    setIsValid,
+    inputs
+) => {
+    let data;
     try {
-        const { data } = await api.post(`${baseURL}/${target}/add/`, inputs);
+        if (inputs["username"]) {
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }));
+        } else {
+            ({ data } = await api.post(`${baseURL}/${target}/add/`, inputs));
+        }
         if (data) {
-            console.log(data);
+            setError(null);
+            setIsValid(data.message);
         }
     } catch (error) {
-        console.log(error);
+        setError(error.response.data);
     }
 };
 
