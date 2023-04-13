@@ -26,9 +26,13 @@ const TableCustomers = (props) => {
                             <td>{customer.username}</td>
                             <td>{customer.full_name}</td>
                             <td>{customer.address}</td>
-                            <td>{customer.phone_no}</td>
                             <td>
-                                {customer.credit_card_no.slice(0, 4)}{" "}
+                                {customer.phone_no.slice(0, 3)}-
+                                {customer.phone_no.slice(3, 6)}-
+                                {customer.phone_no.slice(6)}
+                            </td>
+                            <td>
+                                {customer.credit_card_no.slice(0, 4)}
                                 {" ****".repeat(3)}
                             </td>
                             <td>
