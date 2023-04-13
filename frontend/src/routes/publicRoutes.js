@@ -13,6 +13,7 @@ import FlightsView from "views/public/flights/FlightsView";
 import CountryAirlinesView from "views/public/countries/CountryAirlinesView";
 import CountryOriginFlightsView from "views/public/countries/CountryOriginFlightsView";
 import CountryDestinationFlightsView from "views/public/countries/CountryDestinationFlightsView";
+import AirlineFlightsView from "views/public/airlines/AirlineFlightsView";
 
 export const Page404 = () => {
     return (
@@ -150,6 +151,19 @@ export const Airline = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <AirlineView />
+            </div>
+        </>
+    );
+};
+
+export const AirlineFlights = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Airline Flights</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <AirlineFlightsView />
             </div>
         </>
     );

@@ -15,7 +15,7 @@ const AirlineItem = (props) => {
             </div>
 
             <div className="displayed-item-links">
-                <Link to="/" className="btn btn-md btn-primary">
+                <Link to={`/airlines/${airline.id}/flights`} className="btn btn-md btn-primary">
                     All Flights
                 </Link>
             </div>

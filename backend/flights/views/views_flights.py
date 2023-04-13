@@ -15,6 +15,15 @@ def get_all_airlines(request):
 
 
 # --------------------------------------------- #
+# -------------- Airline Flights -------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_airline_flights(request, pk):
+    return facade_base.get_flight_by_airline(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- Airline Details -------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

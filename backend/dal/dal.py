@@ -62,6 +62,13 @@ class GenericDAL:
         return None
     
 
+    def get_flights_by_airline_id(self, pk):
+        airline = self.read_object(AirlineCompany, pk)
+
+        if airline:
+            return self.read_object_filter_by(Flight, {'airline_company_id': pk})
+        return None   
+
     def get_flights_by_origin_country_id(self, pk):
         country = self.read_object(Country, pk)
         if country:

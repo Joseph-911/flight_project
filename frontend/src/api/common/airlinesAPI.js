@@ -18,3 +18,13 @@ export const getAirlineById = async (id, setState, setError) => {
         setError(error.response.data.message);
     }
 };
+
+export const getAirlineFlights = async (id, setState) => {
+    try {
+        const { data } = await axios.get(`${baseURL}${id}/flights/`);
+
+        data && setState(data);
+    } catch (error) {
+        return;
+    }
+};

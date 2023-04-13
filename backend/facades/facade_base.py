@@ -92,6 +92,18 @@ class FacadeBase:
             else:
                 return Response({'message': 'No airline company found'}, status=status.HTTP_404_NOT_FOUND)
     
+
+    # --------------------------------------------- # 
+    # ------ Get Flights By Airline Company ------- # 
+    # --------------------------------------------- # 
+    def get_flight_by_airline(self, request, pk):
+        flights = self.dal.get_flights_by_airline_id(pk)
+        if flights is not None:
+            serializer = FlightSerializer(flights, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'message': 'Airline company not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
     
     # --------------------------------------------- # 
     # --------------- All Countries --------------- # 
