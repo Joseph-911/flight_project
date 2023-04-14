@@ -64,7 +64,7 @@ const Flight = (props) => {
                 </div>
             </div>
             <div>
-                <Link className="btn btn-xl btn-primary">Details</Link>
+                <Link to={`/flight/${flight.id}`} className="btn btn-xl btn-primary">Details</Link>
             </div>
         </li>
     );

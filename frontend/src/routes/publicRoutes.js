@@ -1,19 +1,23 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
+import PageNotFoundView from "views/public/404/Page404View";
 import HomeView from "views/public/home/HomeView";
 import LoginView from "views/public/login/LoginView";
+import RegisterView from "views/public/register/RegisterView";
+// Countries
 import CountriesView from "views/public/countries/CountriesView";
 import CountryView from "views/public/countries/CountryView";
-import AirlinesView from "views/public/airlines/AirlinesView";
-import AirlineView from "views/public/airlines/AirlineView";
-import RegisterView from "views/public/register/RegisterView";
-import PageNotFoundView from "views/public/404/Page404View";
-import FlightsView from "views/public/flights/FlightsView";
 import CountryAirlinesView from "views/public/countries/CountryAirlinesView";
 import CountryOriginFlightsView from "views/public/countries/CountryOriginFlightsView";
 import CountryDestinationFlightsView from "views/public/countries/CountryDestinationFlightsView";
+// Airlines
+import AirlinesView from "views/public/airlines/AirlinesView";
+import AirlineView from "views/public/airlines/AirlineView";
 import AirlineFlightsView from "views/public/airlines/AirlineFlightsView";
+// Flights
+import FlightsView from "views/public/flights/FlightsView";
+import FlightView from "views/public/flights/FlightView";
 
 export const Page404 = () => {
     return (
@@ -177,6 +181,19 @@ export const Flights = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <FlightsView />
+            </div>
+        </>
+    );
+};
+
+export const Flight = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Flight</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <FlightView />
             </div>
         </>
     );

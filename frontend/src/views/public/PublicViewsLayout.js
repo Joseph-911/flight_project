@@ -2,19 +2,20 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import {
+    Page404,
     Home,
     Login,
-    Countries,
-    Country,
-    Airlines,
-    Airline,
     Register,
-    Page404,
-    Flights,
+    Countries,
     CountryAirlines,
+    Country,
     CountryOriginFlights,
     CountryDestinationFlights,
+    Airlines,
+    Airline,
     AirlineFlights,
+    Flights,
+    Flight,
 } from "routes/publicRoutes";
 
 import { RestrictedRoute } from "utils/CustomRoutes";
@@ -32,6 +33,7 @@ const PublicViewsLayout = () => {
             <Route path="/airlines/:id" element={<Airline />} />
             <Route path="/airlines/:id/flights" element={<AirlineFlights />} />
             <Route path="/flights" element={<Flights />} />
+            <Route path="/flight/:id" element={<Flight />} />
             <Route element={<RestrictedRoute />}>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />

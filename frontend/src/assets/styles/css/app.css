@@ -1122,4 +1122,97 @@ button {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+.flight-details {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 30px 30px;
+  position: relative;
+}
+.flight-details::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  background-color: var(--blue-1);
+  border-radius: 5px 0 0 5px;
+}
+
+.flight-details .flight-location {
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.flight-details .flight-location.single {
+  text-align: center;
+}
+.flight-details .flight-location.multi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flight-details .flight-time {
+  display: flex;
+  align-items: center;
+}
+.flight-details .flight-time .datetime p {
+  white-space: nowrap;
+}
+.flight-details .flight-time .datetime:nth-of-type(1) {
+  text-align: left;
+}
+.flight-details .flight-time .datetime:nth-of-type(3) {
+  text-align: right;
+}
+.flight-details .flight-time .duration {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.flight-details .flight-time .duration > div {
+  position: relative;
+  padding: 0 10px;
+}
+.flight-details .flight-time .duration span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.flight-details .flight-time .duration span.icon {
+  font-size: 1.7rem;
+}
+.flight-details .flight-time .duration span.icon ion-icon {
+  margin-left: 2px;
+}
+.flight-details .flight-time .duration span.content {
+  position: absolute;
+  top: 100%;
+  padding-top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: var(--gray-2);
+  white-space: nowrap;
+}
+.flight-details .flight-time .duration::before, .flight-details .flight-time .duration::after {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+.flight-details .flight-action {
+  max-width: 300px;
+  margin: 50px auto 0;
 }/*# sourceMappingURL=app.css.map */

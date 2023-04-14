@@ -84,3 +84,12 @@ def get_country_destination_flights(request, pk):
 @permission_classes([AllowAny])
 def get_all_flights(request):
     return facade_base.get_all_flights()
+
+
+# --------------------------------------------- #
+# -------------- Flight Details --------------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_flight(request, pk):
+    return facade_base.get_flight_by_id(pk)
