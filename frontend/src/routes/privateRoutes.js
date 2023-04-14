@@ -5,6 +5,7 @@ import ProfileView from "views/private/profile/ProfileView";
 import AllView from "views/private/profile/AllView";
 import AddView from "views/private/profile/AddView";
 import ProfileEditView from "views/private/profile/ProfileEditView";
+import CreateCutomerView from "views/private/profile/user/CreateCutomerView";
 
 export const Profile = () => {
     return (
@@ -53,6 +54,19 @@ export const ProfileEdit = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <ProfileEditView />
+            </div>
+        </>
+    );
+};
+
+export const CreateCustomer = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Create Customer</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <CreateCutomerView />
             </div>
         </>
     );

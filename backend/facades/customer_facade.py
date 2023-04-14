@@ -19,4 +19,14 @@ class CustomerFacade(FacadeBase):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+    # --------------------------------------------- #
+    # ---------------- Buy Ticket ----------------- #
+    # --------------------------------------------- #
+    def add_ticket(self, request, pk):
+        customer = request.user.customer
+        
+        customer_serializer = CustomerSerializer(customer)
+        return Response(customer_serializer.data)
+
+
 customer_facade = CustomerFacade()

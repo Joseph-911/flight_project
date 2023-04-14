@@ -7,6 +7,7 @@ import {
     ProfileAdd,
     ProfileAll,
     ProfileEdit,
+    CreateCustomer,
 } from "routes/privateRoutes";
 
 const PrivateViewsLayout = () => {
@@ -17,6 +18,7 @@ const PrivateViewsLayout = () => {
                 <Route path="/all" element={<ProfileAll />} />
                 <Route path="/add" element={<ProfileAdd />} />
                 <Route path="/edit" element={<ProfileEdit />} />
+                <Route path="/create-customer" element={<CreateCustomer />} />
             </Route>
         </Routes>
     );

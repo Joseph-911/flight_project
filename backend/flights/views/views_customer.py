@@ -12,3 +12,11 @@ from utils.decorators import *
 def get_my_tickets(request):
     return customer_facade.get_my_tickets(request)
 
+
+# --------------------------------------------- #
+# --------------------------------------------- #
+# --------------------------------------------- #
+@api_view(['GET', 'POST'])
+@user_has_permission('add_ticket')
+def add_ticket(request, pk):
+    return customer_facade.add_ticket(request, pk)

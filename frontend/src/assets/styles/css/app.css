@@ -804,7 +804,7 @@ button {
 .credit-card {
   position: relative;
   border: 1px solid;
-  max-width: 320px;
+  width: 320px;
   height: 200px;
   margin: 0 auto;
   border-radius: 10px;
@@ -865,6 +865,14 @@ button {
 .credit-card .card-info .card-holder {
   font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
+}
+
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .animate-up {

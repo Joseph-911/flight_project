@@ -14,7 +14,6 @@ export const getFlight = async (id, setState, setError) => {
     try {
         const { data } = await axios.get(`${baseURL}${id}`);
         if (data) {
-            console.log(data);
             setState(data);
         }
     } catch (error) {

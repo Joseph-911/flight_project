@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from flights.views import views_administrator, views_airline, views_customer
+from flights.views import views_administrator, views_airline, views_customer, views_anonymous
 
 
 administrator_url_patterns = [
@@ -35,6 +35,10 @@ customer_url_patterns = [
     path('tickets/', views_customer.get_my_tickets, name='customer-all-tickets'),
 ]
 
+anonymous_url_patterns = [
+    path('create-customer/', views_anonymous.create_customer, name='create-customer'),
+]
+
 roles_urls = [
     path('administrator/', include(administrator_url_patterns)),
     path('airline/', include(airline_url_patterns)),
@@ -44,4 +48,5 @@ roles_urls = [
 
 urlpatterns = [
     path('profile/', include(roles_urls)),
+    path('', include(anonymous_url_patterns))
 ]
