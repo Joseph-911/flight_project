@@ -47,10 +47,6 @@ const AddCustomer = () => {
                     userSelect={true}
                 />
 
-                <div className="form-block">
-                    <CreditCard formInputs={formInputs} />
-                </div>
-
                 <input
                     type="submit"
                     value="Add"

@@ -149,9 +149,49 @@ class AdministratorFacade(FacadeBase):
 
             return Response({'message': 'Customer added successfully'}, status=status.HTTP_200_OK)
         elif 'username' in request.data:
-            return Response({'message': 'message'})
+            data = request.data.dict()
+
+            customer_fields = {
+                'first_name': data.pop('first_name').title(),
+                'last_name': data.pop('last_name').title(),
+                'address': data.pop('address').title(),
+                'phone_no': data.pop('phone_no'),
+                'credit_card_no': data.pop('credit_card_no'),
+            }
+            user_fields = data
+            
+            with transaction.atomic():
+                # Get username, email and password from request data
+                username = user_fields['username'].lower()
+                email = user_fields['email'].lower()
+                password = user_fields['password1']
+                hashed_password = make_password(password)
+
+                # Create user 
+                user_serializer = UserRegisterSerializer(data=user_fields)
+                user_serializer.is_valid(raise_exception=True)
+                user = self.dal.create_object(User, {'username': username, 'email': email, 'password': hashed_password})
+
+
+                # Create customer
+                customer_fields['user_id'] = str(user.id)
+                customer_serializer = CustomerSerializer(data=customer_fields)
+
+                customer_serializer.is_valid(raise_exception=True)
+
+                customer_fields['user_id'] = user
+                self.dal.create_object(Customer, customer_fields)
+
+
+                # Update user (role and thumbnail if found)
+                role = self.dal.read_object_by(UserRole, 'role_name', 'customer')
+                self.dal.update_object(user, {'user_role': role})     
+                if 'thumbnail' in user_fields:
+                    self.dal.update_object(user, {'thumbnail': user_fields['thumbnail']})
+
+            return Response({'message': 'User customer created successfully'}, status=status.HTTP_200_OK)
         else:
-            return Response({'message': 'Error during creating an airline'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Error during creating a customer'}, status=status.HTTP_400_BAD_REQUEST)
         
     
     # --------------------------------------------- # 

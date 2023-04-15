@@ -10,6 +10,7 @@ import {
     FieldError,
     FormBlockImage,
 } from "./FormsUtils";
+import CreditCard from "./CreditCard";
 
 /* --------------------------------------------- */
 /* ---------------- Search Form ---------------- */
@@ -250,6 +251,10 @@ export const CustomerForm = (props) => {
                 error={props.error}
                 maxLength="10"
             />
+
+            <div className="form-block">
+                <CreditCard formInputs={props.formInputs} />
+            </div>
         </>
     );
 };
