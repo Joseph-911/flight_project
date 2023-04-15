@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import AuthContext from "context/AuthContext";
+import MessagesContext from "context/MessagesContext";
 import { getFlight } from "api/common/flightsAPI";
 
 const FlightView = () => {
-    const { userRole } = useContext(AuthContext);
+    const { userRole, user } = useContext(AuthContext);
+    const {addMessage} = useContext(MessagesContext)
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -17,14 +19,19 @@ const FlightView = () => {
     }, [id]);
 
     const handleBuyTicket = async () => {
-        const roleData = await userRole();
-
-        if (!roleData.role) {
-            navigate(`/profile/create-customer`, {
-                state: { isBuying: true },
-            });
+        
+        if (user === null) {
+            navigate('/login');
+            addMessage('Login to continue', 'info')
         } else {
-            navigate(`/flight/${id}/book`);
+            const roleData = await userRole();
+            if (!roleData.role) {
+                navigate(`/profile/create-customer`, {
+                    state: { isBuying: true },
+                });
+            } else {
+                navigate(`/flight/${id}/book`);
+            }
         }
     };
 
