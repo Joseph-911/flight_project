@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const Flight = (props) => {
     const flight = props.flight;
+
     return (
         <li className="flight-item">
             <div className="flight-locations">
@@ -12,7 +13,7 @@ const Flight = (props) => {
                         <p>
                             <span className="text-xs bold">FROM</span>
                             <span className="bold">
-                                {flight.origin_country}
+                                <Link to={`/countries/${flight.origin_country_id}`}>{flight.origin_country}</Link>
                             </span>
                         </p>
                         <div>
@@ -23,7 +24,7 @@ const Flight = (props) => {
                         <p>
                             <span className="text-xs bold">TO</span>
                             <span className="bold">
-                                {flight.destination_country}
+                                <Link to={`/countries/${flight.destination_country_id}`}>{flight.destination_country}</Link>
                             </span>
                         </p>
                         <div>
@@ -53,18 +54,38 @@ const Flight = (props) => {
             </div>
             <div className="flight-footer">
                 <div className="flight-company">
-                    <div className="flight-company-img">
-                        <img src={flight.airline_company_thumbnail} alt="Airline Company Thumbnail" />
-                    </div>
-                    <p>{flight.airline_company_id}</p>
+                    <Link to={`/airlines/${flight.company_id}`}>
+                        <div className="flight-company-img">
+                            <img
+                                src={flight.airline_company_thumbnail}
+                                alt="Airline Company Thumbnail"
+                            />
+                        </div>
+                        <span>{flight.airline_company_id}</span>
+                    </Link>
                 </div>
                 <div className="flight-price">
                     <span className="price">${flight.price}</span>
-                    <span>{flight.remaining_tickets} Tickets left</span>
+                    <span
+                        className={`${
+                            flight.remaining_tickets === 0
+                                ? "red"
+                                : flight.remaining_tickets <= 10
+                                ? "orange"
+                                : "green"
+                        }`}
+                    >
+                        {flight.remaining_tickets} Tickets left
+                    </span>
                 </div>
             </div>
             <div>
-                <Link to={`/flight/${flight.id}`} className="btn btn-xl btn-primary">Details</Link>
+                <Link
+                    to={`/flight/${flight.id}`}
+                    className="btn btn-xl btn-primary"
+                >
+                    Details
+                </Link>
             </div>
         </li>
     );

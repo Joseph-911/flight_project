@@ -40,6 +40,7 @@ class FlightSerializer(serializers.ModelSerializer):
     formatted_landing_datetime = serializers.SerializerMethodField()
     origin_country = serializers.SerializerMethodField()
     destination_country = serializers.SerializerMethodField()
+    company_id = serializers.SerializerMethodField()
     airline_company_thumbnail = serializers.CharField(source='airline_company_id.user_id.thumbnail.url', read_only=True)
 
     airline_company_id = serializers.CharField(required=True, validators=[validate_airline_id])
@@ -59,6 +60,9 @@ class FlightSerializer(serializers.ModelSerializer):
         ret['origin_country_id'] = instance.origin_country_id.id
         ret['destination_country_id'] = instance.destination_country_id.id
         return ret
+    
+    def get_company_id(self, obj):
+        return obj.airline_company_id.id
     
     def get_origin_country(self, obj):
         return obj.origin_country_id.name

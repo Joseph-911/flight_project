@@ -18,6 +18,7 @@ import AirlineFlightsView from "views/public/airlines/AirlineFlightsView";
 // Flights
 import FlightsView from "views/public/flights/FlightsView";
 import FlightView from "views/public/flights/FlightView";
+import FlightBookingView from "views/public/flights/FlightBookingView";
 
 export const Page404 = () => {
     return (
@@ -194,6 +195,19 @@ export const Flight = () => {
             </Helmet>
             <div className="animate-fade-up">
                 <FlightView />
+            </div>
+        </>
+    );
+};
+
+export const FlightBooking = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Flight Booking</title>
+            </Helmet>
+            <div className="animate-fade-up">
+                <FlightBookingView />
             </div>
         </>
     );

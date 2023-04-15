@@ -15,8 +15,15 @@
   --blue-1: #2562f4;
   --blue-2: #1546b7;
   --blue-3: #346ff8;
+  --blue-4: #40489b;
+  --blue-5: #c8d2ed;
   --red-1: #cf2c2c;
   --red-2: #bc2323;
+  --red-3: #9b4040;
+  --red-4: #edc8c8;
+  --green-1: #c8edd6;
+  --green-2: #469b40;
+  --orange-1: #ffa500;
 }
 
 html {
@@ -173,6 +180,18 @@ a:not(.btn):hover {
 .page-title {
   font-size: 2.3rem;
   margin-bottom: 30px;
+}
+
+.red {
+  color: var(--red-1);
+}
+
+.green {
+  color: var(--green-2);
+}
+
+.orange {
+  color: var(--orange-1);
 }
 
 html, body {
@@ -646,22 +665,22 @@ button {
   opacity: 0.9;
 }
 .messages-wrapper .banner-alert.message-info {
-  background-color: #c8d2ed;
+  background-color: var(--blue-5);
 }
 .messages-wrapper .banner-alert.message-info .counter {
-  background-color: #40489b;
+  background-color: var(--blue-4);
 }
 .messages-wrapper .banner-alert.message-success {
-  background-color: #c8edd6;
+  background-color: var(--green-1);
 }
 .messages-wrapper .banner-alert.message-success .counter {
-  background-color: #469b40;
+  background-color: var(--green-2);
 }
 .messages-wrapper .banner-alert.message-error {
-  background-color: #edc8c8;
+  background-color: var(--red-4);
 }
 .messages-wrapper .banner-alert.message-error .counter {
-  background-color: #9b4040;
+  background-color: var(--red-3);
 }
 
 /* --------------------------------------------- */
@@ -1029,6 +1048,7 @@ button {
 .flights-list .flight-item .flight-locations .locations .location {
   height: 100%;
   width: 49%;
+  margin-bottom: 10px;
 }
 .flights-list .flight-item .flight-locations .location {
   border: 1px solid var(--gray-1);
@@ -1039,15 +1059,18 @@ button {
   justify-content: space-between;
   align-items: center;
 }
-.flights-list .flight-item .flight-locations .location:not(:last-of-type) {
-  margin-bottom: 10px;
-}
 .flights-list .flight-item .flight-locations .location > p span {
   display: block;
 }
 .flights-list .flight-item .flight-locations .location > p span:last-of-type {
   color: var(--blue-1);
   margin-top: 4px;
+}
+.flights-list .flight-item .flight-locations .location > p a:link, .flights-list .flight-item .flight-locations .location > p a:visited {
+  text-decoration: none;
+}
+.flights-list .flight-item .flight-locations .location > p a:hover, .flights-list .flight-item .flight-locations .location > p a:active {
+  opacity: 0.8;
 }
 .flights-list .flight-item .flight-locations .location.location-from > div {
   transform: rotate(-30deg);
@@ -1113,10 +1136,20 @@ button {
   margin-bottom: 5px;
 }
 
-.flights-list .flight-item .flight-company {
+.flights-list .flight-item .flight-company a {
+  transition: all 0.2s;
+}
+.flights-list .flight-item .flight-company a:link, .flights-list .flight-item .flight-company a:visited {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+.flights-list .flight-item .flight-company a:hover, .flights-list .flight-item .flight-company a:active {
+  transform: translateY(-5px);
+  color: var(--gray);
 }
 .flights-list .flight-item .flight-company .flight-company-img {
   width: 45px;
@@ -1124,6 +1157,7 @@ button {
   border-radius: 50%;
   border: 1px solid var(--gray-1);
   overflow: hidden;
+  margin-bottom: 5px;
 }
 .flights-list .flight-item .flight-company .flight-company-img img {
   width: 100%;

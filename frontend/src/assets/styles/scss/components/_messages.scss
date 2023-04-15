@@ -50,21 +50,21 @@
         }
 
         &.message-info {
-            background-color: #c8d2ed;
+            background-color: var(--blue-5);
             .counter {
-                background-color: #40489b;
+                background-color: var(--blue-4);
             }
         }
         &.message-success {
-            background-color: #c8edd6;
+            background-color: var(--green-1);
             .counter {
-                background-color: #469b40;
+                background-color: var(--green-2);
             }
         }
         &.message-error {
-            background-color: #edc8c8;
+            background-color: var(--red-4);
             .counter {
-                background-color: #9b4040;
+                background-color: var(--red-3);
             }
         }
     }

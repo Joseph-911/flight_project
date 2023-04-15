@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -23,10 +25,39 @@ class CustomerFacade(FacadeBase):
     # ---------------- Buy Ticket ----------------- #
     # --------------------------------------------- #
     def add_ticket(self, request, pk):
+        flight = self.dal.read_object_by(Flight, 'id', pk)
         customer = request.user.customer
-        
+        flight_serializer = FlightSerializer(flight)
         customer_serializer = CustomerSerializer(customer)
-        return Response(customer_serializer.data)
+        
+        if request.method == 'GET':
+            if flight is not None:
+                return Response(
+                    {
+                        'flight': flight_serializer.data,
+                        'customer': customer_serializer.data
+                    }, status=status.HTTP_200_OK
+                )
+            return Response({'message': 'Flight not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if request.method == 'POST':
+            customer_has_ticket = self.dal.read_object_filter_by(Ticket, {'customer_id': customer.id, 'flight_id': pk})
+
+            if flight.departure_time <= timezone.now():
+                return Response({'message': 'Sorry this flight took a place in the past.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if customer_has_ticket:
+                return Response({'message': 'You already bought this ticket before.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            if flight.remaining_tickets == 0:
+                return Response({'message': 'Sorry, no tickets available left for this flight.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Create ticket object
+            self.dal.create_object(Ticket, {'customer_id': customer, 'flight_id' : flight})
+            # Update remaining tickets  
+            self.dal.update_object(flight, {'remaining_tickets': flight.remaining_tickets - 1})
+
+            return Response({'message': 'Ticket added successfully'}, status=status.HTTP_200_OK) 
 
 
 customer_facade = CustomerFacade()
