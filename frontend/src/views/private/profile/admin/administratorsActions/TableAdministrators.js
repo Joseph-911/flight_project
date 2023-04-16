@@ -1,7 +1,8 @@
 import React from "react";
 
-import { getUser } from "api/administratorsActions";
+import { getUser, removeAdministrator } from "api/administratorsActions";
 import ViewButton from "components/ViewButton";
+import DeleteButton from "components/DeleteButton";
 
 const TableAdministrators = (props) => {
     const administrators = props.data;
@@ -12,6 +13,7 @@ const TableAdministrators = (props) => {
                     <th>ID</th>
                     <th>Username</th>
                     <th>Full name</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,6 +36,14 @@ const TableAdministrators = (props) => {
                                     func={getUser}
                                     pk={administrator.user_id}
                                     theTarget="users"
+                                />
+                            </td>
+                            <td>
+                                <DeleteButton
+                                    title={administrator.full_name}
+                                    btnSize="md"
+                                    func={removeAdministrator}
+                                    pk={administrator.id}
                                 />
                             </td>
                         </tr>

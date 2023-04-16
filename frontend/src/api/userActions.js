@@ -6,6 +6,5 @@ export const createCustomer = async (api, setState, setError, inputs) => {
         }
     } catch (error) {
         setError(error.response.data);
-        console.log(error);
     }
 };

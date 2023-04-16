@@ -1,7 +1,8 @@
 import React from "react";
 
-import { getUser } from "api/administratorsActions";
+import { getUser, removeCustomer } from "api/administratorsActions";
 import ViewButton from "components/ViewButton";
+import DeleteButton from "components/DeleteButton";
 
 const TableCustomers = (props) => {
     const customers = props.data;
@@ -15,6 +16,7 @@ const TableCustomers = (props) => {
                     <th>Address</th>
                     <th>Phone Number</th>
                     <th>Credit Card</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,6 +42,14 @@ const TableCustomers = (props) => {
                                     func={getUser}
                                     pk={customer.user_id}
                                     theTarget="users"
+                                />
+                            </td>
+                            <td>
+                                <DeleteButton
+                                    title={customer.full_name}
+                                    btnSize="md"
+                                    func={removeCustomer}
+                                    pk={customer.id}
                                 />
                             </td>
                         </tr>

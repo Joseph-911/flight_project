@@ -51,34 +51,36 @@ const Avatar = (props) => {
                 <p>Member since: {user.created}</p>
             </div>
             {props.details && (
-                <div className="avatar-additional-info">
-                    <p>
-                        <span className="bold">Role:</span>{" "}
-                        {user.user_role ? user.user_role : "----------"}
-                    </p>
-                    {user.user_role &&
-                    (user.user_role === "admin" ||
-                        user.user_role === "customer" ||
-                        user.user_role === "administrator") ? (
+                <>
+                    <div className="avatar-additional-info">
                         <p>
-                            <span className="bold">Name: </span>
-                            {user.role_obj.full_name}
+                            <span className="bold">Role:</span>{" "}
+                            {user.user_role ? user.user_role : "----------"}
                         </p>
-                    ) : user.user_role === "airline company" ? (
-                        <>
+                        {user.user_role &&
+                        (user.user_role === "admin" ||
+                            user.user_role === "customer" ||
+                            user.user_role === "administrator") ? (
                             <p>
-                                <span className="bold">Company: </span>
-                                {user.role_obj.name}
+                                <span className="bold">Name: </span>
+                                {user.role_obj.full_name}
                             </p>
-                            <p>
-                                <span className="bold">Country: </span>
-                                {user.role_obj.country_name}
-                            </p>
-                        </>
-                    ) : (
-                        ""
-                    )}
-                </div>
+                        ) : user.user_role === "airline company" ? (
+                            <>
+                                <p>
+                                    <span className="bold">Company: </span>
+                                    {user.role_obj.name}
+                                </p>
+                                <p>
+                                    <span className="bold">Country: </span>
+                                    {user.role_obj.country_name}
+                                </p>
+                            </>
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );

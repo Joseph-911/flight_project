@@ -109,3 +109,30 @@ def add_administrator(request):
 @user_has_permission('add_country')
 def add_country(request):
     return administrator_facade.add_country(request)
+
+
+# --------------------------------------------- #
+# -------------- Remove Customer -------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('delete_customer')
+def remove_customer(request, pk):
+    return administrator_facade.remove_customer(pk)
+
+
+# --------------------------------------------- #
+# --------------- Remove Airline -------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('delete_airlinecompany')
+def remove_airline(request, pk):
+    return administrator_facade.remove_airline(pk)
+
+
+# --------------------------------------------- #
+# ------------ Remove Administrator ----------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('delete_airlinecompany')
+def remove_administrator(request, pk):
+    return administrator_facade.remove_administrator(request, pk)

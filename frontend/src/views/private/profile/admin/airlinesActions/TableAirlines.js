@@ -1,7 +1,8 @@
 import React from "react";
 
-import { getUser } from "api/administratorsActions";
+import { getUser, removeAirline } from "api/administratorsActions";
 import ViewButton from "components/ViewButton";
+import DeleteButton from "components/DeleteButton";
 
 const TableAirlines = (props) => {
     const airlines = props.data;
@@ -15,6 +16,7 @@ const TableAirlines = (props) => {
                     <th>Name</th>
                     <th>Country</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,12 +26,20 @@ const TableAirlines = (props) => {
                             <td>{airline.id}</td>
                             <td>{airline.username}</td>
                             <td>{airline.name}</td>
-                            <td>{airline.country_id}</td>
+                            <td>{airline.country_name}</td>
                             <td>
                                 <ViewButton
                                     func={getUser}
                                     pk={airline.user_id}
                                     theTarget="users"
+                                />
+                            </td>
+                            <td>
+                                <DeleteButton
+                                    title={airline.name}
+                                    btnSize="md"
+                                    func={removeAirline}
+                                    pk={airline.id}
                                 />
                             </td>
                         </tr>

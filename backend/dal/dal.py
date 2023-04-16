@@ -55,9 +55,13 @@ class GenericDAL:
         return model_class.objects.filter(**filter_dict)
 
 
-    def get_customer_by_id(self, pk):
-        return Customer.objects.get(id=pk)
-
+    def delete_object(self, model_class, pk):
+        return model_class.objects.delete()
+    
+    
+    # def get_customer_by_id(self, pk):
+    #     return Customer.objects.get(id=pk)
+    
 
     def get_airlines_by_county(self, pk):
         country = self.read_object(Country, pk)

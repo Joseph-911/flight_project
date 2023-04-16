@@ -326,5 +326,48 @@ class AdministratorFacade(FacadeBase):
         return Response({'message': 'not valid'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+    # --------------------------------------------- #
+    # -------------- Remove Customer -------------- #
+    # --------------------------------------------- #
+    def remove_customer(self, pk):
+        customer = self.dal.read_object(Customer, pk)
+        if customer:
+            user = self.dal.read_object(User, customer.user_id.id)
+            user.delete()
+            return Response({'message': 'Customer deleted successfully'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Customer not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+    # --------------------------------------------- #
+    # --------------- Remove Airline -------------- #
+    # --------------------------------------------- #
+    def remove_airline(self, pk):
+        airline = self.dal.read_object(AirlineCompany, pk)
+        if airline:
+            user = self.dal.read_object(User, airline.user_id.id)
+            user.delete()
+            return Response({'message': 'Airline company deleted successfully'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Airline company not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # --------------------------------------------- #
+    # ------------ Remove Administrator ----------- #
+    # --------------------------------------------- #
+    def remove_administrator(self, request, pk):
+        administrator = self.dal.read_object(Administrator, pk)
+        if administrator:
+            user = self.dal.read_object(User, administrator.user_id.id)
+            
+            if user == request.user:
+                return Response({'message': 'An error has occurred during action. You cannot delete your account'}, status=status.HTTP_403_FORBIDDEN)
+
+            if user.is_superuser:
+                return Response({'message': 'The action is forbidden. Superuser cannot be deleted!'}, status=status.HTTP_403_FORBIDDEN)
+            
+            user.delete()
+            return Response({'message': 'Administrator deleted successfully'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Administrator not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 administrator_facade = AdministratorFacade()

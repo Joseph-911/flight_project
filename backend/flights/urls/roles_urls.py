@@ -11,12 +11,15 @@ administrator_url_patterns = [
     # Customers
     path('customers/', views_administrator.view_all_customers, name='customers-list'),
     path('customers/add/', views_administrator.add_customer, name='add-customer'),
+    path('customers/delete/<str:pk>/', views_administrator.remove_customer, name='remove-customer'),
     # Airlines
     path('airlines/', views_administrator.view_all_airlines, name='airlines-list'),
     path('airlines/add/', views_administrator.add_airline, name='add-airline'),
+    path('airlines/delete/<str:pk>/', views_administrator.remove_airline, name='remove-airline'),
     # Administrators
     path('administrators/', views_administrator.view_all_administrators, name='administrators-list'),
     path('administrators/add/', views_administrator.add_administrator, name='add-administrator'),
+    path('administrators/delete/<str:pk>/', views_administrator.remove_administrator, name='remove-administrator'),
     # Countries
     path('countries/', views_administrator.view_all_countries, name='countries-list'),
     path('countries/add/', views_administrator.add_country, name='add-country'),

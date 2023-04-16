@@ -6,7 +6,6 @@ import MessagesContext from "context/MessagesContext";
 import { CustomerForm } from "components/Forms";
 import { handleInputChange } from "utils/HandleStates";
 import { addCustomer } from "api/administratorsActions";
-import CreditCard from "components/CreditCard";
 
 const AddCustomer = () => {
     const location = useLocation();
