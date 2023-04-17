@@ -32,6 +32,15 @@ def update_flight(request, pk):
 
 
 # --------------------------------------------- #
+# --------------- Remove Flight --------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('delete_flight')
+def remove_flight(request, pk):
+    return airline_facade.remove_flight(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- Get My Flights --------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

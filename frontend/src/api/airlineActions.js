@@ -46,7 +46,7 @@ export const updateFlight = async (
     inputs
 ) => {
     if (method === "get") {
-        const { data } = await api.get(`${baseURL}/flights/${target}/edit/`);
+        const { data } = await api.get(`${baseURL}/flights/edit/${target}/`);
 
         if (data) {
             setState(data);
@@ -55,7 +55,7 @@ export const updateFlight = async (
     if (method === "put") {
         try {
             const { data } = await api.put(
-                `${baseURL}/flights/${target}/edit/`,
+                `${baseURL}/flights/edit/${target}/`,
                 inputs
             );
 
@@ -65,5 +65,16 @@ export const updateFlight = async (
         } catch (error) {
             setError(error.response.data);
         }
+    }
+};
+
+export const removeFlight = async (api, pk, setState, setError) => {
+    try {
+        const { data } = await api.post(`${baseURL}/flights/delete/${pk}/`);
+        if (data) {
+            setState(data.message);
+        }
+    } catch (error) {
+        setError(error.response.data.message);
     }
 };

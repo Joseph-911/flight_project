@@ -1,7 +1,8 @@
-import DeleteButton from "components/DeleteButton";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import React from "react";
+import { removeFlight } from "api/airlineActions";
+import DeleteButton from "components/DeleteButton";
 
 const TableFlights = (props) => {
     const navigate = useNavigate();
@@ -21,11 +22,12 @@ const TableFlights = (props) => {
                     <th>From - To</th>
                     <th>Departure Time</th>
                     <th>Landing Time</th>
-                    <th>Flight Duration</th>
+                    <th>Duration</th>
                     <th>Price</th>
-                    <th>Tickets - Total</th>
-                    <th>Tickets - Sold</th>
-                    <th>Tickets - Remaining</th>
+                    <th>Tickets-Total</th>
+                    <th>Tickets-Sold</th>
+                    <th>Tickets-Remaining</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -47,12 +49,17 @@ const TableFlights = (props) => {
                             <td>
                                 <button
                                     onClick={() => handleRouteChange(flight.id)}
-                                    className="btn btn-sm btn-primary"
+                                    className="btn btn-md btn-primary"
                                 >
                                     Edit
                                 </button>
+                            </td>
+                            <td>
                                 <DeleteButton
                                     title={`${flight.from_to} flight`}
+                                    btnSize="md"
+                                    pk={flight.id}
+                                    func={removeFlight}
                                 />
                             </td>
                         </tr>
