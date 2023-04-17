@@ -347,7 +347,7 @@ class AdministratorFacade(FacadeBase):
                 if user.is_superuser:
                     return Response({'message': 'The action is forbidden. Superuser cannot be deleted!'}, status=status.HTTP_403_FORBIDDEN)
 
-                user.delete()
+                self.dal.delete_object(User, user.id)
                 return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
             
             return Response({'message': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
@@ -362,7 +362,7 @@ class AdministratorFacade(FacadeBase):
         if request.method == 'DELETE':
             if customer:
                 user = self.dal.read_object(User, customer.user_id.id)
-                user.delete()
+                self.dal.delete_object(User, user.id)
                 return Response({'message': 'Customer deleted successfully'}, status=status.HTTP_200_OK)
             return Response({'message': 'Customer not found'}, status=status.HTTP_404_NOT_FOUND)
         return Response()
@@ -376,7 +376,7 @@ class AdministratorFacade(FacadeBase):
         if request.method == 'DELETE':
             if airline:
                 user = self.dal.read_object(User, airline.user_id.id)
-                user.delete()
+                self.dal.delete_object(User, user.id)
                 return Response({'message': 'Airline company deleted successfully'}, status=status.HTTP_200_OK)
             return Response({'message': 'Airline company not found'}, status=status.HTTP_404_NOT_FOUND)
         return Response()
@@ -397,7 +397,7 @@ class AdministratorFacade(FacadeBase):
                 if user.is_superuser:
                     return Response({'message': 'The action is forbidden. Superuser cannot be deleted!'}, status=status.HTTP_403_FORBIDDEN)
                 
-                user.delete()
+                self.dal.delete_object(User, user.id)
                 return Response({'message': 'Administrator deleted successfully'}, status=status.HTTP_200_OK)
             return Response({'message': 'Administrator not found'}, status=status.HTTP_404_NOT_FOUND)
         return Response()

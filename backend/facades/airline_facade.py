@@ -99,7 +99,7 @@ class AirlineFacade(FacadeBase):
                 if tickets.exists():
                     return Response({'message': 'Flight cannot be deleted. Customers already booked this flight'}, status=status.HTTP_403_FORBIDDEN)
                 
-                flight.delete()
+                self.dal.delete_object(Flight, flight.id)
                 return Response({'message': 'Flight deleted successfully'}, status=status.HTTP_200_OK)
                 
             return Response({'message': 'Flight is not found. It\'s either not in the database or doesn\'t belong to you'}, status=status.HTTP_404_NOT_FOUND)
