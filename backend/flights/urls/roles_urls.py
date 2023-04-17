@@ -36,15 +36,19 @@ airline_url_patterns = [
     path('flights/add/', views_airline.add_flight, name='add-flight'),
 ]
 
+
 customer_url_patterns = [
+    path('edit/', views_customer.update_customer, name='update-customer'),
     path('tickets/', views_customer.get_my_tickets, name='customer-all-tickets'),
     path('tickets/add/<str:pk>/', views_customer.add_ticket, name='add-ticket'),
     path('tickets/delete/<str:pk>/', views_customer.remove_ticket, name='remove-ticket'),
 ]
 
+
 anonymous_url_patterns = [
     path('create-customer/', views_anonymous.create_customer, name='create-customer'),
 ]
+
 
 roles_urls = [
     path('administrator/', include(administrator_url_patterns)),

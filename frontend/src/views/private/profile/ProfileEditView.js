@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import UpdateAirline from "./airline/UpdateAirline";
+import UpdateCustomer from "./customer/UpdateCustomer";
 import UpdateFlight from "./airline/flightsActions/UpdateFlight";
 
 const ProfileEditView = () => {
@@ -18,7 +19,7 @@ const ProfileEditView = () => {
                     setEditCompnent(<UpdateAirline />);
                     break;
                 case "customer":
-                    setEditCompnent(<p>You are: {location.state.target}</p>);
+                    setEditCompnent(<UpdateCustomer />);
                     break;
                 case "flight":
                     setEditCompnent(<UpdateFlight />);

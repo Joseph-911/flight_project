@@ -5,6 +5,16 @@ from utils.decorators import *
 
 
 # --------------------------------------------- #
+# -------------- Update Customer -------------- #
+# --------------------------------------------- #
+@api_view(['GET','PUT'])
+@user_has_permission('change_customer')
+def update_customer(request):
+    customer = request.user.customer
+    return customer_facade.update_customer(request, customer)
+
+
+# --------------------------------------------- #
 # ----------------- Add Ticket ---------------- #
 # --------------------------------------------- #
 @api_view(['GET','POST'])

@@ -1,5 +1,30 @@
 const baseURL = "profile/customer";
 
+export const updateCustomer = async (
+    api,
+    method,
+    setState,
+    setError,
+    inputs
+) => {
+    if (method === "get") {
+        const { data } = await api.get(`${baseURL}/edit/`);
+        if (data) {
+            setState(data);
+        }
+    }
+    if (method === "put") {
+        try {
+            const { data } = await api.put(`${baseURL}/edit/`, inputs);
+            if (data) {
+                setState(data.message);
+            }
+        } catch (error) {
+            setError(error.response.data);
+        }
+    }
+};
+
 export const addTicket = async (
     api,
     id,

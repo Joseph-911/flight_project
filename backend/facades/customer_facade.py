@@ -9,6 +9,27 @@ from flights.serializers import *
 
 
 class CustomerFacade(FacadeBase):
+
+    # --------------------------------------------- #
+    # -------------- Update Customer -------------- #
+    # --------------------------------------------- #
+    def update_customer(self, request, customer):
+        # Check the request user customer
+        if request.method == 'GET':
+            serializer = CustomerSerializer(customer)
+            return Response(serializer.data)
+        
+        if request.method == 'PUT':
+            serializer = CustomerSerializer(instance=customer, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+
+            validated_data = serializer.validated_data
+            validated_data['first_name'] = validated_data['first_name'].title()
+            validated_data['last_name'] = validated_data['last_name'].title()
+            validated_data['address'] = validated_data['address'].title()
+            self.dal.update_object(customer, validated_data)
+            return Response({'message': 'Customer updated successfully'}, status=status.HTTP_200_OK)
+        
     
     # --------------------------------------------- #
     # ---------------- Add Ticket ----------------- #
