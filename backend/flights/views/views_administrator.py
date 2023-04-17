@@ -112,6 +112,15 @@ def add_country(request):
 
 
 # --------------------------------------------- #
+# ---------------- Remove User ---------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@user_has_permission('delete_user')
+def remove_user(request, pk):
+    return administrator_facade.remove_user(request, pk)
+
+
+# --------------------------------------------- #
 # -------------- Remove Customer -------------- #
 # --------------------------------------------- #
 @api_view(['POST'])

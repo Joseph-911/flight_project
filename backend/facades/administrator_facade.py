@@ -327,6 +327,25 @@ class AdministratorFacade(FacadeBase):
 
 
     # --------------------------------------------- #
+    # ---------------- Remove User ---------------- #
+    # --------------------------------------------- #
+    def remove_user(self, request, pk):
+        user = self.dal.read_object(User, pk)
+
+        if user:
+            if user == request.user:
+                return Response({'message': 'An error has occurred during action. You cannot delete your account'}, status=status.HTTP_403_FORBIDDEN)
+            
+            if user.is_superuser:
+                return Response({'message': 'The action is forbidden. Superuser cannot be deleted!'}, status=status.HTTP_403_FORBIDDEN)
+
+            user.delete()
+            return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
+        
+        return Response({'message': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    # --------------------------------------------- #
     # -------------- Remove Customer -------------- #
     # --------------------------------------------- #
     def remove_customer(self, pk):

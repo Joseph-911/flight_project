@@ -1,5 +1,16 @@
 const baseURL = "profile/administrator";
 
+export const removeUser = async (api, pk, setState, setError) => {
+    try {
+        const { data } = await api.post(`${baseURL}/users/delete/${pk}/`);
+        if (data) {
+            setState(data.message);
+        }
+    } catch (error) {
+        setError(error.response.data.message);
+    }
+};
+
 export const removeCustomer = async (api, pk, setState, setError) => {
     try {
         const { data } = await api.post(`${baseURL}/customers/delete/${pk}/`);

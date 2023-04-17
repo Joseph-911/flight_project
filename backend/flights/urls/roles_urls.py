@@ -8,6 +8,7 @@ administrator_url_patterns = [
     path('users/', views_administrator.view_all_users, name='users-list'),
     path('users/no-role/', views_administrator.view_user_no_role, name='users-list-no-role'),
     path('user/<str:pk>/', views_administrator.view_user, name='user'),
+    path('users/delete/<str:pk>/', views_administrator.remove_user, name='remove-user'),
     # Customers
     path('customers/', views_administrator.view_all_customers, name='customers-list'),
     path('customers/add/', views_administrator.add_customer, name='add-customer'),
