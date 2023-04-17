@@ -12,7 +12,7 @@ export const addTicket = async (
 ) => {
     if (method === "get") {
         try {
-            const { data } = await api.get(`${baseURL}/tickets/${id}/add/`);
+            const { data } = await api.get(`${baseURL}/tickets/add/${id}/`);
 
             if (data) {
                 setData(data);
@@ -28,7 +28,7 @@ export const addTicket = async (
 
     if (method === "post") {
         try {
-            const { data } = await api.post(`${baseURL}/tickets/${id}/add/`);
+            const { data } = await api.post(`${baseURL}/tickets/add/${id}/`);
 
             if (data) {
                 setIsValid(data.message);
@@ -36,5 +36,16 @@ export const addTicket = async (
         } catch (error) {
             setError(error.response.data.message);
         }
+    }
+};
+
+export const removeTicket = async (api, pk, setState, setError) => {
+    try {
+        const { data } = await api.delete(`${baseURL}/tickets/delete/${pk}/`);
+        if (data) {
+            setState(data.message);
+        }
+    } catch (error) {
+        setError(error.response.data.message);
     }
 };

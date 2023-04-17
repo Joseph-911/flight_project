@@ -33,25 +33,27 @@ class AirlineFacade(FacadeBase):
     # ----------------- Add Flight ---------------- # 
     # --------------------------------------------- #  
     def add_flight(self, request):
-        # Assign the airline company ID to the request user
-        request.data['airline_company_id'] = request.user.airlinecompany.id
+        if request.method == 'POST':
+            # Assign the airline company ID to the request user
+            request.data['airline_company_id'] = request.user.airlinecompany.id
 
-        serializer = FlightSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            validated_data = serializer.validated_data
+            serializer = FlightSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                validated_data = serializer.validated_data
 
-            airline_company = self.dal.read_object(AirlineCompany, validated_data['airline_company_id'])
-            origin_country = self.dal.read_object(Country, validated_data['origin_country_id'])
-            destination_country = self.dal.read_object(Country, validated_data['destination_country_id'])
+                airline_company = self.dal.read_object(AirlineCompany, validated_data['airline_company_id'])
+                origin_country = self.dal.read_object(Country, validated_data['origin_country_id'])
+                destination_country = self.dal.read_object(Country, validated_data['destination_country_id'])
 
-            validated_data['airline_company_id'] = airline_company
-            validated_data['origin_country_id'] = origin_country
-            validated_data['destination_country_id'] = destination_country
+                validated_data['airline_company_id'] = airline_company
+                validated_data['origin_country_id'] = origin_country
+                validated_data['destination_country_id'] = destination_country
 
-            self.dal.create_object(Flight, validated_data)
-            
-            return Response({'message': 'Flight added successfully'}, status=status.HTTP_200_OK)
-        return Response({'error': 'An error has occurred during adding flight'}, status=status.HTTP_400_BAD_REQUEST)
+                self.dal.create_object(Flight, validated_data)
+                
+                return Response({'message': 'Flight added successfully'}, status=status.HTTP_200_OK)
+            return Response({'error': 'An error has occurred during adding flight'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response()
 
 
     # --------------------------------------------- #
@@ -89,17 +91,20 @@ class AirlineFacade(FacadeBase):
     def remove_flight(self, request, pk):
         flight = self.dal.read_object_filter_by(Flight, {'id': pk, 'airline_company_id': request.user.airlinecompany.id})
 
-        if flight:
-            flight = flight.first()
-            tickets = self.dal.read_object_filter_by(Ticket, {'flight_id': flight})
+        if request.method == 'DELETE':
+            if flight:
+                flight = flight.first()
+                tickets = self.dal.read_object_filter_by(Ticket, {'flight_id': flight})
 
-            if tickets.exists():
-                return Response({'message': 'Flight cannot be deleted. Customers already booked this flight'}, status=status.HTTP_403_FORBIDDEN)
-            
-            flight.delete()
-            return Response({'message': 'Flight deleted successfully'}, status=status.HTTP_200_OK)
-            
-        return Response({'message': 'Flight is not found. It\'s either not in the database or doesn\'t belong to you'}, status=status.HTTP_404_NOT_FOUND)
+                if tickets.exists():
+                    return Response({'message': 'Flight cannot be deleted. Customers already booked this flight'}, status=status.HTTP_403_FORBIDDEN)
+                
+                flight.delete()
+                return Response({'message': 'Flight deleted successfully'}, status=status.HTTP_200_OK)
+                
+            return Response({'message': 'Flight is not found. It\'s either not in the database or doesn\'t belong to you'}, status=status.HTTP_404_NOT_FOUND)
+        return Response()
+
 
     # --------------------------------------------- # 
     # -------------- Get My Flights --------------- # 

@@ -78,7 +78,7 @@ def view_country(request, pk):
 # --------------------------------------------- #
 # ---------------- Add Customer --------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @user_has_permission('add_customer')
 def add_customer(request):
     return administrator_facade.add_customer(request)
@@ -87,7 +87,7 @@ def add_customer(request):
 # --------------------------------------------- #
 # ----------------- Add Airline --------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @user_has_permission('add_airlinecompany')
 def add_airline(request):
     return administrator_facade.add_airline(request)
@@ -96,7 +96,7 @@ def add_airline(request):
 # --------------------------------------------- #
 # ------------- Add Administrator ------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @user_has_permission('add_administrator')
 def add_administrator(request):
     return administrator_facade.add_administrator(request)
@@ -105,7 +105,7 @@ def add_administrator(request):
 # --------------------------------------------- #
 # ---------------- Add Country ---------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @user_has_permission('add_country')
 def add_country(request):
     return administrator_facade.add_country(request)
@@ -114,7 +114,7 @@ def add_country(request):
 # --------------------------------------------- #
 # ---------------- Remove User ---------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','DELETE'])
 @user_has_permission('delete_user')
 def remove_user(request, pk):
     return administrator_facade.remove_user(request, pk)
@@ -123,25 +123,25 @@ def remove_user(request, pk):
 # --------------------------------------------- #
 # -------------- Remove Customer -------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','DELETE'])
 @user_has_permission('delete_customer')
 def remove_customer(request, pk):
-    return administrator_facade.remove_customer(pk)
+    return administrator_facade.remove_customer(request, pk)
 
 
 # --------------------------------------------- #
 # --------------- Remove Airline -------------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','DELETE'])
 @user_has_permission('delete_airlinecompany')
 def remove_airline(request, pk):
-    return administrator_facade.remove_airline(pk)
+    return administrator_facade.remove_airline(request, pk)
 
 
 # --------------------------------------------- #
 # ------------ Remove Administrator ----------- #
 # --------------------------------------------- #
-@api_view(['POST'])
+@api_view(['GET','DELETE'])
 @user_has_permission('delete_airlinecompany')
 def remove_administrator(request, pk):
     return administrator_facade.remove_administrator(request, pk)

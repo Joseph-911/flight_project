@@ -38,7 +38,8 @@ airline_url_patterns = [
 
 customer_url_patterns = [
     path('tickets/', views_customer.get_my_tickets, name='customer-all-tickets'),
-    path('tickets/<str:pk>/add/', views_customer.add_ticket, name='add-ticket'),
+    path('tickets/add/<str:pk>/', views_customer.add_ticket, name='add-ticket'),
+    path('tickets/delete/<str:pk>/', views_customer.remove_ticket, name='remove-ticket'),
 ]
 
 anonymous_url_patterns = [

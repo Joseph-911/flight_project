@@ -70,7 +70,7 @@ export const updateFlight = async (
 
 export const removeFlight = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.post(`${baseURL}/flights/delete/${pk}/`);
+        const { data } = await api.delete(`${baseURL}/flights/delete/${pk}/`);
         if (data) {
             setState(data.message);
         }

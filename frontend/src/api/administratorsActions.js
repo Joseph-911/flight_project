@@ -2,7 +2,7 @@ const baseURL = "profile/administrator";
 
 export const removeUser = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.post(`${baseURL}/users/delete/${pk}/`);
+        const { data } = await api.delete(`${baseURL}/users/delete/${pk}/`);
         if (data) {
             setState(data.message);
         }
@@ -13,7 +13,7 @@ export const removeUser = async (api, pk, setState, setError) => {
 
 export const removeCustomer = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.post(`${baseURL}/customers/delete/${pk}/`);
+        const { data } = await api.delete(`${baseURL}/customers/delete/${pk}/`);
         if (data) {
             setState(data.message);
         }
@@ -24,7 +24,7 @@ export const removeCustomer = async (api, pk, setState, setError) => {
 
 export const removeAirline = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.post(`${baseURL}/airlines/delete/${pk}/`);
+        const { data } = await api.delete(`${baseURL}/airlines/delete/${pk}/`);
         if (data) {
             setState(data.message);
         }
@@ -35,7 +35,7 @@ export const removeAirline = async (api, pk, setState, setError) => {
 
 export const removeAdministrator = async (api, pk, setState, setError) => {
     try {
-        const { data } = await api.post(
+        const { data } = await api.delete(
             `${baseURL}/administrators/delete/${pk}/`
         );
         if (data) {

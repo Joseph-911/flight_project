@@ -56,7 +56,7 @@ class GenericDAL:
 
 
     def delete_object(self, model_class, pk):
-        return model_class.objects.delete()
+        return model_class.objects.get(id=pk).delete()
     
     
     # def get_customer_by_id(self, pk):

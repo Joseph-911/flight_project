@@ -11,18 +11,7 @@ from flights.serializers import *
 class CustomerFacade(FacadeBase):
     
     # --------------------------------------------- #
-    # -------------- Get My Tickets --------------- #
-    # --------------------------------------------- #
-    def get_my_tickets(self, request):
-        pk = request.user.customer.id
-        tickets = self.dal.get_tickets_by_customer(pk)
-
-        serializer = TicketSerializer(tickets, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-    # --------------------------------------------- #
-    # ---------------- Buy Ticket ----------------- #
+    # ---------------- Add Ticket ----------------- #
     # --------------------------------------------- #
     def add_ticket(self, request, pk):
         flight = self.dal.read_object_by(Flight, 'id', pk)
@@ -58,6 +47,38 @@ class CustomerFacade(FacadeBase):
             self.dal.update_object(flight, {'remaining_tickets': flight.remaining_tickets - 1})
 
             return Response({'message': 'Ticket added successfully'}, status=status.HTTP_200_OK) 
+
+
+    # --------------------------------------------- #
+    # --------------- Remove Ticket --------------- #
+    # --------------------------------------------- #
+    def remove_ticket(self, request, pk):
+        ticket = self.dal.read_object_filter_by(Ticket, {'id': pk, 'customer_id': request.user.customer})
+        if request.method == 'DELETE':
+            if ticket:
+                # Delete ticket
+                ticket = ticket.first()
+                self.dal.delete_object(Ticket, ticket.id)
+
+                # Update flight remaining tickets
+                flight = self.dal.read_object_filter_by(Flight, {'id': ticket.flight_id.id}).first()
+                self.dal.update_object(flight, {'remaining_tickets': flight.remaining_tickets + 1})
+
+                return Response({'message': 'Ticket deleted successfully'}, status=status.HTTP_200_OK)
+            
+            return Response({'message': 'Ticket not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response()
+
+
+    # --------------------------------------------- #
+    # -------------- Get My Tickets --------------- #
+    # --------------------------------------------- #
+    def get_my_tickets(self, request):
+        pk = request.user.customer.id
+        tickets = self.dal.get_tickets_by_customer(pk)
+
+        serializer = TicketSerializer(tickets, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 customer_facade = CustomerFacade()
