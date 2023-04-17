@@ -108,7 +108,7 @@ export const FormBlockSelectCountry = (props) => {
             <select
                 name={props.name}
                 id={props.id}
-                required
+                required={props.required}
                 value={props.value}
                 onChange={props.onChange}
             >

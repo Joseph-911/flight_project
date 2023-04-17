@@ -91,6 +91,20 @@ class FacadeBase:
                 return Response(serializer.data)
             else:
                 return Response({'message': 'No airline company found'}, status=status.HTTP_404_NOT_FOUND)
+            
+    
+    # --------------------------------------------- #
+    # --------- Get Airline By Parameters --------- #
+    # --------------------------------------------- #
+    def get_airline_by_parameters(self, request):
+        request.data['country_id'] = self.dal.read_object(Country, int(request.data['country_id']))
+
+        airline = self.dal.read_object_filter_by(AirlineCompany, request.data).first()
+
+        if airline:
+            serializer = AirlineCompanySerializer(airline)
+            return Response(serializer.data)
+        return Response()
     
 
     # --------------------------------------------- # 

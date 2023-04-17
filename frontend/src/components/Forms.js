@@ -292,6 +292,7 @@ export const AirlineForm = (props) => {
                 label="Country"
                 name="country_id"
                 id="country_id"
+                required={true}
                 value={props.formInputs.country_id || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
@@ -392,6 +393,7 @@ export const FlightForm = (props) => {
                 label="Origin Country"
                 name="origin_country_id"
                 id="origin_country_id"
+                required={true}
                 value={props.formInputs.origin_country_id || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
@@ -402,6 +404,7 @@ export const FlightForm = (props) => {
                 label="Destination Country"
                 name="destination_country_id"
                 id="destination_country_id"
+                required={true}
                 value={props.formInputs.destination_country_id || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
@@ -451,6 +454,39 @@ export const FlightForm = (props) => {
                 required
                 id="remaining_tickets"
                 value={props.formInputs.remaining_tickets || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
+
+/* --------------------------------------------- */
+/* -------------- Search Airline --------------- */
+/* --------------------------------------------- */
+export const SearchAirlineForm = (props) => {
+    return (
+        <>
+            <FormBlock
+                label="Name"
+                name="name"
+                type="text"
+                required={true}
+                id="name"
+                value={props.formInputs.name || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlockSelectCountry
+                label="Country"
+                name="country_id"
+                id="country_id"
+                required={true}
+                value={props.formInputs.country_id || ""}
                 onChange={(e) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}

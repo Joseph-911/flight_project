@@ -33,6 +33,15 @@ def get_airline(request, pk):
 
 
 # --------------------------------------------- #
+# -------------- Airlines Filter -------------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def get_airline_by_parameters(request):
+    return facade_base.get_airline_by_parameters(request)
+
+
+# --------------------------------------------- #
 # ------------ View All Countries ------------- #
 # --------------------------------------------- #
 @api_view(['GET'])

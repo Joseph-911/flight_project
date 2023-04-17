@@ -28,3 +28,12 @@ export const getAirlineFlights = async (id, setState) => {
         return;
     }
 };
+
+export const getAirlineByParameters = async (setState, inputs) => {
+    const {data} = await axios.post(`${baseURL}filter/`, inputs);
+    if (data) {
+        setState([data])
+    } else {
+        setState([])
+    }
+}
