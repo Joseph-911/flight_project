@@ -10,9 +10,8 @@ const AirlinesView = () => {
     const [airlines, setAirlines] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formInputs, setFormInputs] = useState({});
-    // const [error, setError] = useState(null);
     const [isSearching, setIsSearching] = useState(false);
- 
+
     useEffect(() => {
         getAllAirlines(setAirlines, setLoading);
     }, []);
@@ -21,31 +20,45 @@ const AirlinesView = () => {
         e.preventDefault();
         getAirlineByParameters(setAirlines, formInputs);
         setIsSearching(true);
-    }
+    };
 
-    const handleClearSearch = (e) => {
+    const handleClearSearch = () => {
         getAllAirlines(setAirlines, setLoading);
         setIsSearching(false);
         setFormInputs({});
-    }
+    };
 
     return (
         <>
             <PageTitle title="All Airlines" />
 
             <div className="form-wrapper-oneline">
-                <form className="form-inline" onSubmit={handleFormSubmit}>
+                <form
+                    method="POST"
+                    className="form-inline"
+                    onSubmit={handleFormSubmit}
+                >
                     <SearchAirlineForm
                         formInputs={formInputs}
                         setFormInputs={setFormInputs}
                         handleInputChange={handleInputChange}
-                        // error={error}
                     />
 
                     <div className="form-block">
-                        <input type="submit" value="Search" className="btn btn-md btn-primary" />
+                        <input
+                            type="submit"
+                            value="Search"
+                            className="btn btn-md btn-primary"
+                        />
                     </div>
-                    {isSearching && <button onClick={handleClearSearch} className="btn btn-md btn-primary-outline">Clear Search</button>}
+                    {isSearching && (
+                        <button
+                            onClick={handleClearSearch}
+                            className="btn btn-md btn-primary-outline"
+                        >
+                            Clear Search
+                        </button>
+                    )}
                 </form>
             </div>
 
@@ -53,7 +66,9 @@ const AirlinesView = () => {
                 <p>Loading...</p>
             ) : airlines.length === 0 ? (
                 <>
-                    <p className="bold">Based on your search:</p>
+                    {isSearching && (
+                        <p className="bold">Based on your search:</p>
+                    )}
                     <p>No airlines found</p>
                 </>
             ) : (

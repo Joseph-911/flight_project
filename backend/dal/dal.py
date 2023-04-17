@@ -1,3 +1,5 @@
+from datetime import datetime, time
+
 from users.models import *
 from flights.models import * 
 
@@ -58,10 +60,6 @@ class GenericDAL:
     def delete_object(self, model_class, pk):
         return model_class.objects.get(id=pk).delete()
     
-    
-    # def get_customer_by_id(self, pk):
-    #     return Customer.objects.get(id=pk)
-    
 
     def get_airlines_by_county(self, pk):
         country = self.read_object(Country, pk)
@@ -91,6 +89,20 @@ class GenericDAL:
             return self.read_object_filter_by(Flight, {'destination_country_id': pk})
         return None
 
+    def get_flights_by_parameters(self, origin_country_id, destination_country_id, date):
+        origin_country = self.read_object(Country, origin_country_id)
+        destination_country = self.read_object(Country, destination_country_id)
+
+        date = datetime.strptime(date, '%Y-%m-%d').date()
+        date_time = datetime.combine(date, time.min)
+
+        flights = Flight.objects.filter(
+            origin_country_id=origin_country,
+            destination_country_id=destination_country,
+            departure_time__gte=date_time,
+            departure_time__lte=date_time.replace(hour=23, minute=59, second=59)
+        )
+        return flights
 
     def get_tickets_by_customer(self, pk):
         return self.read_object_filter_by(Ticket, {'customer_id': pk})

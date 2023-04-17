@@ -194,5 +194,20 @@ class FacadeBase:
         return Response({'message': 'Flight not found'}, status=status.HTTP_404_NOT_FOUND) 
 
 
+    # --------------------------------------------- #
+    # --------- Get Flights By Parameters --------- #
+    # --------------------------------------------- #
+    def get_flights_by_paremeters(self, request):
+        origin_country_id = request.data['origin_country_id']
+        destination_country_id = request.data['destination_country_id']
+        date = request.data['date']
+
+        flights = self.dal.get_flights_by_parameters(origin_country_id, destination_country_id, date)
+        
+        if flights:
+            serializer = FlightSerializer(flights, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response()
+
 
 facade_base = FacadeBase()

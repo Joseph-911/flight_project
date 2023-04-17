@@ -33,7 +33,7 @@ def get_airline(request, pk):
 
 
 # --------------------------------------------- #
-# -------------- Airlines Filter -------------- #
+# ----------- Airline By Parameters ----------- #
 # --------------------------------------------- #
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -102,3 +102,12 @@ def get_all_flights(request):
 @permission_classes([AllowAny])
 def get_flight(request, pk):
     return facade_base.get_flight_by_id(pk)
+
+
+# --------------------------------------------- #
+# ----------- Flights By Parameters ----------- #
+# --------------------------------------------- #
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def get_flights_by_parameters(request):
+    return facade_base.get_flights_by_paremeters(request)

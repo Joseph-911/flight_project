@@ -20,3 +20,12 @@ export const getFlight = async (id, setState, setError) => {
         setError(error.response.data.message);
     }
 };
+
+export const getFlightsByParameters = async (setState, inputs) => {
+    const { data } = await axios.post(`${baseURL}filter/`, inputs);
+    if (data) {
+        setState(data);
+    } else {
+        setState([]);
+    }
+};

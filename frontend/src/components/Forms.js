@@ -495,3 +495,47 @@ export const SearchAirlineForm = (props) => {
         </>
     );
 };
+
+/* --------------------------------------------- */
+/* -------------- Search Flights --------------- */
+/* --------------------------------------------- */
+export const SearchFlightsForm = (props) => {
+    return (
+        <>
+            <FormBlockSelectCountry
+                label="From"
+                name="origin_country_id"
+                id="origin_country_id"
+                required={true}
+                value={props.formInputs.origin_country_id || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlockSelectCountry
+                label="To"
+                name="destination_country_id"
+                id="destination_country_id"
+                required={true}
+                value={props.formInputs.destination_country_id || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+            <FormBlock
+                label="Date"
+                name="date"
+                type="date"
+                required
+                id="date"
+                value={props.formInputs.date || ""}
+                onChange={(e) => {
+                    props.handleInputChange(e, props.setFormInputs);
+                }}
+                error={props.error}
+            />
+        </>
+    );
+};
