@@ -78,6 +78,24 @@ def get_country_origin_flights(request, pk):
 
 
 # --------------------------------------------- #
+# ----- Country Origin Flights - 12 Hours ----- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_departure_flights(request, pk):
+    return facade_base.get_departure_flights(request, pk)
+
+
+# --------------------------------------------- #
+# --- Country Destination Flights - 12 Hours -- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_arrival_flights(request, pk):
+    return facade_base.get_arrival_flights(request, pk)
+
+
+# --------------------------------------------- #
 # -------- Country Destination Flights -------- #
 # --------------------------------------------- #
 @api_view(['GET'])

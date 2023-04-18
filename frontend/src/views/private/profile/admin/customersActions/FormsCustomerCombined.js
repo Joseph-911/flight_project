@@ -4,24 +4,27 @@ import AddCustomer from "./AddCustomer";
 import Tabs from "components/Tabs";
 
 const FormsCustomerCombined = () => {
-    const [currentForm, setCurrentForm] = useState("user-customer");
+    const [currentTab, setcurrentTab] = useState("user-customer");
 
-    const handleCurrentForm = (form) => {
-        setCurrentForm(form);
+    const handleCurrentTab = (tab) => {
+        setcurrentTab(tab);
     };
 
     return (
         <>
             <Tabs
-                withUser="user-customer"
-                withoutUser="customer"
-                withUserTitle="Register Customer"
-                withoutUserTitle="Add Customer"
-                currentForm={currentForm}
-                handleCurrentForm={handleCurrentForm}
+                tabs={[
+                    {
+                        name: "Register Customer",
+                        target: "user-customer",
+                    },
+                    { name: "Add Customer", target: "customer" },
+                ]}
+                currentTab={currentTab}
+                handleCurrentTab={handleCurrentTab}
             />
 
-            {currentForm === "user-customer" ? (
+            {currentTab === "user-customer" ? (
                 <AddCustomerUser />
             ) : (
                 <AddCustomer />

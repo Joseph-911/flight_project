@@ -5,24 +5,27 @@ import AddAdministratorUser from "./AddAdministratorUser";
 import AddAdministrator from "./AddAdministrator";
 
 const FormsAdministratorCombined = () => {
-    const [currentForm, setCurrentForm] = useState("user-administrator");
+    const [currentTab, setcurrentTab] = useState("user-administrator");
 
-    const handleCurrentForm = (form) => {
-        setCurrentForm(form);
+    const handleCurrentTab = (tab) => {
+        setcurrentTab(tab);
     };
 
     return (
         <>
             <Tabs
-                withUser="user-administrator"
-                withoutUser="administrator"
-                withUserTitle="Register Administrator"
-                withoutUserTitle="Add Administrator"
-                currentForm={currentForm}
-                handleCurrentForm={handleCurrentForm}
+                tabs={[
+                    {
+                        name: "Register Administrator",
+                        target: "user-administrator",
+                    },
+                    { name: "Add Administrator", target: "administrator" },
+                ]}
+                currentTab={currentTab}
+                handleCurrentTab={handleCurrentTab}
             />
 
-            {currentForm === "user-administrator" ? (
+            {currentTab === "user-administrator" ? (
                 <AddAdministratorUser />
             ) : (
                 <AddAdministrator />

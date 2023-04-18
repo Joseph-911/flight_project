@@ -5,24 +5,27 @@ import AddAirlineUser from "./AddAirlineUser";
 import AddAirline from "./AddAirline";
 
 const FormsAirlineCombined = () => {
-    const [currentForm, setCurrentForm] = useState("user-airline");
+    const [currentTab, setcurrentTab] = useState("user-airline");
 
-    const handleCurrentForm = (form) => {
-        setCurrentForm(form);
+    const handleCurrentTab = (tab) => {
+        setcurrentTab(tab);
     };
 
     return (
         <>
             <Tabs
-                withUser="user-airline"
-                withoutUser="airline"
-                withUserTitle="Register Airline"
-                withoutUserTitle="Add Airline"
-                currentForm={currentForm}
-                handleCurrentForm={handleCurrentForm}
+                tabs={[
+                    {
+                        name: "Register Airline",
+                        target: "user-airline",
+                    },
+                    { name: "Add Airline", target: "airline" },
+                ]}
+                currentTab={currentTab}
+                handleCurrentTab={handleCurrentTab}
             />
 
-            {currentForm === "user-airline" ? (
+            {currentTab === "user-airline" ? (
                 <AddAirlineUser />
             ) : (
                 <AddAirline />

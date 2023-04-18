@@ -3,27 +3,21 @@ import React from "react";
 const Tabs = (props) => {
     return (
         <div className="tab-btns">
-            <button
-                className={`btn btn-md ${
-                    props.currentForm === props.withUser
-                        ? "btn-primary"
-                        : "btn-primary-outline"
-                }`}
-                onClick={() => props.handleCurrentForm(props.withUser)}
-            >
-                {props.withUserTitle}
-            </button>
-
-            <button
-                className={`btn btn-md ${
-                    props.currentForm === props.withoutUser
-                        ? "btn-primary"
-                        : "btn-primary-outline"
-                }`}
-                onClick={() => props.handleCurrentForm(props.withoutUser)}
-            >
-                {props.withoutUserTitle}
-            </button>
+            {props.tabs.map((tab) => {
+                return (
+                    <button
+                        key={`tab-btn-${tab.name}`}
+                        className={`btn btn-md ${
+                            props.currentTab === tab.target
+                                ? "btn-primary"
+                                : "btn-primary-outline"
+                        }`}
+                        onClick={() => props.handleCurrentTab(tab.target)}
+                    >
+                        {tab.name}
+                    </button>
+                );
+            })}
         </div>
     );
 };

@@ -39,15 +39,43 @@ export const getCountryOriginFlights = async (id, setState) => {
     } catch (error) {
         return;
     }
-}
+};
 
 export const getCountryDestinationFlights = async (id, setState) => {
     try {
-        const { data } = await axios.get(`${baseURL}${id}/flights/destination/`);
+        const { data } = await axios.get(
+            `${baseURL}${id}/flights/destination/`
+        );
         if (data) {
             setState(data);
         }
     } catch (error) {
         return;
     }
-}
+};
+
+export const getCountryDepartureFlights = async (id, setState) => {
+    try {
+        const { data } = await axios.get(
+            `${baseURL}${id}/flights/origin/soon/`
+        );
+        if (data) {
+            setState(data);
+        }
+    } catch (error) {
+        return;
+    }
+};
+
+export const getCountryArrivalFlights = async (id, setState) => {
+    try {
+        const { data } = await axios.get(
+            `${baseURL}${id}/flights/destination/soon/`
+        );
+        if (data) {
+            setState(data);
+        }
+    } catch (error) {
+        return;
+    }
+};

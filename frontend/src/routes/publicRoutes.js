@@ -9,8 +9,7 @@ import RegisterView from "views/public/register/RegisterView";
 import CountriesView from "views/public/countries/CountriesView";
 import CountryView from "views/public/countries/CountryView";
 import CountryAirlinesView from "views/public/countries/CountryAirlinesView";
-import CountryOriginFlightsView from "views/public/countries/CountryOriginFlightsView";
-import CountryDestinationFlightsView from "views/public/countries/CountryDestinationFlightsView";
+import CountryFlightsView from "views/public/countries/CountryFlightsView";
 // Airlines
 import AirlinesView from "views/public/airlines/AirlinesView";
 import AirlineView from "views/public/airlines/AirlineView";
@@ -109,27 +108,14 @@ export const CountryAirlines = () => {
     );
 };
 
-export const CountryOriginFlights = () => {
+export const CountryFlights = () => {
     return (
         <>
             <Helmet>
                 <title>Country Origin Flights</title>
             </Helmet>
             <div className="animate-fade-up">
-                <CountryOriginFlightsView />
-            </div>
-        </>
-    );
-};
-
-export const CountryDestinationFlights = () => {
-    return (
-        <>
-            <Helmet>
-                <title>Country Destination Flights</title>
-            </Helmet>
-            <div className="animate-fade-up">
-                <CountryDestinationFlightsView />
+                <CountryFlightsView />
             </div>
         </>
     );

@@ -9,14 +9,13 @@ import {
     Countries,
     CountryAirlines,
     Country,
-    CountryOriginFlights,
-    CountryDestinationFlights,
     Airlines,
     Airline,
     AirlineFlights,
     Flights,
     Flight,
     FlightBooking,
+    CountryFlights,
 } from "routes/publicRoutes";
 
 import { RestrictedRoute } from "utils/CustomRoutes";
@@ -31,14 +30,7 @@ const PublicViewsLayout = () => {
                 path="/countries/:id/airlines"
                 element={<CountryAirlines />}
             />
-            <Route
-                path="/countries/:id/flights/origin"
-                element={<CountryOriginFlights />}
-            />
-            <Route
-                path="/countries/:id/flights/destination"
-                element={<CountryDestinationFlights />}
-            />
+            <Route path="/countries/:id/flights" element={<CountryFlights />} />
             <Route path="/airlines" element={<Airlines />} />
             <Route path="/airlines/:id" element={<Airline />} />
             <Route path="/airlines/:id/flights" element={<AirlineFlights />} />

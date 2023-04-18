@@ -1,4 +1,5 @@
-from datetime import datetime, time
+from django.utils import timezone
+from datetime import datetime, time, timedelta
 
 from users.models import *
 from flights.models import * 
@@ -103,6 +104,36 @@ class GenericDAL:
             departure_time__lte=date_time.replace(hour=23, minute=59, second=59)
         )
         return flights
+
+
+    def get_arrival_flights(self, country_id):
+        destination_country = self.read_object(Country, country_id)
+        if destination_country:
+            now = timezone.now()
+            next_12_hours = now + timedelta(hours=12)
+
+            flights = Flight.objects.filter(
+                destination_country_id=destination_country,
+                landing_time__range=[now, next_12_hours]
+            )
+            return flights
+        return None
+    
+
+    def get_departure_flights(self, country_id):
+        origin_country = self.read_object(Country, country_id)
+
+        if origin_country:
+            now = timezone.now()
+            next_12_hours = now + timedelta(hours=12)
+
+            flights = Flight.objects.filter(
+                origin_country_id=origin_country,
+                departure_time__range=[now, next_12_hours]
+            )
+            return flights
+        return None
+
 
     def get_tickets_by_customer(self, pk):
         return self.read_object_filter_by(Ticket, {'customer_id': pk})

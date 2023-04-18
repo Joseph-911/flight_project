@@ -9,7 +9,9 @@ urlpatterns = [
     path('countries/<str:pk>/', views_flights.get_country, name='country'),
     path('countries/<str:pk>/airlines/', views_flights.get_country_airlines, name='country-airlines'),
     path('countries/<str:pk>/flights/origin/', views_flights.get_country_origin_flights, name='country-origin-flights'),
+    path('countries/<str:pk>/flights/origin/soon/', views_flights.get_departure_flights, name='country-origin-flights-soon'),
     path('countries/<str:pk>/flights/destination/', views_flights.get_country_destination_flights, name='country-destination-flights'),
+    path('countries/<str:pk>/flights/destination/soon/', views_flights.get_arrival_flights, name='country-destination-flights-soon'),
     # Airlines
     path('airlines/', views_flights.get_all_airlines, name='airlines'),
     path('airlines/filter/', views_flights.get_airline_by_parameters, name='airline-by'),
