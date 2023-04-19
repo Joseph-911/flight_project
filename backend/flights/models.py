@@ -30,6 +30,9 @@ class Flight(models.Model):
     price = models.IntegerField()
     remaining_tickets = models.IntegerField()
 
+    class Meta:
+        ordering = ['-departure_time']
+
     def __str__(self):
         return f'Company: {self.airline_company_id}, From: {self.origin_country_id}, To: {self.destination_country_id}'
 

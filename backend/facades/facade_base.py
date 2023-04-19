@@ -97,9 +97,10 @@ class FacadeBase:
     # --------- Get Airline By Parameters --------- #
     # --------------------------------------------- #
     def get_airline_by_parameters(self, request):
-        request.data['country_id'] = self.dal.read_object(Country, int(request.data['country_id']))
+        country_id = self.dal.read_object(Country, int(request.data['country_id']))
+        name = request.data['name']
 
-        airline = self.dal.read_object_filter_by(AirlineCompany, request.data).first()
+        airline = self.dal.read_object_filter_by(AirlineCompany, {'country_id': country_id, 'name': name}).first()
 
         if airline:
             serializer = AirlineCompanySerializer(airline)
@@ -225,7 +226,7 @@ class FacadeBase:
         date = request.data['date']
 
         flights = self.dal.get_flights_by_parameters(origin_country_id, destination_country_id, date)
-        
+
         if flights:
             serializer = FlightSerializer(flights, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

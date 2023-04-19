@@ -34,7 +34,7 @@ export const Home = () => {
     return (
         <>
             <Helmet>
-                <title>Flight Project</title>
+                <title>Home</title>
             </Helmet>
             <div className="animate-fade-up">
                 <HomeView />
