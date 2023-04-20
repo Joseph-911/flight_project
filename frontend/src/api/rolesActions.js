@@ -10,7 +10,7 @@ api = the link for api in Django rest framework (check AuthContext)
 setState = state to save the data
 setError = state to save the error
 setLoading = state to save loading state
-
+search_query = search query inputs (if found)
 
 ** Examples for using this function: **
 
