@@ -1,0 +1,16 @@
+asgiref==3.6.0
+Django==4.1.7
+django-cors-headers==3.14.0
+djangorestframework==3.14.0
+fuzzywuzzy==0.18.0
+Levenshtein==0.20.9
+mysqlclient==2.1.1
+Pillow==9.4.0
+pycountry==22.3.5
+python-dotenv==1.0.0
+python-Levenshtein==0.20.9
+pytz==2022.7.1
+rapidfuzz==2.15.1
+sqlparse==0.4.3
+tzdata==2022.7
+whitenoise==6.4.0
