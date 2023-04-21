@@ -480,6 +480,7 @@ export const SearchAirlineForm = (props) => {
                     props.handleInputChange(e, props.setFormInputs);
                 }}
                 error={props.error}
+                placeholder="Enter name"
             />
             <FormBlockSelectCountry
                 label="Country"

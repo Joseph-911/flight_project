@@ -24,6 +24,7 @@ export const FormBlock = (props) => {
                 value={props.value}
                 onChange={props.onChange}
                 pattern={props.pattern}
+                placeholder={props.placeholder}
             />
             {props.children}
             <FieldError error={props.error} field={props.name} />
