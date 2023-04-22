@@ -110,8 +110,7 @@ class AirlineFacade(FacadeBase):
     # -------------- Get My Flights --------------- # 
     # --------------------------------------------- # 
     def get_my_flights(self, request):
-        # Get request user airline company flights
-        flights = self.dal.read_object_filter_by(Flight, {'airline_company_id': request.user.airlinecompany})
+        flights = self.dal.get_flights_by_airline_id(request.user.airlinecompany.id)
         serializer = FlightSerializer(flights, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

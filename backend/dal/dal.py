@@ -16,6 +16,7 @@ class GenericDAL:
         self.info_logger = logging.getLogger('dal.info')
         self.error_logger = logging.getLogger('dal.error')
 
+
     def create_object(self, model_class, data):
         try:
             obj = model_class.objects.create(**data)
@@ -73,7 +74,7 @@ class GenericDAL:
     
 
     def read_object_filter_by(self, model_class, filter_dict):
-        self.info_logger.info(f'Searching "{model_class.__name__}" objects')
+        self.info_logger.info(f'Filtering "{model_class.__name__}" objects')
         return model_class.objects.filter(**filter_dict)
 
 
@@ -95,9 +96,9 @@ class GenericDAL:
         airline = self.read_object(AirlineCompany, pk)
 
         if airline:
-            self.info_logger.info(f'Reading "{Flight.__name__}" objects by "{AirlineCompany.__name__}"')
-            return self.read_object_filter_by(Flight, {'airline_company_id': pk})
-        self.error_logger.error(f'Failed  reading "{Flight.__name__}" objects by "{AirlineCompany.__name__}"  (404 not found)')
+            self.info_logger.info(f'Reading all "{Flight.__name__}" objects by "{AirlineCompany.__name__}"')
+            return Flight.objects.filter(airline_company_id=airline)
+        self.error_logger.error(f'Failed reading "{Flight.__name__}" objects by "{AirlineCompany.__name__}"  (404 not found)')
         return None   
 
 
@@ -172,5 +173,5 @@ class GenericDAL:
 
 
     def get_tickets_by_customer(self, pk):
-        self.info_logger.info(f'Reading "{Ticket.__name__}" objects by {Customer.__name__}')
-        return self.read_object_filter_by(Ticket, {'customer_id': pk})
+        self.info_logger.info(f'Reading all "{Ticket.__name__}" objects by "{Customer.__name__}"')
+        return Ticket.objects.filter(customer_id=pk)
