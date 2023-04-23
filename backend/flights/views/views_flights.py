@@ -129,3 +129,21 @@ def get_flight(request, pk):
 @permission_classes([AllowAny])
 def get_flights_by_parameters(request):
     return facade_base.get_flights_by_paremeters(request)
+
+
+# --------------------------------------------- #
+# ------- Get Flights by Departure Date ------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_flights_by_departure_date(request):
+    return facade_base.get_flights_by_departure_date(request)
+
+
+# --------------------------------------------- #
+# -------- Get Flights by Landing Date -------- #
+# --------------------------------------------- #
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_flights_by_landing_date(request):
+    return facade_base.get_flights_by_landing_date(request)

@@ -226,6 +226,28 @@ class GenericDAL:
         
         self.error_logger.error(f'Failed reading departure "{Flight.__name__}" objects by {Country.__name__} (404 not found)')
         return None
+    
+
+    # --------------------------------------------- #
+    # ------- Get Flights by Departure Date ------- #
+    # --------------------------------------------- #
+    def get_flights_by_departure_date(self, date):
+        datetime_at_midnight = datetime.combine(date, time.min)
+        flights = Flight.objects.filter(departure_time__gte=datetime_at_midnight, departure_time__lt=datetime_at_midnight+timedelta(days=1))
+
+        self.info_logger.info(f'Reading all "{Flight.__name__}" objects by departure date {date}')
+        return flights
+    
+
+    # --------------------------------------------- #
+    # -------- Get Flights by Landing Date -------- #
+    # --------------------------------------------- #
+    def get_flights_by_landing_date(self, date):
+        datetime_at_midnight = datetime.combine(date, time.min)
+        flights = Flight.objects.filter(landing_time__gte=datetime_at_midnight, landing_time__lt=datetime_at_midnight+timedelta(days=1))
+
+        self.info_logger.info(f'Reading all "{Flight.__name__}" objects by landing date {date}')
+        return flights
 
 
     # --------------------------------------------- #

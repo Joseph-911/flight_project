@@ -20,5 +20,7 @@ urlpatterns = [
     # Flights
     path('flights/', views_flights.get_all_flights, name='flights'),
     path('flights/filter/', views_flights.get_flights_by_parameters, name='flights-by'),
+    path('flights/departure-date/', views_flights.get_flights_by_departure_date, name='flights-by-departure-date'),
+    path('flights/landing-date/', views_flights.get_flights_by_landing_date, name='flights-by-landing-date'),
     path('flights/<str:pk>/', views_flights.get_flight, name='flight'),
 ]

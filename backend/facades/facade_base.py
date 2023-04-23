@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
 
@@ -231,6 +233,47 @@ class FacadeBase:
             serializer = FlightSerializer(flights, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response()
+    
+
+    # --------------------------------------------- #
+    # ------- Get Flights by Departure Date ------- #
+    # --------------------------------------------- #
+    def get_flights_by_departure_date(self, request): 
+        try:
+            # Parse the date from the query parameter
+            departure_date_str = request.GET.get('date')
+            departure_date = datetime.datetime.strptime(departure_date_str, '%Y/%m/%d').date()
+
+            flights = self.dal.get_flights_by_departure_date(departure_date)
+
+            if flights:
+                serializer = FlightSerializer(flights, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({'message': 'No flights found'}, status=status.HTTP_200_OK)
+        except Exception as e: 
+            # Handle any errors with the query parameter
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    # --------------------------------------------- #
+    # -------- Get Flights by Landing Date -------- #
+    # --------------------------------------------- #
+    def get_flights_by_landing_date(self, request):
+        try:
+            # Parse the date from the query parameter
+            landing_date_str = request.GET.get('date')
+            landing_date = datetime.datetime.strptime(landing_date_str, '%Y/%m/%d').date()
+
+            flights = self.dal.get_flights_by_landing_date(landing_date)
+
+            if flights:
+                serializer = FlightSerializer(flights, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({'message': 'No flights found'}, status=status.HTTP_200_OK)
+        except Exception as e: 
+            # Handle any errors with the query parameter
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 facade_base = FacadeBase()
