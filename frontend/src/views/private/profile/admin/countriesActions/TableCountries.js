@@ -1,4 +1,5 @@
-import { getCountry } from "api/administratorsActions";
+import { getCountry, removeCountry } from "api/administratorsActions";
+import DeleteButton from "components/DeleteButton";
 import ViewButton from "components/ViewButton";
 import React from "react";
 
@@ -11,6 +12,7 @@ const TableCountries = (props) => {
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -25,6 +27,14 @@ const TableCountries = (props) => {
                                     func={getCountry}
                                     pk={country.id}
                                     theTarget="countries"
+                                />
+                            </td>
+                            <td>
+                                <DeleteButton
+                                    title={country.name}
+                                    btnSize="md"
+                                    func={removeCountry}
+                                    pk={country.id}
                                 />
                             </td>
                         </tr>

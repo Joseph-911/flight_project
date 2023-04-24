@@ -46,6 +46,17 @@ export const removeAdministrator = async (api, pk, setState, setError) => {
     }
 };
 
+export const removeCountry = async (api, pk, setState, setError) => {
+    try {
+        const {data} = await api.delete(`${baseURL}/countries/delete/${pk}/`);
+        if (data) {
+            setState(data.message)
+        } 
+    } catch (error) {
+        setError(error.response.data.message)
+    }
+}
+
 export const getUser = async (api, pk, setState, setError) => {
     try {
         const { data } = await api.get(`${baseURL}/user/${pk}/`);

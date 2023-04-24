@@ -403,4 +403,25 @@ class AdministratorFacade(FacadeBase):
         return Response()
 
 
+    # --------------------------------------------- #
+    # -------------- Remove Country --------------- #
+    # --------------------------------------------- #
+    def remove_country(self, request, pk):
+        country = self.dal.read_object(Country, pk)
+
+        if request.method == 'DELETE':
+            if country:
+                airlines = self.dal.read_object_filter_by(AirlineCompany, {'country_id': country})
+                origin_flights = self.dal.read_object_filter_by(Flight, {'origin_country_id': country})
+                destination_flights = self.dal.read_object_filter_by(Flight, {'destination_country_id': country})
+
+                if airlines or origin_flights or destination_flights:
+                    return Response({'message': 'An error has occurred during action. Airline companies and flights found based on this country.'}, status=status.HTTP_403_FORBIDDEN)
+
+                self.dal.delete_object(Country, pk)
+                return Response({'message': 'Country deleted successfully'}, status=status.HTTP_200_OK)
+        return Response()
+
+
+
 administrator_facade = AdministratorFacade()

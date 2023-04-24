@@ -24,6 +24,7 @@ administrator_url_patterns = [
     # Countries
     path('countries/', views_administrator.view_all_countries, name='countries-list'),
     path('countries/add/', views_administrator.add_country, name='add-country'),
+    path('countries/delete/<str:pk>/', views_administrator.remove_country, name='remove-country'),
     path('country/<str:pk>/', views_administrator.view_country, name='country-details')
 ]
 

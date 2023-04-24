@@ -145,3 +145,11 @@ def remove_airline(request, pk):
 @user_has_permission('delete_airlinecompany')
 def remove_administrator(request, pk):
     return administrator_facade.remove_administrator(request, pk)
+
+
+# --------------------------------------------- #
+# -------------- Remove Country --------------- #
+# --------------------------------------------- #
+@api_view(['GET','DELETE'])
+def remove_country(request, pk):
+    return administrator_facade.remove_country(request, pk)
