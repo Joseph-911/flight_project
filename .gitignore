@@ -7,3 +7,4 @@ __pycache__
 *.sqlite3
 backend/static/images/*
 !backend/static/images/defaults/
+.pytest_cache
