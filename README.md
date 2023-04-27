@@ -112,3 +112,19 @@ ADMIN_PASSWORD=VALUE
     Open [`127.0.0.1:8000`](http://127.0.0.1:8000/) and [`127.0.0.1:3000`](http://127.0.0.1:3000/) and enjoy &#127881;!
 
     **NOTE: It's important to use the IP address "127.0.0.1" for both, due to Cross-site request forgery (also known as CSRF)**
+
+
+## Running Tests:
+
+To run the application tests:
+
+1. go to tests folder in the backend folder with the command:
+
+    `cd backend/tests`
+
+    (assuming you're in the root directory "*flight-project*" and the requirements are already installed) 
+
+
+2. run the command: 
+
+    `pytest test_facades.py`
