@@ -72,7 +72,7 @@ class AdministratorFacade(FacadeBase):
             customers = self.dal.read_objects_filter_username(Customer, request.data['search_query'])
 
         serializer = CustomerSerializer(customers, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
     # --------------------------------------------- # 
@@ -88,7 +88,7 @@ class AdministratorFacade(FacadeBase):
                 airlines = self.dal.read_objects_filter_username(AirlineCompany, request.data['search_query'])
 
         serializer = AirlineCompanySerializer(airlines, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
     # --------------------------------------------- # 
@@ -104,7 +104,7 @@ class AdministratorFacade(FacadeBase):
                 administrators = self.dal.read_objects_filter_username(Administrator, request.data['search_query'])
 
         serializer = AdministratorSerializer(administrators, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
 
     # --------------------------------------------- # 
@@ -120,7 +120,7 @@ class AdministratorFacade(FacadeBase):
                 countries = self.dal.read_objects_filter_name(Country, request.data['search_query'])
 
         serializer = CountrySerializer(countries, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
     # --------------------------------------------- # 
