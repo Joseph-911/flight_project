@@ -87,6 +87,7 @@ ADMIN_PASSWORD=VALUE
     2. Install requirements with `pip install -r requirements.txt`
     3. Go to frontend folder `cd../frontend`
     4. Install packages with `npm install` 
+    5. Build for production `npm run build`
 
 
 5. **Run the project:**
@@ -102,9 +103,7 @@ ADMIN_PASSWORD=VALUE
         `python manage.py runserver`
 
 
-    2. Go to frontend folder and run the commands:
-
-        `npm start`
+    2. Go to frontend folder and run the command:
 
         `npm start`
 
