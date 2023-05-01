@@ -7,7 +7,7 @@ Flight project is a website for a flight management system, allows airline compa
 1. Python ≥ 3.11
 1. Node.js ≥ 16.17.0
 
-## Before We Start:
+## Before We Start (Skip this part if you're using Docker):
 he program is using environment variables for some values, and are required to start the project.
 
 In the very first steps, before starting the project, the program will ask you to fill in required inputs, this will:
@@ -80,7 +80,18 @@ ADMIN_PASSWORD=VALUE
     And fill in the inputs (Check "Before We Start" section)
 
 
-4. **Install requirements:**
+4. **Setup the Database in Backend**
+    
+    1. open `backend/flight_project/settings.py`.
+
+    2. *Comment* the `DATABASE = {}` that uses **Docker** ('HOST': 'mysql').
+    
+    3. *Uncomment* the `DATABASE = {}` that uses **environment variables**.
+
+    (This will change the configuration of the database to use MySQL on your local machine)
+
+
+5. **Install requirements:**
 
     Open the Terminal in IDE (View > Terminal), then:
     1. Go to backend folder `cd backend`
@@ -90,7 +101,7 @@ ADMIN_PASSWORD=VALUE
     5. Build for production `npm run build`
 
 
-5. **Run the project:**
+6. **Run the project:**
 
     To start the project successfully, run the commands **in order**:
     
@@ -124,17 +135,6 @@ ADMIN_PASSWORD=VALUE
 2. **Docker Desktop**
 
     Make sure you're connected to Docker (Open Docker Desktop)
-
-
-3. **Setup the Database in Backend**
-    
-    1. open `backend/flight_project/settings.py`.
-
-    2. *Comment* the `DATABASE = {}` that uses **environment variables**.
-    
-    3. *Uncomment* the `DATABASE = {}` that uses **Docker** ('HOST': 'mysql').
-
-    (This will change the configuration of the database to use the Docker database)
 
 
 3. **Run the project**

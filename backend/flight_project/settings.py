@@ -102,29 +102,13 @@ WSGI_APPLICATION = 'flight_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'flight',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'mysql',
-#         'PORT': '3306',
-#     },
-#     'test_db': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'test_db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': 'localhost',
+        'NAME': 'flight',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'mysql',
         'PORT': '3306',
     },
     'test_db': {
@@ -132,6 +116,22 @@ DATABASES = {
         'NAME': BASE_DIR / 'test_db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv('DATABASE_NAME'),
+#         'USER': os.getenv('DATABASE_USER'),
+#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     },
+#     'test_db': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'test_db.sqlite3',
+#     }
+# }
 
 
 # Password validation
