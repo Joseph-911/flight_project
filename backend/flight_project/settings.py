@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-go681_(l=lhufa7t-x2wp92prjw5k4j9ospl#m=2!7@(h=0ozw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
@@ -83,9 +83,7 @@ ROOT_URLCONF = 'flight_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR.parent / 'frontend/build',
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,6 +101,22 @@ WSGI_APPLICATION = 'flight_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'flight',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'mysql',
+#         'PORT': '3306',
+#     },
+#     'test_db': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'test_db.sqlite3',
+#     }
+# }
+
 
 DATABASES = {
     'default': {
@@ -162,10 +176,8 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    BASE_DIR.parent / 'frontend/build/static',
 ]
 
-STATIC_ROOT = BASE_DIR.parent / 'frontend/build/staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

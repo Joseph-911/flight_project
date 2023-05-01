@@ -51,7 +51,7 @@ ADMIN_PASSWORD=VALUE
 **In case you decided to create the database and add the values manually, please ignore Step 3 (Create environment variables and database) in "Getting Started" section.**
 
 
-## Getting Started:
+## Getting Started (without Docker):
 
 **Note: the tools and shortcuts provided below in the steps list, for Visual Studio Code users, if you're using another IDE please check the documentation of your IDE**
 
@@ -111,6 +111,49 @@ ADMIN_PASSWORD=VALUE
     Open [`127.0.0.1:8000`](http://127.0.0.1:8000/) and [`127.0.0.1:3000`](http://127.0.0.1:3000/) and enjoy &#127881;!
 
     **NOTE: It's important to use the IP address "127.0.0.1" for both, due to Cross-site request forgery (also known as CSRF)**
+
+
+
+## Getting Started (with Docker):
+
+1. **Clone the project:**
+
+    Open your favorite IDE and clone the project.
+    
+
+2. **Docker Desktop**
+
+    Make sure you're connected to Docker (Open Docker Desktop)
+
+
+3. **Setup the Database in Backend**
+    
+    1. open `backend/flight_project/settings.py`.
+
+    2. *Comment* the `DATABASE = {}` that uses **environment variables**.
+    
+    3. *Uncomment* the `DATABASE = {}` that uses **Docker** ('HOST': 'mysql').
+
+    (This will change the configuration of the database to use the Docker database)
+
+
+3. **Run the project**
+
+    Open the `Terminal`, make sure you're in the root directory and run the command:
+
+    `docker-compose up --build`
+
+
+    (This will create the container and the images frontend, backend and mysql including a database named 'flight' and a superuser)
+
+
+    *superuser details:*
+
+    * username: admin
+    * password: admin1234
+
+
+    Open [`127.0.0.1:3000`](http://127.0.0.1:3000/) and enjoy &#127881;!
 
 
 ## Running Tests:

@@ -5,6 +5,7 @@ migrations
 __pycache__
 *.sql
 *.sqlite3
+!data.sql
 backend/static/images/*
 !backend/static/images/defaults/
 .pytest_cache

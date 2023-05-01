@@ -1,0 +1,45 @@
+
+version: "3"
+services:
+  # Backend
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    entrypoint: ["./wait.sh"]
+    depends_on:
+      - mysql
+    ports:
+      - "8000:8000"
+    networks:
+      - internal
+    volumes:
+      - ./backend/static/images:/app/static/images
+    expose:
+      - "/static/images"
+  # Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - internal
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
+    volumes:
+      - ./backend/static/images:/app/build/static/images
+  # Database
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.31
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
