@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: yousef.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d0dfd03d6fb744e18a24fa1f31206e9e }}/docker-compose.yml:${{ github.sha }}
-        file: ./Dockerfile
+        file: docker-compose.yml
 
   deploy:
     runs-on: ubuntu-latest
