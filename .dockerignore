@@ -1,8 +1,0 @@
-# Exclude node modules
-node_modules
-
-# Exclude compiled React code
-build
-
-# Exclude Python virtual environment
-.venv
