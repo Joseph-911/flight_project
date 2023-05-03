@@ -9,3 +9,5 @@ __pycache__
 backend/static/images/*
 !backend/static/images/defaults/
 .pytest_cache
+static/images/users/*
+static/images/countries/*
