@@ -1,1 +1,1 @@
-web: gunicorn flight_project.wsgi
+web: gunicorn flight_project.wsgi:application --log-file - 
