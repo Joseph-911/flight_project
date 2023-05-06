@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://flight-project.azurewebsites.net/api/flights/";
+const baseURL = "https://flight-project1.azurewebsites.net/api/flights/";
 
 export const getAllFlights = async (setState, setLoading) => {
     const { data } = await axios.get(baseURL);
