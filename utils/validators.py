@@ -222,6 +222,14 @@ def validate_number_positive(value):
     
 
 # --------------------------------------------- #
+# -------- Validate Positive Number2 ---------- #
+# --------------------------------------------- #
+def validate_number_positive2(value):
+    # Check for positive number
+    if value is None or value < 0:
+        raise ValidationError('Field must be a relavant positive number.')
+
+# --------------------------------------------- #
 # -------- Validate Time is in Future --------- #
 # --------------------------------------------- #
 def validate_time_is_future(value):

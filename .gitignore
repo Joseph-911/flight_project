@@ -11,3 +11,4 @@ backend/static/images/*
 .pytest_cache
 static/images/users/*
 static/images/countries/*
+staticfiles

@@ -49,7 +49,7 @@ class FlightSerializer(serializers.ModelSerializer):
     departure_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
     landing_time = serializers.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], validators=[validate_time_is_future])
     price = serializers.IntegerField(validators=[validate_number_positive])
-    remaining_tickets = serializers.IntegerField(validators=[validate_number_positive])
+    remaining_tickets = serializers.IntegerField(validators=[validate_number_positive2])
 
     class Meta:
         model = Flight
