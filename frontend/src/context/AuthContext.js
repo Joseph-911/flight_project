@@ -20,7 +20,8 @@ export const AuthProvider = (props) => {
     axios.defaults.withCredentials = true;
 
     const api = axios.create({
-        baseURL: "https://flight-project1.azurewebsites.net/api/",
+        // baseURL: "http://127.0.0.1:8000/api/",
+        baseURL: "https://flight-project10.azurewebsites.net/api/",
     });
 
     const [user, setUser] = useState(() => Cookies.get("user") || null);
@@ -91,7 +92,8 @@ export const AuthProvider = (props) => {
         const token = Cookies.get("user");
         const userInfo = async () => {
             const { data } = await axios.get(
-                "https://flight-project1.azurewebsites.net/api/user-details/"
+                // "http://127.0.0.1:8000/api/user-details/"
+                "https://flight-project10.azurewebsites.net/api/user-details/"
             );
             setUserDetails(data);
         };

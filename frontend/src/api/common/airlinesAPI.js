@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://flight-project1.azurewebsites.net/api/airlines/";
+// const baseURL = "http://127.0.0.1:8000/api/airlines/";
+const baseURL = "https://flight-project10.azurewebsites.net/api/airlines/";
 
 export const getAllAirlines = async (setState, setLoading) => {
     const { data } = await axios.get(baseURL);

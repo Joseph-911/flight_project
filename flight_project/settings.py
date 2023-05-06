@@ -27,14 +27,14 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['flight-project1.azurewebsites.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['flight-project10.azurewebsites.net', 'localhost', '127.0.0.1']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'https://flight-project1.azurewebsites.net',
+    'https://flight-project10.azurewebsites.net',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -42,7 +42,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'https://flight-project1.azurewebsites.net'
+    'https://flight-project10.azurewebsites.net'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -166,7 +166,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'frontend/build/static'
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
