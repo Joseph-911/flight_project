@@ -1,0 +1,53 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - flight-project
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://yousef.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_d0dfd03d6fb744e18a24fa1f31206e9e }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_8f1b1e916850408caa9cad6b85dc5d69 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: yousef.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d0dfd03d6fb744e18a24fa1f31206e9e }}/docker-compose.yml:${{ github.sha }}
+        file: docker-compose.yml
+        run: |
+          docker-compose up --build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'flight-project'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_50b207eb6c084a458d565c15549026be }}
+        images: 'yousef.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d0dfd03d6fb744e18a24fa1f31206e9e }}/docker-compose.yml:${{ github.sha }}'
