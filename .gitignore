@@ -9,3 +9,4 @@ __pycache__
 backend/static/images/*
 !backend/static/images/defaults/
 .pytest_cache
+staticfiles
