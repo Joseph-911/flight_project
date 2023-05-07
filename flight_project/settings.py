@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = True
 
-# ALLOWED_HOSTS = ['flight-project10.azurewebsites.net', 'localhost', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
+
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'https://flight-project10.azurewebsites.net'
+    'https://flight-project10.azurewebsites.net',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -87,7 +87,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build')
+            BASE_DIR / 'frontend/build'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
