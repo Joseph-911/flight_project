@@ -24,23 +24,29 @@ const AddCountry = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         addCountry(api, target, setError, setIsValid, formInputs);
-        
+
         setTimeout(() => {
-            let suggestionsList = document.getElementById('suggestions-list');
+            let suggestionsList = document.getElementById("suggestions-list");
 
             if (suggestionsList) {
-                let suggestionsButtons = suggestionsList.querySelectorAll('span[role="button"]');
+                let suggestionsButtons = suggestionsList.querySelectorAll(
+                    'span[role="button"]'
+                );
 
-                suggestionsButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        let countryName = btn.getAttribute('value')
-                        let nameInput = document.querySelector('input[name="name"]');
-                        nameInput.value = countryName
-                        setFormInputs((values) => ({ ...values, name: countryName }));
-                    })
+                suggestionsButtons.forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        let countryName = btn.getAttribute("value");
+                        let nameInput =
+                            document.querySelector('input[name="name"]');
+                        nameInput.value = countryName;
+                        setFormInputs((values) => ({
+                            ...values,
+                            name: countryName,
+                        }));
+                    });
                 });
             }
-        }, 200);
+        }, 1000);
     };
 
     useEffect(() => {
