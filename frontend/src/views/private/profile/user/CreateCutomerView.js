@@ -5,7 +5,6 @@ import AuthContext from "context/AuthContext";
 import MessagesContext from "context/MessagesContext";
 import { CustomerForm } from "components/Forms";
 import { handleInputChange } from "utils/HandleStates";
-import CreditCard from "components/CreditCard";
 import { createCustomer } from "api/userActions";
 
 const CreateCutomerView = () => {
@@ -52,10 +51,6 @@ const CreateCutomerView = () => {
                     error={error}
                     userSelect={false}
                 />
-
-                <div className="form-block">
-                    <CreditCard formInputs={formInputs} />
-                </div>
 
                 <input
                     type="submit"
